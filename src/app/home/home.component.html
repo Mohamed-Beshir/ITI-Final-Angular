@@ -1,0 +1,75 @@
+
+<div class="page-homepage navigation-fixed-top page-slider horizontal-search" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <app-navbar></app-navbar>
+        <app-home-page-slider></app-home-page-slider>
+        <app-advanced-search></app-advanced-search>  
+        <!-- Page Content -->
+        <div id="page-content">
+
+            <!-- Our Services -->
+            <section id="our-services" class="block">
+                <div class="container">
+                    <header class="section-title"><h2>Our Services</h2></header>
+                    <div class="row">
+                        @for (service of services; track service.id) {
+                            <div class="col-md-4 col-sm-4">
+                                <app-service-card></app-service-card>
+                            </div>
+                        }
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </section><!-- /#our-services -->
+
+            <!-- Price Drop -->
+            <section id="price-drop" class="block">
+                <div class="container">
+                    <header class="section-title">
+                        <h2>Price Drop</h2>
+                        <a href="#" class="link-arrow">All Properties</a>
+                    </header>
+                    <div class="row">
+                        @for (property of priceDropProperties; track property.id) {
+                            <div class="col-md-3 col-sm-6">
+                                <app-property-card></app-property-card>
+                            </div>
+                        }
+                    </div><!-- /.row-->
+                </div><!-- /.container -->
+            </section><!-- /#price-drop -->
+            <aside id="advertising" class="block">
+                <div class="container">
+                    <a href="#">
+                        <div class="banner">
+                            <div class="wrapper">
+                                <span class="title">Do you want your property to be listed here?</span>
+                                <span class="submit">Submit it now! <i class="fa fa-plus-square"></i></span>
+                            </div>
+                        </div><!-- /.banner-->
+                    </a>
+                </div>
+            </aside><!-- /#adveritsing-->
+            <!-- New Properties for you -->
+            <section id="new-properties" class="block">
+                <div class="container">
+                    <header class="section-title">
+                        <h2>New Properties for You</h2>
+                        <a href="#" class="link-arrow">All Properties</a>
+                    </header>
+                    <div class="row">
+                        @for (property of newProperties; track property.id) {
+                            <div class="col-md-3 col-sm-6" style="margin-bottom: 30px;">
+                                <app-property-card></app-property-card>
+                            </div>
+                        }
+                    </div><!-- /.row-->
+                </div> <!-- /container -->
+            </section> <!-- /New Properties for you -->      
+        </div> 
+        <footer id="page-footer">
+            <app-big-footer></app-big-footer>
+        </footer>
+    </div>
+</div>
+
