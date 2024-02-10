@@ -38,8 +38,17 @@
     opacity: 1;
 }
 
+
+
 .navigation .last-nav {
     background-color: #073855;
+}
+.navigation .last-nav .navbar-brand {
+    filter: contrast(0.5);
+    transition: 0.2s;
+}
+.navigation .last-nav .navbar-brand:hover {
+    filter: contrast(1);
 }
 .navigation .last-nav .navbar-brand img {
     width: 40px;

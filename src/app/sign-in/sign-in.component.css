@@ -1,5 +1,6 @@
 .sign {
     background-color: #f3f3f3;
+    height: calc(100vh - 160px);
 }
 form .form-group label {
     font-size: 15px;
@@ -15,7 +16,8 @@ form .form-group input:hover {
     border-color: #777 transparent transparent transparent;
 }
 nav .breadcrumb,
-.row > div > div {
+.row > div > div,
+.error {
     font-size: 14px;
 }
 .row > div > div a {
