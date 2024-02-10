@@ -1,0 +1,26 @@
+.sign {
+    background-color: #f3f3f3;
+}
+form .form-group label {
+    font-size: 15px;
+}
+form .form-group input {
+    border-top: 1px solid #777;
+}
+form .form-group input:focus,
+form .form-group input:hover {
+    transition: 0.3s;
+    background-color: white !important;
+    box-shadow: none !important;
+    border-color: #777 transparent transparent transparent;
+}
+nav .breadcrumb,
+.row > div > div {
+    font-size: 14px;
+}
+.row > div > div a {
+    color: #1396e2;
+}
+.row > div > div a:hover {
+    color: #073855;
+}
