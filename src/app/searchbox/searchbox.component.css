@@ -1,0 +1,23 @@
+.search-box-container {
+    background: linear-gradient(rgba(19, 150, 226, 0.7), rgba(19, 150, 226, 0.7)), url('/assets/img/searchbox-bg.jpg');
+    background-size: cover;
+}
+.search-box-container .nav-pills .nav-item button.active {
+    background-color: #073855;
+}
+.tab-button{
+    color: white;
+    padding: 8px 15px;
+    background-color: inherit;
+    border: none;
+    font-size: 14px;
+    transition: background-color 0.4s ease;
+}
+.search-button{
+    font-size: 14px;
+    border: none;
+    background-color: #073855;
+    padding: 10px 15px;
+    color: #fff;
+    cursor: pointer;
+}

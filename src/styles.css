@@ -1,2 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
-@import "bootstrap/dist/css/bootstrap.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+body {
+    font-family: sans-serif !important;
+}
+
+/* custom dropdown */
+.p-dropdown{
+    width: 100%;
+    box-shadow: none;
+    border-radius:0px;
+}
+.p-dropdown-label{
+    font-size: 14px;
+    font-weight: bold;
+    color: #5a5a5a;
+    padding: 10px;
+}	
+
+.p-dropdown-panel{
+    width: fit-content;
+    border-radius:0px;
+    
+}
+.p-dropdown-trigger{
+    width: fit-content;
+    color:#1396e2;
+    padding: 0px 10px;
+}	
+.p-dropdown-item{
+    margin-left: -40px;
+    font-size: 14px;
+}
+/* end custom dropdown */
+
+
+
