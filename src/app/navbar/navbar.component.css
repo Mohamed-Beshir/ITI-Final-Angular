@@ -1,0 +1,81 @@
+.navigation:hover .first-nav {
+    opacity: 1;
+}
+.navigation .first-nav {
+    background-color: #f3f3f3;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+.navigation .first-nav .contact{
+    font-size: 13px;
+}
+.navigation .first-nav .user-area {
+    width: 100%;
+}
+@media (min-width: 768px) {
+    .navigation .first-nav .user-area {
+        width: auto;
+    }
+}
+.navigation .first-nav .links a{
+    font-size: 13px;
+    color: #073855;
+    transition: 0.2s;
+}
+.navigation .first-nav .links a:hover {
+    color: #1396e2;
+}
+.navigation .first-nav .language-bar a {
+    padding-bottom: 1px;
+}
+.navigation .first-nav .language-bar a img{
+    width: 17px;
+    opacity: .5;
+    transition: 0.2s;
+}
+.navigation .first-nav .language-bar a.active img,
+.navigation .first-nav .language-bar a img:hover {
+    opacity: 1;
+}
+
+.navigation .last-nav {
+    background-color: #073855;
+}
+.navigation .last-nav .navbar-brand img {
+    width: 40px;
+}
+.navigation .last-nav .collapse a {
+    font-size: 14px;
+}
+.navigation .last-nav .collapse a:hover {
+    color: #1396e2;
+} 
+
+.navigation .last-nav .add-property {
+    right: 0;
+    bottom: -32px;
+}
+.navigation .last-nav .add-property i{
+    z-index: 1;
+}
+.navigation .last-nav .add-property span {
+    opacity: 0;
+    left: -120px;
+    transition: 0.3s;
+}
+.navigation .last-nav .add-property span::after {
+    content: "";
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgb(13,202,240);
+
+}
+.navigation .last-nav .add-property i:hover + span {
+    margin-left: -15px;
+    opacity: 1;
+    transition: 0.3s;
+}
