@@ -1,0 +1,67 @@
+.big-footer {
+    background-color: #f3f3f3;
+}
+.big-footer  .row p {
+    font-size: 14px;
+}
+footer a {
+    transition: 0.2s;
+}
+a:not(a.mail):hover {
+    color: #1396e2 !important;
+}
+article .link-arrow:hover {
+    color: #073855 !important;
+}
+article .link-arrow::after{
+    content: ">";
+    position: relative;
+    left: 15px;
+    transition: 0.2s;
+}
+article .link-arrow:hover::after {
+    left: 25px;
+    transition: 0.2s;
+}
+.property a{
+    color: #073855;
+}
+.property > a {
+    width: 35%;
+}
+@media (max-width: 991px) {
+    .property > a {
+        width: 100%;
+    } 
+}
+.property .info .property-title {
+    font-size: 15px;
+    letter-spacing: -1px;
+}
+.property .info figure {
+    font-size: 13px;
+}
+.property .info .price {
+    font-size: 12px;
+    padding: 5px 7px;
+}
+.big-footer .contact {
+    font-size: 14px;
+}
+.big-footer article .mail {
+    color: #1396e2;
+}
+.big-footer article .mail:hover {
+    color: #073855;
+}
+.big-footer article .list-unstyled li {
+    transition: 0.2s;
+}
+.big-footer article .list-unstyled li:hover {
+    margin-left: 10px;
+    transition: 0.2s;
+}
+.small-footer {
+    background-color: #073855;
+    font-size: 14px;
+}

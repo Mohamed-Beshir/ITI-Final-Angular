@@ -20,8 +20,13 @@
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+<<<<<<< HEAD
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
+=======
+              "src/styles.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css"
+>>>>>>> d96eb3889a0de516934cf534a330d0edd95fde3f
             ],
             "scripts": []
           },
@@ -72,8 +77,20 @@
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
+<<<<<<< HEAD
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
+=======
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css"
+
+            ],
+>>>>>>> d96eb3889a0de516934cf534a330d0edd95fde3f
             "scripts": []
           }
         }
@@ -81,6 +98,10 @@
     }
   },
   "cli": {
+<<<<<<< HEAD
     "analytics": false
+=======
+    "analytics": "0c36033b-db6a-4669-b6a5-c383c82c1a86"
+>>>>>>> d96eb3889a0de516934cf534a330d0edd95fde3f
   }
 }

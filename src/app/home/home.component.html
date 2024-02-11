@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<app-slider></app-slider>
+<app-searchbox></app-searchbox>
+<div class="container my-4">
+    <h2 class="section-header">Our Services</h2>
+    <div class="row">
+        @for (service of services; track service.title) {
+            <div class="col-lg-4">
+                <app-service-card [title]="service.title" [description]="service.description" [icon]="service.icon"></app-service-card>
+            </div>
+        }
+    </div>
+    <div class="section-header">
+        <h2>Price Drop</h2>
+        <div>
+            <a href="#">All Properties&nbsp;<i class="pi pi-angle-right"></i></a>
+        </div>
+    </div>
+    <div class="row">
+        @for (property of priceDropProperties; track property.id) {
+            <div class="col-lg-3 col-md-6">
+                <app-property-card></app-property-card>
+            </div>
+        }
+    </div>
+    
+    <app-property-ad></app-property-ad>
+
+    <div class="section-header">
+        <h2>New Properties For You</h2>
+        <div>
+            <a href="#">All Properties&nbsp;<i class="pi pi-angle-right"></i></a>
+        </div>
+    </div>
+    <div class="row">
+        @for (property of newProperties; track property.id) {
+            <div class="col-lg-3 col-md-6">
+                <app-property-card></app-property-card>
+            </div>
+        }
+    </div>
+</div>
+<app-big-footer></app-big-footer>

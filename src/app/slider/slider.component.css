@@ -1,0 +1,13 @@
+.property-caption{
+    text-align: left;
+    width: fit-content;
+}
+.property-caption h5{
+    width: fit-content;
+    padding: 10px;
+    background-color: #1396e2;
+    font-weight: bold;
+}
+.property-caption p{
+    font-size: larger;
+}
