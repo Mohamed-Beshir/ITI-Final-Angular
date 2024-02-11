@@ -1,13 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+/* my added imports :mohamed */
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
-body {
-    font-family: sans-serif !important;
-}
 
-/* custom dropdown */
+
+/* custom styling for primeng dropdown */
 .p-dropdown{
     width: 100%;
     box-shadow: none;
@@ -34,7 +34,6 @@ body {
     margin-left: -40px;
     font-size: 14px;
 }
-/* end custom dropdown */
-
-
+/* end custom styling for primeng dropdown */
+/* end my added imports :mohamed */
 
