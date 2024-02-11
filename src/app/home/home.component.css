@@ -1,0 +1,37 @@
+
+.section-header {
+    display: flex;
+    justify-content:space-between;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 23px;
+    font-weight: lighter;
+    color: #818181;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    display: flex; 
+    align-items: center; 
+    color: #393838;
+}
+
+a:hover {
+    color: #007bff;
+}
+
+i {
+    color: #1396e2 ;
+    transition: transform 0.3s ease-in-out;
+}
+
+a:hover i {
+    transform: translateX(7px); 
+}
