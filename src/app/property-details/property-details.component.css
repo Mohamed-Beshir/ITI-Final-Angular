@@ -1,0 +1,126 @@
+
+body {
+    background-color: #fff;
+    color: #5a5a5a;
+    font-family: 'Roboto', sans-serif;
+  }
+  a {
+    -moz-transition: 0.2s;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    color: #1396e2;
+    outline: none !important;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  a:hover h1, a:hover h2, a:hover h3, a:hover h4 {
+    color: #1396e2;
+  }
+  a:focus, a:active {
+    outline: none !important;
+    text-decoration: none;
+  }
+  a h1, a h2, a h3, a h4 {
+    -moz-transition: 0.2s;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    color: #073855;
+  }
+  .page-sub-page #page-content:after {
+    background: #f1f1f1;
+    background: -moz-linear-gradient(top, #f1f1f1 0%, white 80%);
+    background: -webkit-linear-gradient(top, #f1f1f1 0%, white 80%);
+    background: -o-linear-gradient(top, #f1f1f1 0%, white 80%);
+    background: -ms-linear-gradient(top, #f1f1f1 0%, white 80%);
+    background: linear-gradient(to bottom, #f1f1f1 0%, white 80%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f1f1f1', endColorstr='#ffffff',GradientType=0 );
+    content: "";
+    left: 0;
+    height: 110px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+  }
+
+/* univerasl classes */
+
+.background-color-grey-light {
+    background-color: #f3f3f3;
+}
+
+.background-color-grey-medium {
+    background-color: #5a5a5a;
+}
+
+.background-color-grey-dark {
+    background-color: #2a2a2a;
+}
+
+.background-color-default {
+    background-color: #1396e2;
+}
+
+.background-color-default-darker {
+    background-color: #073855;
+}
+
+.background-image {
+    left: 0;
+    margin: auto;
+    max-width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+    height: 100%;
+    overflow: hidden;
+}
+
+.button-icon .fa {
+    margin: 0 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+#overlay {
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99998;
+}
+
+#similar-properties {
+  padding-bottom: 20px;
+}
+#similar-properties h2 {
+  margin-bottom: 10px !important;
+}
+
+
+@keyframes animate-bookmark {
+    0% {
+      filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+      opacity: 0;
+      top: 0px;
+    }
+
+    30% {
+        top: -20px;
+        filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+        opacity: 1;
+      }
+    
+      100% {
+        top: -20px;
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+        opacity: 0;
+      }
+    }
