@@ -5,12 +5,14 @@ import { ServiceCardComponent } from '../service-card/service-card.component';
 import { faFolder, faUsers, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import { PropertyCardComponent } from '../property-card/property-card.component';
 import { PropertyAdComponent } from '../property-ad/property-ad.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { BigFooterComponent } from '../big-footer/big-footer.component';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SliderComponent, SearchboxComponent, ServiceCardComponent, PropertyCardComponent, PropertyAdComponent],
+  imports: [NavbarComponent, BigFooterComponent, SliderComponent, SearchboxComponent, ServiceCardComponent, PropertyCardComponent, PropertyAdComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
