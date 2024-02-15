@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { InnerfooterComponent } from '../innerfooter/innerfooter.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SmallFooterComponent } from '../small-footer/small-footer.component';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +21,8 @@ import { InnerfooterComponent } from '../innerfooter/innerfooter.component';
     RouterLink,
     RouterLinkActive,
     InnerfooterComponent,
+    NavbarComponent,
+    SmallFooterComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
