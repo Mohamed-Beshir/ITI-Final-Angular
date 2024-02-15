@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { InnerfooterComponent } from '../innerfooter/innerfooter.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SmallFooterComponent } from '../small-footer/small-footer.component';
 
@@ -20,7 +19,6 @@ import { SmallFooterComponent } from '../small-footer/small-footer.component';
     FormsModule,
     RouterLink,
     RouterLinkActive,
-    InnerfooterComponent,
     NavbarComponent,
     SmallFooterComponent,
   ],
