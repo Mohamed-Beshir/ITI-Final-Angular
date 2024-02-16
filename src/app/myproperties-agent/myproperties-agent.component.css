@@ -331,3 +331,6 @@ td{
   border-color: #1396e2;
   color: #1396e2;
 }
+a{
+  cursor: pointer;
+}
