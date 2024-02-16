@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SmallFooterComponent } from '../small-footer/small-footer.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AddUserService } from '../services/add-user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,7 +14,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class SignInComponent {
   signForm : FormGroup;
-  constructor (private formb : FormBuilder) {
+  constructor (private formb : FormBuilder, private users : AddUserService, private router : Router) {
     this.signForm = this.formb.group({
       email: ['', [Validators.email,
          Validators.required,
@@ -20,5 +22,23 @@ export class SignInComponent {
       
       password: ['', [Validators.required, Validators.minLength(8)]]
     })
+  }
+  arrOfUsers : any;
+  ngOnInit(){
+    this.users.getAllUsers().subscribe(res=> this.arrOfUsers = res)
+  }
+
+  checkUser(){
+    let result = false;
+    for(let i = 0; i < this.arrOfUsers.length; i++){
+      if(this.signForm.controls['email'].value == this.arrOfUsers[i]['email'] && this.signForm.controls['password'].value == this.arrOfUsers[i]['password']) {
+        result = true
+      }
+    }
+    if(!result){
+      this.signForm.setErrors({ unauthenticated: true });
+    }else{
+      this.router.navigate(['/']);
+    }
   }
 }
