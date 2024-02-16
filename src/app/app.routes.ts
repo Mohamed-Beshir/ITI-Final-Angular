@@ -3,9 +3,14 @@ import { Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { ProfileAgentComponent } from './profile-agent/profile-agent.component';
+import { MypropertiesAgentComponent } from './myproperties-agent/myproperties-agent.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'signin', component: SignInComponent },
->>>>>>> d96eb3889a0de516934cf534a330d0edd95fde3f
+    { path: 'register', component: RegisterComponent },
+    { path: 'profile', component: ProfileAgentComponent },
+    { path: 'my-properties', component: MypropertiesAgentComponent },
+
 ];

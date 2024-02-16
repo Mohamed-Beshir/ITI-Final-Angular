@@ -1,0 +1,448 @@
+
+.container{
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+  -moz-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  color: #1396e2;
+  outline: none !important;
+}
+a:hover {
+  text-decoration: none;
+}
+a:hover h1, a:hover h2, a:hover h3, a:hover h4 {
+  color: #1396e2;
+}
+a:focus, a:active {
+  outline: none !important;
+  text-decoration: none;
+}
+a h1, a h2, a h3, a h4 {
+  -moz-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  color: #073855;
+}
+
+
+
+dl {
+  margin-bottom: 10px;
+}
+dl dt {
+  float: left;
+}
+dl dd {
+  margin-bottom: 8px;
+  text-align: right;
+}
+dl dd .rating {
+  float: right;
+  position: relative;
+  top: -5px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 300;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  margin-top: 10px;
+  padding-bottom: 15px;
+}
+
+
+
+h3 {
+  font-size: 18px;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+
+
+hr {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+hr.thick {
+  border-width: 2px;
+}
+hr.divider {
+  border-color: #1396e2;
+  border-width: 2px;
+  width: 40px;
+}
+
+
+
+section {
+  position: relative;
+}
+
+
+
+/* Account page */
+
+.account-profile {
+  position: relative;
+}
+.account-profile h3 {
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+.account-profile img {
+  width: 100%;
+  margin-bottom: 30px;
+}
+.account-profile form {
+  position: relative;
+}
+.account-profile section {
+  margin-bottom: 0px;
+}
+.account-profile section#agency {
+  -moz-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.account-profile section#contact label, .account-profile section#agency label {
+  display: block;
+  line-height: 38px;
+}
+.account-profile section#social .input-group {
+  width: 100%;
+}
+.account-profile section#social .input-group .input-group-addon {
+  background-color: #2a2a2a;
+  width: 40px;
+}
+.account-profile section#social .input-group .input-group-addon i {
+  color: #fff;
+}
+.account-profile .contact-fields {
+  display: table;
+  width: 100%;
+}
+.account-profile .contact-fields dt {
+  clear: both;
+}
+.account-profile .contact-fields dd {
+  float: right;
+  margin-bottom: 5px;
+  width: 65%;
+}
+.account-profile .switch {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.account-profile .switch label {
+  line-height: 0 !important;
+}
+.account-profile .switch .icheckbox {
+  margin-right: 0;
+}
+
+
+
+
+#sidebar aside {
+  margin-bottom: 50px;
+}
+#sidebar h3 {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  margin-top: 21px;
+  padding-bottom: 15px;
+}
+#sidebar form .btn {
+  width: 100%;
+}
+#sidebar ul {
+  padding-left: 15px;
+}
+#sidebar ul.list-links li {
+  color: #1396e2;
+}
+#sidebar .sidebar-navigation {
+  list-style: none;
+  padding-left: 0;
+}
+#sidebar .sidebar-navigation li.active a {
+  -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  background-color: #f3f3f3;
+  border-color: #073855;
+  padding-left: 10px;
+}
+#sidebar .sidebar-navigation li.active a:after {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
+  border-color: transparent transparent transparent #073855;
+}
+#sidebar .sidebar-navigation li.active a:hover {
+  padding-left: 10px;
+}
+#sidebar .sidebar-navigation li.active i {
+  display: inline-block;
+}
+#sidebar .sidebar-navigation > li {
+  -moz-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  margin-bottom: 5px;
+  position: relative;
+}
+#sidebar .sidebar-navigation > li a {
+  border-right: 3px solid transparent;
+  color: #2a2a2a;
+  display: block;
+  padding: 10px 0 10px 10px;
+  position: relative;
+}
+#sidebar .sidebar-navigation > li a:after {
+  -moz-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 0 4px 5px;
+  border-color: transparent transparent transparent transparent;
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: 1px;
+  bottom: 0;
+  margin: auto;
+}
+#sidebar .sidebar-navigation > li a:hover {
+  border-color: #1396e2;
+  padding-left: 15px;
+}
+#sidebar .sidebar-navigation > li a:hover:after {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
+  border-color: transparent transparent transparent #1396e2;
+}
+#sidebar .sidebar-navigation > li i {
+  color: #1396e2;
+  margin-right: 8px;
+}
+#sidebar .sidebar-navigation > li ul {
+  padding-left: 30px;
+  list-style: none;
+}
+#sidebar .sidebar-navigation > li ul > li {
+  border-bottom: 1px solid #f3f3f3;
+  position: relative;
+}
+#sidebar .sidebar-navigation > li ul > li:before {
+  content: "•";
+  color: #1396e2;
+  font-size: 24px;
+  position: absolute;
+  left: -5px;
+  top: 2px;
+}
+#sidebar .sidebar-navigation > li ul > li ul {
+  padding-left: 10px;
+}
+#sidebar .sidebar-navigation > li ul > li ul li {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6;
+  border-bottom: none;
+}
+#sidebar .sidebar-navigation > li ul > li ul li:before {
+  display: none;
+}
+
+
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+input[type="text"], input[type="email"], input[type="search"], input[type="password"], input[type="number"], input[type="tel"], textarea.form-control {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  -moz-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2) inset;
+  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2) inset;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2) inset;
+  background-color: #f3f3f3;
+  border: none;
+  font-size: 14px;
+  outline: none !important;
+  padding: 10px 9px 11px 9px;
+  width: 100%;
+  height: inherit;
+}
+input[type="text"]:active, input[type="text"]:focus, input[type="email"]:active, input[type="email"]:focus, input[type="search"]:active, input[type="search"]:focus, input[type="password"]:active, input[type="password"]:focus, input[type="number"]:active, input[type="number"]:focus, input[type="tel"]:active, input[type="tel"]:focus, textarea.form-control:active, textarea.form-control:focus {
+  -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.2);
+}
+input[type="text"]:hover, input[type="email"]:hover, input[type="search"]:hover, input[type="password"]:hover, input[type="number"]:hover, input[type="tel"]:hover, textarea.form-control:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.btn, select {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  -moz-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  background-color: #f3f3f3;
+  border: none;
+  color: #5a5a5a;
+  font-size: 14px;
+  outline: none !important;
+  padding: 10px 9px 9px 9px;
+  width: auto;
+}
+.btn:hover, select:hover {
+  background-color: #ebebeb;
+  color: #5a5a5a;
+}
+.btn:active, .btn:focus, select:active, select:focus {
+  -moz-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+  background-color: #ebebeb;
+  color: #5a5a5a;
+}
+.btn.btn-default, select.btn-default {
+  -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  -moz-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  background-color: #1396e2;
+  color: #fff;
+}
+.btn.btn-default:hover, select.btn-default:hover {
+  background-color: #128dd4;
+}
+.btn.btn-default:active, select.btn-default:active {
+  -moz-box-shadow: 0px 2px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 2px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.btn.btn-grey-dark, select.btn-grey-dark {
+  background-color: #2a2a2a;
+  color: #fff;
+}
+.btn.btn-grey-dark:hover, select.btn-grey-dark:hover {
+  background-color: #393939;
+}
+.btn.btn-danger, select.btn-danger {
+  background-color: #C9302C;
+  color: #fff;
+}
+.btn.btn-danger:hover, select.btn-danger:hover {
+  background-color: #b42b27;
+}
+.btn.btn-success, select.btn-success {
+  background-color: #5CB85C;
+  color: #fff;
+}
+.btn.btn-success:hover, select.btn-success:hover {
+  background-color: #4cae4c;
+}
+.btn.btn-info, select.btn-info {
+  background-color: #31B0D5;
+  color: #fff;
+}
+.btn.btn-info:hover, select.btn-info:hover {
+  background-color: #28a1c4;
+}
+.btn.btn-warning, select.btn-warning {
+  background-color: #EC971F;
+  color: #fff;
+}
+.btn.btn-warning:hover, select.btn-warning:hover {
+  background-color: #df8a13;
+}
+.btn.small, select.small {
+  font-size: 12px;
+  padding: 5px 12px 5px;
+}
+.btn.large, select.large {
+  font-size: 18px;
+  padding: 15px 20px;
+}
+
+.checkbox, .radio {
+  padding-left: 0px;
+}
+.form-group {
+  position: relative;
+}
+
+form #form-status {
+  line-height: 1;
+  position: relative;
+  top: -28px;
+}
+form #form-status #valid {
+  position: relative;
+  top: -10px;
+}
+form #form-status #valid .icon {
+  font-size: 24px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+form #form-status #invalid {
+  color: red;
+  position: relative;
+  top: -10px;
+}
+form label.error {
+  background-color: red;
+  bottom: -30px;
+  color: #fff;
+  font-size: 12px;
+  left: 0;
+  padding: 5px;
+  position: absolute;
+  z-index: 2;
+}
+form label.error:before {
+  border-style: solid;
+  border-width: 0 3.5px 5px 3.5px;
+  border-color: transparent transparent red transparent;
+  content: "";
+  height: 0px;
+  left: 5px;
+  position: absolute;
+  top: -5px;
+  width: 0px;
+}
+aside a{
+    text-decoration: none;
+    font-size: 14px;
+}
+#profile{
+    font-size: 14px;
+    color: #5a5a5a;
+}

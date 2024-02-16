@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DropdownModule } from 'primeng/dropdown';
 
 
-
 @Component({
   selector: 'app-searchbox',
   standalone: true,
