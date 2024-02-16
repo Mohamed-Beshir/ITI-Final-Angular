@@ -1,0 +1,79 @@
+<app-navbar></app-navbar>
+<!-- Page Content -->
+<div id="page-content">
+
+    <div class="container">
+        <div class="row">
+        <!-- sidebar -->
+        <div class="col-md-3">
+            <section id="sidebar">
+                <header><h3>Account</h3></header>
+                <aside>
+                    <ul class="sidebar-navigation">
+                        <li><a routerLink="/profile"><i class="fa fa-user"></i><span>Profile</span></a></li>
+                        <li class="active"><a routerLink="/my-properties"><i class="fa fa-home"></i><span>My Properties</span></a></li>
+                    </ul>
+                </aside>
+            </section><!-- /#sidebar -->
+        </div><!-- /.col-md-3 -->
+        <!-- end Sidebar -->
+            <!-- My Properties -->
+            <div class="col-md-9">
+                <section id="my-properties">
+                    <header><h1>My Properties</h1></header>
+                    <div class="my-properties">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th></th>
+                                    <th>Date Added</th>
+                                    <th>Views</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @for (property of getCurrentPageProperties(); track property.id) {
+                                    <tr>
+                                        <td class="image">
+                                            <a href="#"><img alt="" src="{{property.image}}"></a>
+                                        </td>
+                                        <td><div class="inner">
+                                            <a href="#"><h2>{{property.street}}</h2></a>
+                                            <figure>{{property.propertyNumber}}</figure>
+                                            <div class="tag-price">LE {{property.price}}</div>
+                                        </div>
+                                        </td>
+                                        <td>{{property.dateAdded}}</td>
+                                        <td>{{property.views}}</td>
+                                        <td class="actions">
+                                            <a href="#" class="edit"><i class="fa fa-pencil"></i>Edit</a>
+                                            <a (click)="confirmDelete($event,property.id)"><i class="delete fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                            <p-toast></p-toast>
+                            <p-confirmDialog></p-confirmDialog>
+                        </div><!-- /.table-responsive -->
+                        <!-- Pagination -->
+                        <div class="text-center my-2">
+                            <ul class="pagination">
+                              @for (page of getPageNumbers(); track page) {
+                                <li [class.active]="page === currentPage">
+                                    <a (click)="changePage(page)">{{ page }}</a>
+                                </li>
+                              }  
+                            </ul><!-- /.pagination-->
+                        </div><!-- /.center-->
+                    </div><!-- /.my-properties -->
+                </section><!-- /#my-properties -->
+            </div><!-- /.col-md-9 -->
+            <!-- end My Properties -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div>
+<!-- end Page Content -->
+<app-big-footer></app-big-footer>
