@@ -18,6 +18,4 @@ export class PropertyDetailsComponent {
   userValue!: number;
   overallValue: number = 4;
   similarProperties = [{id : 1},{id : 2},{id : 3}];
-
-
 }

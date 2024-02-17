@@ -6,6 +6,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { ProfileAgentComponent } from './profile-agent/profile-agent.component';
 import { MypropertiesAgentComponent } from './myproperties-agent/myproperties-agent.component';
 import { PropertyDetailsComponent } from './property-details/property-details.component';
+import { AddPropertyComponent } from './add-property/add-property.component';
+
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -14,5 +16,6 @@ export const routes: Routes = [
     { path: 'profile', component: ProfileAgentComponent },
     { path: 'my-properties', component: MypropertiesAgentComponent },
     { path: 'property-details', component: PropertyDetailsComponent },
+    { path: 'add-property', component: AddPropertyComponent}
 
 ];

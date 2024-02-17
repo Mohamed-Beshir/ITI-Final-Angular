@@ -1,0 +1,173 @@
+*{
+  box-sizing: border-box;
+}
+h1 ,h2 ,p ,span ,label{
+  color: #5a5a5a;
+
+}
+h2 {
+  font-size: 24px;
+  font-weight: lighter;
+  border: none;
+
+}
+select{
+  font-weight: normal !important;
+}
+.section-title h2{
+display: inline-block;
+font-family: inherit;
+line-height: 1.1;
+color: inherit;
+border: none;
+}
+.input1{
+
+  box-shadow: none;
+
+  border-radius: 0px;
+
+  transition: 0.3s;
+
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2) inset;
+    appearance: none;
+  background-color: #f3f3f3;
+  border: none;
+  font-size: 14px;
+  outline: none !important;
+  padding: 10px 9px 11px 9px;
+  width: 100%;
+  height: inherit;
+}
+.input-group-addon {
+  padding: 12px 20px 6px 12px !important;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  line-height: 1 !important;
+  color: #555;
+  text-align: center !important;
+  background-color: #eee;
+  border: 0px solid #ccc;
+  border-radius: 0px !important;
+  justify-content: center;
+}
+.input-group-addon, .input-group-btn {
+  width: 1% !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+}
+ .submit-features li {
+  display: inline-block;
+  width: 33%;
+}
+
+
+/* section {
+  position: relative;
+}
+.submit-features li {
+  display: inline-block;
+  width: 33%;
+
+}
+.checkbox{
+  width: 20px;
+}
+*/
+.checkbox{
+  display: inline-block;
+  align-items: center;
+  padding: 10px;
+  margin: 5px;
+  width: auto;
+  position: relative;
+  margin-left: 10px;
+}
+
+.checkbox input[type="checkbox"]{
+  width: 100px;
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  z-index: 2;
+}
+
+.checkbox label{
+  cursor: pointer;
+  display: flex;
+
+
+}
+
+.checkbox label::before{
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: #f3f3f3;
+
+  border-radius: 0px;
+  box-shadow: 0px 0px 1px;
+  cursor: pointer;
+  position: absolute;
+  left: -14px;
+
+
+
+}
+
+
+
+.checkbox input[type="checkbox"]:checked + label::before{
+  font-family: 'fontawesome';
+  content:'\f00c';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 15px;
+  line-height: 20px;
+}
+/* gallary */
+.form-submit .file-input {
+  border: 2px solid #f3f3f3;
+  padding: 15px;
+  position: relative;
+  width: 100%;
+}
+.center {
+  text-align: center;
+}
+/* image upload */
+.image-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}
+.upload{
+  background-color: #1396e2;
+
+}
+input[type="file"]{
+opacity: 0;
+position: absolute;
+cursor: pointer;
+height: 55px;
+width: 180px;
+z-index: 0;
+
+}
+.upload label{
+  text-align: center;
+  color: white;
+  padding:15px 40px;
+  user-select: none;
+  letter-spacing:1,5px ;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+
+}
+
