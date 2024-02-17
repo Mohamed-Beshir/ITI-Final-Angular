@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -17,7 +15,6 @@ import { SmallFooterComponent } from '../small-footer/small-footer.component';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    FormsModule,
     RouterLink,
     RouterLinkActive,
     InnerfooterComponent,
@@ -29,7 +26,7 @@ import { SmallFooterComponent } from '../small-footer/small-footer.component';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+  constructor(private router: Router) {
     this.registerForm = new FormGroup({
       fullname: new FormControl('', [
         Validators.required,
@@ -38,21 +35,16 @@ export class RegisterComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(10),
+        Validators.minLength(8),
       ]),
       confirmpassword: new FormControl('', [
         Validators.required,
-        // Validators.minLength(10),
+        // Validators.minLength(8),
       ]),
     });
   }
   handlesubmit() {
     console.log(this.registerForm);
-    this.router.navigate(['/']);
-  }
-
-  handledropdown ()
-  {
-    
+    this.router.navigate(['/signin']);
   }
 }
