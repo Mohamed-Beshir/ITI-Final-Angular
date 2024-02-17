@@ -18,7 +18,7 @@
           <form  role="form" id="form-submit" class="form-submit" [formGroup]="myForm" (submit)="onSubmit()">
               <div class="row">
                   <div class="block">
-                      <div class="col-md-9 col-sm-9">
+                      <div class="col-md-9 col-sm-9 sc">
                           <section id="submit-form">
                               <section id="basic-information">
                                   <header><h2>Basic Information</h2></header>
@@ -45,42 +45,62 @@
                                   </div><!-- /.form-group -->
                               </section><!-- /#basic-information -->
 
-                              <section>
-                                  <div class="row">
-                                      <div class="block clearfix">
+
+                                  <div class="container">
+                                      <div class="row">
                                           <div class="col-md-6 col-sm-6">
                                               <section id="summary">
                                                   <header><h2>Summary</h2></header>
                                                   <div class="form-group">
-                                                      <label for="submit-location">Location</label>
-                                                      <select name="type" id="submit-location" formControlName="location">
-                                                          <option value="New York">New York</option>
-                                                          <option value="Los Angeles">Los Angeles</option>
-                                                          <option value="Chicago">Chicago</option>
-                                                          <option value="Houston">Houston</option>
-                                                          <option value="Philadelphia">Philadelphia</option>
-                                                      </select>
+                                                      <label for="submit-location">City</label>
+                                                      <div class="select_container">
+                                                        <select name="type" id="submit-location" formControlName="location">
+                                                            <option value="New York">New York</option>
+                                                            <option value="Los Angeles">Los Angeles</option>
+                                                            <option value="Chicago">Chicago</option>
+                                                            <option value="Houston">Houston</option>
+                                                            <option value="Philadelphia">Philadelphia</option>
+                                                        </select>
+                                                      </div>
                                                   </div>
+                                                  <!--  -->
+                                                  <div class="col-md-6 col-sm-6" style="width: 100%;">
+                                                    <div class="form-group" >
+                                                        <label for="submit-garages">street</label>
+                                                        <input type="text" class="form-control input1" id="submit-garages" name="garages" pattern="\d*" required>
+                                                    </div><!-- /.form-group -->
+                                                </div><!-- /.col-md-6 -->
+                                                <div class="col-md-6 col-sm-6" style="width: 100%;">
+                                                  <div class="form-group">
+                                                      <label for="submit-garages">property number</label>
+                                                      <input type="text" class="form-control input1" id="submit-garages" name="garages" pattern="\d*" required>
+                                                  </div><!-- /.form-group -->
+                                              </div><!-- /.col-md-6 -->
+                                                  <!--  -->
                                                   <div class="row">
-                                                      <div class="col-md-6 col-sm-6">
+                                                      <div class="col-md-6 col-sm-6" >
                                                           <div class="form-group">
                                                               <label for="submit-property-type">Property Type</label>
-                                                              <select name="type" id="submit-property-type" formControlName="property_type">
-                                                                  <option value="Apartment">Apartment</option>
-                                                                  <option value="Condominium">Condominium</option>
-                                                                  <option value="Cottage">Cottage</option>
-                                                                  <option value="Flat">Flat</option>
-                                                                  <option value="House">House</option>
-                                                              </select>
+                                                              <div class="select_container">
+                                                                <select name="type" id="submit-property-type" formControlName="property_type">
+                                                                    <option value="Apartment">Apartment</option>
+                                                                    <option value="Condominium">Condominium</option>
+                                                                    <option value="Cottage">Cottage</option>
+                                                                    <option value="Flat">Flat</option>
+                                                                    <option value="House">House</option>
+                                                                </select>
+                                                              </div>
                                                           </div><!-- /.form-group -->
                                                       </div><!-- /.col-md-6 -->
                                                       <div class="col-md-6 col-sm-6">
                                                           <div class="form-group">
                                                               <label for="submit-status">Status</label>
-                                                              <select name="type" id="submit-status" formControlName="status">
-                                                                  <option value="Sale">Sale</option>
-                                                                  <option value="Rent">Rent</option>
-                                                              </select>
+                                                              <div class="select_container">
+                                                                <select name="type" id="submit-status" formControlName="status">
+                                                                    <option value="Sale">Sale</option>
+                                                                    <option value="Rent">Rent</option>
+                                                                </select>
+                                                              </div>
                                                           </div><!-- /.form-group -->
                                                       </div><!-- /.col-md-6 -->
                                                   </div><!-- /.row -->
@@ -103,8 +123,8 @@
                                                           <div class="form-group">
                                                               <label for="submit-area">Area</label>
                                                               <div class="input-group">
-                                                                  <input type="text" class="form-control input1" id="submit-area" name="area" pattern="\d*" required formControlName="area">
-                                                                  <span class="input-group-addon">m<sup>2</sup></span>
+                                                                  <input type="text" class="form-control input-area" id="submit-area" name="area" pattern="\d*" required formControlName="area">
+                                                                  <span class="input-group-text ">m<sup>2</sup></span>
                                                               </div>
                                                           </div><!-- /.form-group -->
                                                       </div><!-- /.col-md-6 -->
@@ -117,22 +137,39 @@
                                                   </div><!-- /.row -->
                                               </section><!-- /#summary -->
                                           </div><!-- /.col-md-6 -->
+                                          <!-- map -->
+                                          <div class="col-md-6 col-sm-6">
+                                            <section id="place-on-map">
+                                                <header class="section-title">
+                                                    <h2>Place on Map</h2>
+                                                </header>
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110502.77769395754!2d31.340866811853022!3d30.05946276096188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2z2KfZhNmC2KfZh9ix2KnYjCDZhdit2KfZgdi42Kkg2KfZhNmC2KfZh9ix2KnigKw!5e0!3m2!1sar!2seg!4v1708135131469!5m2!1sar!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                            </section><!-- /#place-on-map -->
+                                        </div><!-- /.col-md-6 -->
+                                          <!-- end map -->
                                       </div><!-- /.block -->
                                   </div><!-- /.row -->
-                              </section>
-                              <section class="block" id="gallery">
-                                  <header><h2>Gallery</h2></header>
-                                    <div class="image-container">
-                                      <div class="upload">
-                                          <input id="file-upload" type="file" class=" " multiple="true" data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-default" data-browse-label="Browse Images" formControlName="image">
-                                          <label for="upload-button">
-                                            <fa-icon [icon]="upload"></fa-icon>&nbsp;
-                                            chose image
-                                          </label>
-                                      </div>
-                                    </div>
 
-                              </section>
+                              <!-- gallary -->
+                              <section class="block" id="gallery">
+                                <header><h2>Gallery</h2></header>
+                                <div class="image-container">
+                                  <div class="upload">
+                                    <input id="file-upload" type="file" (change)="onFileSelected($event)" multiple class=" " multiple="true" data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-default" data-browse-label="Browse Images" formControlName="image">
+                                    <label for="file-upload">
+                                      <fa-icon [icon]="upload"></fa-icon>&nbsp;
+                                      chose image
+                                    </label>
+                                  </div>
+                                  <div class="preview-container">
+                                    <div   *ngFor="let image of images let i = index" class="image-preview">
+                                      <img  [src]="image.url" alt="Preview">
+                                      <button  class="btn btn-danger" (click)="deleteImage(i)">Delete</button>
+                                    </div>
+                                  </div>
+                                </div>
+                            </section>
+                              <!--end gallary  -->
                               <hr>
                           </section>
                       </div><!-- /.col-md-9 -->
@@ -140,7 +177,7 @@
               </div><!-- /.row -->
               <div class="row">
                   <div class="block">
-                      <div class="col-md-9 col-sm-9">
+                      <div style="width: 100%;" class="col-md-9 col-sm-9">
                           <div class="center">
                               <div class="form-group">
                                   <button type="submit" class="btn btn-default large">Proceed to Payment</button>

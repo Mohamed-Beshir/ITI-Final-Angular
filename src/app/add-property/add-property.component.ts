@@ -3,19 +3,20 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-property',
   standalone: true,
-  imports: [FontAwesomeModule,ReactiveFormsModule],
+  imports: [FontAwesomeModule,ReactiveFormsModule,CommonModule],
   templateUrl: './add-property.component.html',
   styleUrl: './add-property.component.css'
 })
 export class AddPropertyComponent{
-  myForm : FormGroup; 
+  myForm : FormGroup;
   chech=faCheck;
   upload=faUpload;
-  
+
   constructor(private formBuilder : FormBuilder){
     this.myForm = this.formBuilder.group({
       title: ["", [Validators.required]],
@@ -58,5 +59,38 @@ export class AddPropertyComponent{
     console.log(image[image.length - 1])
     console.log(this.myForm)
   }
+
+  //
+  upload1 = 'upload'; // Assuming you have defined the 'upload' icon
+  images: { url: string }[] = []; // Define the images property
+
+  onFileSelected(event: any): void {
+    const files: FileList = event.target.files;
+    if (files && files.length > 0) {
+      // Clear existing images
+      this.images = [];
+
+      // Process the selected files
+      for (let i = 0; i < files.length; i++) {
+        const file: File | null = files.item(i); // Allow file to be null
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onload = (e: any) => {
+            // Push the image URL to the array
+            this.images.push({ url: e.target.result });
+          };
+
+          // Read the file as a data URL
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
+//
+deleteImage(index: number): void {
+  this.images.splice(index, 1); // Remove the image at the specified index
+}
+  //
 }
 
