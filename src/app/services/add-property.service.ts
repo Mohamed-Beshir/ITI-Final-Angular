@@ -6,13 +6,16 @@ import { Injectable } from '@angular/core';
 })
 export class AddPropertyService {
 
-  api : any = "https://retoolapi.dev/lsc0k2/properties";
+  api : any = "https://retoolapi.dev/ss42as/properties";
 
   constructor(private http : HttpClient) {}
-  getAllUsers () {
+  getAllProperty () {
     return this.http.get(this.api);
   }
-  saveUserData (data : any) {
+  savePropertyData (data : any) {
     return this.http.post(this.api, data)
+  }
+  deletePropertyFromApi (id :number) {
+    return this.http.delete(`${this.api}/${id}`)
   }
 }

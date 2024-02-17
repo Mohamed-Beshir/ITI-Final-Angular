@@ -37,16 +37,16 @@
                                 @for (property of getCurrentPageProperties(); track property.id) {
                                     <tr>
                                         <td class="image">
-                                            <a href="#"><img alt="" src="{{property.image}}"></a>
+                                            <a href="#"><img alt="" src="../../assets/img/properties/{{property.image}}"></a>
                                         </td>
                                         <td><div class="inner">
                                             <a href="#"><h2>{{property.street}}</h2></a>
-                                            <figure>{{property.propertyNumber}}</figure>
+                                            <figure>{{property.property_number}}</figure>
                                             <div class="tag-price">LE {{property.price}}</div>
                                         </div>
                                         </td>
-                                        <td>{{property.dateAdded}}</td>
-                                        <td>{{property.views}}</td>
+                                        <td>{{property.date}}</td>
+                                        <td>{{property.property_number}}</td>
                                         <td class="actions">
                                             <a href="#" class="edit"><i class="fa fa-pencil"></i>Edit</a>
                                             <a (click)="confirmDelete($event,property.id)"><i class="delete fa fa-trash"></i></a>

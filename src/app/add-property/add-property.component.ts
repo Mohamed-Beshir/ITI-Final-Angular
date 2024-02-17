@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { AddPropertyService } from '../services/add-property.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-property',
@@ -12,11 +14,11 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './add-property.component.css'
 })
 export class AddPropertyComponent{
-  myForm : FormGroup; 
   chech=faCheck;
   upload=faUpload;
   
-  constructor(private formBuilder : FormBuilder){
+  myForm : FormGroup; 
+  constructor(private formBuilder : FormBuilder, private property : AddPropertyService, private router : Router){
     this.myForm = this.formBuilder.group({
       title: ["", [Validators.required]],
       price: ["", [Validators.required]],
@@ -29,34 +31,29 @@ export class AddPropertyComponent{
       area: ["", [Validators.required]],
       garages: ["", [Validators.required]],
       image: ["", [Validators.required]],
-      features: ["", [Validators.required]],
     })
   }
   onSubmit() {
-    let title = this.myForm.get('title')?.value;
-    let price = this.myForm.get('price')?.value;
-    let description = this.myForm.get('description')?.value;
-    let location = this.myForm.get('location')?.value;
-    let property_type = this.myForm.get('property_type')?.value;
-    let status = this.myForm.get('status')?.value;
-    let beds = this.myForm.get('beds')?.value;
-    let baths = this.myForm.get('baths')?.value;
-    let area = this.myForm.get('area')?.value;
-    let garages = this.myForm.get('garages')?.value;
     let file = this.myForm.get('image')?.value;
-    let image = file.split("\\")
-    console.log(title)
-    console.log(price)
-    console.log(description)
-    console.log(location)
-    console.log(property_type)
-    console.log(status)
-    console.log(beds)
-    console.log(baths)
-    console.log(area)
-    console.log(garages)
-    console.log(image[image.length - 1])
-    console.log(this.myForm)
+    let imgName = file.split("\\");
+    let currentDate = new Date()
+    let newProperty : any = {
+      title : this.myForm.get('title')?.value,
+      price : this.myForm.get('price')?.value,
+      description : this.myForm.get('description')?.value,
+      street : this.myForm.get('location')?.value,
+      property_type : this.myForm.get('property_type')?.value,
+      city : this.myForm.get('status')?.value,
+      property_number : this.myForm.get('beds')?.value,
+      area : this.myForm.get('area')?.value,
+      image : imgName[imgName.length - 1],
+      date: currentDate.getDate()+"."+currentDate.getMonth()+"."+currentDate.getFullYear()
+    }
+
+    if(!this.myForm.valid){
+      this.property.savePropertyData(newProperty).subscribe((res)=> res);
+      this.router.navigate(["my-properties"])
+    }
   }
 }
 
