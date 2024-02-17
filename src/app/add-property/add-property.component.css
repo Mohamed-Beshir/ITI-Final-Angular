@@ -11,6 +11,9 @@ h2 {
   border: none;
 
 }
+.sc{
+  width: 100%;
+}
 select{
   font-weight: normal !important;
 }
@@ -85,7 +88,7 @@ border: none;
 }
 
 .checkbox input[type="checkbox"]{
-  width: 100px;
+
   opacity: 0;
   cursor: pointer;
   position: absolute;
@@ -110,7 +113,6 @@ border: none;
   cursor: pointer;
   position: absolute;
   left: -14px;
-
 
 
 }
@@ -140,21 +142,24 @@ border: none;
 /* image upload */
 .image-container{
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-
+  box-shadow: 0px 0px 3px;
 
 }
 .upload{
   background-color: #1396e2;
+  cursor: pointer;
+  position: relative;
+  margin: 10px;
+
 
 }
 input[type="file"]{
 opacity: 0;
 position: absolute;
 cursor: pointer;
-height: 55px;
-width: 180px;
+
 z-index: 0;
 
 }
@@ -169,5 +174,85 @@ z-index: 0;
   font-size: inherit;
   line-height: inherit;
 
+}
+/* label:active{
+  transform: scale(0.9);
+} */
+
+/* select */
+
+.select_container select
+{
+  width:100%;
+  border-radius: 0;
+  padding-right: 25px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  background-color: #f3f3f3;
+  color: #5a5a5a;
+  border: none;
+  font-size: 14px;
+  outline: none !important;
+  padding: 10px 9px 9px 9px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  text-align: left;
+}
+.form-group{
+  margin: 8px;
+}
+/* .icon-dropdown{
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  color: #1396e2;
+  display: flex;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  top: 0;
+  border: none;
+} */
+/*
+.select_container1
+{
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.select_container option{
+  padding: 30px;
+} */
+
+.select_container1.icon-dropdown{
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  color: #1396e2;
+  display: flex;
+  right: 0;
+  width: 50px;
+  height: 100%;
+}
+/* end select */
+.btn-default
+{
+  background-color: #1396e2;
+  color: white;
+  border-radius: 0;
+  padding: 10px 18px;
+}
+.image-preview{
+  display: inline-block;
+}
+.image-preview img{
+  width: 150px;
+}
+.input-area,.input-group-text{
+ background-color: #f3f3f3;
+ border-radius: 0%;
 }
 

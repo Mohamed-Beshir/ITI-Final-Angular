@@ -1,0 +1,36 @@
+<div style="width: 100%;padding: 4px;" class="col-md-4 col-sm-4">
+  <div class="property equal-height">
+      <!-- <figure class="tag status">For Sale</figure> -->
+      <!-- <figure class="type" title="Apartment"><img src="assets/img/property-types/apartment.png" alt=""></figure> -->
+      <a href="property-detail.html">
+          <div class="property-image">
+              <img alt="" [src]="propertyItem.image">
+          </div>
+          <div class="overlay">
+              <div class="info">
+                  <div class="tag price rounded bg">{{propertyItem.price}}</div>
+                  <h3>{{propertyItem.street}}</h3>
+                  <figure>{{propertyItem.propertyNumber}}</figure>
+              </div>
+              <ul class="additional-info">
+                  <li>
+                      <header>Area:</header>
+                      <figure>{{propertyItem.Area}}<sup>2</sup></figure>
+                  </li>
+                  <li>
+                      <header>Beds:</header>
+                      <figure>{{propertyItem.Beds}}</figure>
+                  </li>
+                  <li>
+                      <header>Baths:</header>
+                      <figure>{{propertyItem.Baths}}</figure>
+                  </li>
+                  <li>
+                      <header>Garages:</header>
+                      <figure>{{propertyItem.Garages}}</figure>
+                  </li>
+              </ul>
+          </div>
+      </a>
+  </div><!-- /.property -->
+</div>

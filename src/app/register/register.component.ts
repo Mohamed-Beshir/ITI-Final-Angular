@@ -47,4 +47,5 @@ export class RegisterComponent {
     console.log(this.registerForm);
     this.router.navigate(['/signin']);
   }
+
 }
