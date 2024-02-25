@@ -1,292 +1,486 @@
 <app-navbar></app-navbar>
-<div style="background-color: #f3f3f3">
-  <div class="container">
-    <nav
-      aria-label="breadcrumb"
+<div class="container">
+  <nav
+    aria-label="breadcrumb"
+    style="
+      filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+      background-color: transparent;
+      padding: 8px 0;
+      font-size: 12px;
+    "
+  >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/" class="text-secondary" style="text-decoration: none"
+          >Home</a
+        >
+      </li>
+      <li
+        class="breadcrumb-item active"
+        aria-current="page"
+        style="opacity: 0.6"
+      >
+        Create an account
+      </li>
+    </ol>
+  </nav>
+  <header>
+    <h2
       style="
-        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
-        background-color: #f3f3f3;
-        padding: 8px 0;
-        font-size: 12px;
+        background-color: #fff;
+        color: #5a5a5a;
+        font-family: 'Roboto', sans-serif;
       "
     >
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a routerLink="/" class="text-secondary" style="text-decoration: none"
-            >Home</a
+      Create an Account
+    </h2>
+  </header>
+  <hr />
+</div>
+<div class="row" id="mainn">
+  <div class="col-md-3 col-sm-6 col-md-offset-4 col-sm-offset-3">
+    <h5 style="margin-bottom: 20px">Account Type</h5>
+    <form
+      role="form"
+      id="form-create-account"
+      method="post"
+      [formGroup]="registerForm"
+      (ngSubmit)="handledropdown()"
+    >
+      <div class="radio">
+        <label>
+          <input
+            type="radio"
+            id="account-type-user"
+            name="account-type"
+            style="margin-right: 6px; cursor: pointer"
+            value="user"
+            formControlName="isagent"
+          />Regular User
+        </label>
+      </div>
+      <div class="radio" >
+        <label>
+          <input
+            type="radio"
+            id="account-type-agent"
+            name="account-type"
+            value="agent"
+            style="margin-right: 6px; cursor: pointer"
+            formControlName="isagent"
+          />Agent
+        </label>
+      </div>
+
+      <div id="agency">
+        <div class="form-group">
+          <label
+            for="account-agency"
+            class="text-secondary my-2"
+            style="opacity: 0.6"
+            formControlName="dropdownValue"
+            >Select your agency:</label
           >
-        </li>
-        <li
-          class="breadcrumb-item active"
-          aria-current="page"
-          style="opacity: 0.6"
+          <br />
+          <select
+          disabled
+          [disabled]="registerForm.controls['isagent'].value !== 'agent'"
+            class="custom-dropdown"
+            name="account-agency"
+            id="account-agency"
+            class="text-secondary"
+            style="
+              width: 100%;
+              height: 40px;
+              background-color: rgb(250, 250, 250);
+              border-radius: 0;
+              border: none;
+              opacity: 0.6;
+            "
+
+
+          >
+            <option value="">Agency</option>
+            <option value="1">Estate+</option>
+            <option value="2">Northfolk Eastate</option>
+            <option value="3">Maximum Properties</option>
+            <option value="4">Edd's Homes</option>
+            <option value="5">Will & Scotch</option>
+          </select>
+        </div>
+      </div>
+
+      <hr />
+      <div
+        class="form-group"
+        [formGroup]="registerForm"
+        (ngSubmit)="handlesubmit()"
+      >
+        <label
+          for="form-create-account-full-name"
+          style="font-weight: bold; color: rgb(92, 91, 91)"
+          >Full Name:</label
         >
-          Create an account
-        </li>
-      </ol>
-    </nav>
-    <header>
-      <h2
+        <input
+          type="text"
+          class="form-control"
+          id="form-create-account-full-name"
+          required
+          style="background-color: rgb(242, 241, 241); border-radius: 0"
+          class="form-control"
+          id="fullname"
+          formControlName="fullname"
+        />
+        @if(registerForm.controls['fullname'].invalid &&
+        registerForm.controls['fullname'].touched ){
+        @if(registerForm.controls['fullname'].errors?.['minlength']) {
+        <span class="form-text text-danger"> min length is 3 </span>
+        } @if(registerForm.controls['fullname'].errors?.['required']) {
+        <span class="form-text text-danger"> Full name is required </span>} }
+      </div>
+      <!-- /.form-group -->
+      <div
+        class="form-group"
+        [formGroup]="registerForm"
+        (ngSubmit)="handlesubmit()"
+      >
+        <label
+          for="form-create-account-email"
+          style="font-weight: bold; color: rgb(92, 91, 91)"
+          >Email:</label
+        >
+        <input
+          type="email"
+          class="form-control"
+          required
+          style="background-color: rgb(242, 241, 241); border-radius: 0"
+          class="form-control"
+          id="Email"
+          formControlName="email"
+        />
+        @if(registerForm.controls['email'].invalid &&
+        registerForm.controls['email'].touched ){
+        @if(registerForm.controls['email'].errors?.['required']) {
+        <span class="form-text text-danger"> Email is required </span>
+        } }
+      </div>
+      <!-- /.form-group -->
+      <div
+        class="form-group"
+        [formGroup]="registerForm"
+        (ngSubmit)="handlesubmit()"
+      >
+        <label
+          for="form-create-account-password"
+          style="font-weight: bold; color: rgb(92, 91, 91)"
+          >Password:</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          id="form-create-account-password"
+          required
+          style="background-color: rgb(242, 241, 241); border-radius: 0"
+          id="Password1"
+          formControlName="password"
+        />
+        @if(registerForm.controls['password'].invalid &&
+        registerForm.controls['password'].touched ){
+        @if(registerForm.controls['password'].errors?.['required']) {
+        <span class="form-text text-danger"> Password is required </span>
+        }@if(registerForm.controls['password'].errors?.['minlength']) {
+        <span class="form-text text-danger">
+          Password (8 or more characters)</span
+        >
+        } }
+      </div>
+      <!-- /.form-group -->
+      <div
+        class="form-group"
+        [formGroup]="registerForm"
+        (ngSubmit)="handlesubmit()"
+      >
+        <label
+          for="form-create-account-confirm-password"
+          style="font-weight: bold; color: rgb(92, 91, 91)"
+          >Confirm Password:</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          id="form-create-account-confirm-password"
+          required
+          style="background-color: rgb(242, 241, 241); border-radius: 0"
+          id="Password"
+          formControlName="confirmpassword"
+        />
+        @if(registerForm.controls['confirmpassword'].invalid &&
+        registerForm.controls['confirmpassword'].touched ){
+        @if(registerForm.controls['confirmpassword'].errors?.['required']) {
+        <span class="form-text text-danger">
+          Password is required
+        </span>
+        } @if(registerForm.controls['password'].errors?.['minlength']) {
+        <span class="form-text text-danger"> Password (8 or more characters)</span>
+        }}
+      </div>
+      <!-- /.form-group -->
+      <div class="checkbox">
+        <label style="display: inline-flex; align-items: center">
+          <input
+            type="checkbox"
+            id="checkbox"
+            name="account-newsletter"
+            style="
+              margin-right: 10px;
+              cursor: pointer;
+              width: 20px;
+              height: 20px;
+            "
+          />
+          Receive Newsletter
+        </label>
+        <button
+          (click)="handlesubmit()"
+          disabled
+          [disabled]="registerForm.invalid"
+          type="submit"
+          class="btn pull-right btn-default btn-primary mx-2 mb-2"
+          id="bttn"
+        >
+          Create an Account
+        </button>
+        @if(registerForm.errors?.['unauthenticated']){
+          <div class="text-danger" style="font-size: 12px;">
+            This email is already registered!
+          </div>
+        }
+      </div>
+      <!-- /.form-group -->
+      <hr />
+      <div
+        class="center"
         style="
-          background-color: #f3f3f3;
-          color: #777;
-          font-family: 'Roboto', sans-serif;
+          text-align: center;
+          filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+          background-color: transparent;
+          padding: 8px 0;
+          font-size: 12px;
+          opacity: 0.6;
         "
       >
-        Create an Account
-      </h2>
-    </header>
-    <hr />
-  </div>
-  <div class="row" id="mainn">
-    <div class="col-md-3 col-sm-6 col-md-offset-4 col-sm-offset-3">
-      <h5 style="margin-bottom: 20px">Account Type</h5>
-      <form role="form" id="form-create-account" method="post">
-        <div class="radio" id="create-account-user">
-          <label>
-            <input
-              type="radio"
-              id="account-type-user"
-              name="account-type"
-              required
-              style="margin-right: 6px; cursor: pointer"
-              value="user"
-              formControlName="dropdownValue"
-            />Regular User
-          </label>
-        </div>
-        <div class="radio" id="agent-switch" data-agent-state="">
-          <label>
-            <input
-              type="radio"
-              id="account-type-agent"
-              name="account-type"
-              value="agent"
-              required
-              style="margin-right: 6px; cursor: pointer"
-              formControlName="dropdownValue"
-            />Agent
-          </label>
-        </div>
-
-        <div id="agency">
-          <div class="form-group">
-            <label
-              for="account-agency"
-              class="text-secondary my-2"
-              style="opacity: 0.6"
-              formControlName="dropdownValue"
-              >Select your agency:</label
-            >
-            <br />
-            <select
-              class="custom-dropdown"
-              name="account-agency"
-              id="account-agency"
-              class="text-secondary"
-              style="
-                width: 100%;
-                height: 40px;
-                background-color: #f3f3f3;
-                border-radius: 0;
-                border: none;
-                opacity: 0.6;
-              "
-            >
-              <option value="">Agency</option>
-              <option value="1">5A</option>
-              <option value="2">NEW CAPTIAL</option>
-              <option value="3">ELSHROUQ</option>
-              <option value="4">ELREHAB</option>
-              <option value="5">NEW 6-OCTOBER</option>
-            </select>
-          </div>
-        </div>
-
-        <hr />
-        <div>
-          <form [formGroup]="registerForm" (ngSubmit)="handlesubmit()">
-            <div class="form-group">
-              <label
-                for="form-create-account-full-name"
-                style="font-weight: bold; color: #777"
-                >Full Name:</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                required
-                name="fullname"
-                style="background-color: rgb(242, 241, 241); border-radius: 0"
-                class="form-control"
-                id="fullname"
-                formControlName="fullname"
-              />
-              @if(registerForm.controls['fullname'].invalid &&
-              registerForm.controls['fullname'].touched ){
-              @if(registerForm.controls['fullname'].errors?.['minlength']) {
-              <span class="form-text text-danger"> min length is 3 </span>
-              } @if(registerForm.controls['fullname'].errors?.['required']) {
-              <span class="form-text text-danger"> Full name is required </span
-              >} }
-            </div>
-            <!-- /.form-group -->
-            <div class="form-group">
-              <label
-                for="form-create-account-email"
-                style="font-weight: bold; color: #777"
-                >Email:</label
-              >
-              <input
-                type="email"
-                class="form-control"
-                required
-                style="background-color: rgb(242, 241, 241); border-radius: 0"
-                class="form-control"
-                name="email"
-                id="Email"
-                formControlName="email"
-              />
-              @if(registerForm.controls['email'].invalid &&
-              registerForm.controls['email'].touched ){
-              @if(registerForm.controls['email'].errors?.['required']) {
-              <span class="form-text text-danger"> Email is required </span>
-              } }
-            </div>
-            <!-- /.form-group -->
-            <div class="form-group">
-              <label
-                for="form-create-account-password"
-                style="font-weight: bold; color: #777"
-                >Password:</label
-              >
-              <input
-                type="password"
-                class="form-control"
-                required
-                name="password"
-                style="background-color: rgb(242, 241, 241); border-radius: 0"
-                id="Password1"
-                formControlName="password"
-              />
-              @if(registerForm.controls['password'].invalid &&
-              registerForm.controls['password'].touched ){
-              @if(registerForm.controls['password'].errors?.['required']) {
-              <span class="form-text text-danger"> Password is required </span>
-              }@if(registerForm.controls['password'].errors?.['minlength']) {
-              <span class="form-text text-danger">
-                Password (8 or more characters)</span
-              >
-              } }
-            </div>
-            <!-- /.form-group -->
-            <div class="form-group">
-              <label
-                for="form-create-account-confirm-password"
-                style="font-weight: bold; color: #777"
-                >Confirm Password:</label
-              >
-              <input
-                type="password"
-                class="form-control"
-                required
-                name="confirmpassword"
-                style="background-color: rgb(242, 241, 241); border-radius: 0"
-                id="Password"
-                formControlName="confirmpassword"
-              />
-              @if(registerForm.controls['confirmpassword'].invalid &&
-              registerForm.controls['confirmpassword'].touched ){
-              @if(registerForm.controls['confirmpassword'].errors?.['required'])
-              {
-              <span class="form-text text-danger">
-                confirm password is required
-              </span>
-              } @if(registerForm.controls['password'].errors?.['minlength']) {
-              <span class="form-text text-danger"> minlength is 8</span>
-              }}
-            </div>
-            <!-- /.form-group -->
-            <div class="checkbox">
-              <label style="display: inline-flex; align-items: center">
-                <input
-                  type="checkbox"
-                  id="checkbox"
-                  name="account-newsletter"
-                  style="
-                    margin-right: 10px;
-                    cursor: pointer;
-                    width: 20px;
-                    height: 20px;
-                  "
-                />
-                Receive Newsletter
-              </label>
-              <button
-                (click)="handlesubmit()"
-                type="submit"
-                class="btn pull-right btn-default btn-primary mx-2"
-                id="bttn"
-              >
-                Create an Account
-              </button>
-            </div>
-          </form>
-        </div>
-        <!-- /.form-group -->
-        <hr />
-        <div
-          class="center"
-          style="
-            text-align: center;
-            filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
-            background-color: transparent;
-            padding: 8px 0;
-            font-size: 12px;
-            opacity: 0.6;
-          "
-        >
-          <figure class="note">
-            By clicking the “Create an Account” button you agree with our
-            <a routerlink="/" style="text-decoration: none" class="text-info"
-              >Terms and conditions</a
-            >
-          </figure>
-        </div>
-      </form>
-    </div>
+        <figure class="note">
+          By clicking the “Create an Account” button you agree with our
+          <a href="#" style="text-decoration: none" class="text-info"
+            >Terms and conditions</a
+          >
+        </figure>
+      </div>
+    </form>
   </div>
 </div>
 <app-small-footer></app-small-footer>
-<style>
-  #mainn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f3f3f3;
-    color: #525252;
-    font-family: "Roboto", sans-serif;
-  }
-  input.form-control {
-    margin-bottom: 10px;
-  }
-  form .form-group label {
-    font-size: 15px;
-  }
-  form .form-group input {
-    border-top: 1px solid #777;
-  }
-  form .form-group input:focus,
-  form .form-group input:hover {
-    transition: 0.3s;
-    background-color: white !important;
-    box-shadow: none !important;
-    border-color: #777 transparent transparent transparent;
-  }
-  #bttn {
-    border-radius: 0;
-    /* margin: 15px 40px; */
-  }
-</style>
+  <style>
+    #mainn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #fff;
+      color: #5a5a5a;
+      font-family: "Roboto", sans-serif;
+    }
+    input.form-control {
+      margin-bottom: 10px;
+    }
+    #bttn {
+      border-radius: 0;
+      /* margin: 15px 40px; */
+    }
+  </style>
+
+  <!-- end Page Footer -->
+
+  <!--------------------------->
+  <!-- <div class="container" id="maindiv">
+            <h2 style="text-align: center">Great to see you here!</h2>
+            <br />
+            <p class="form-text text-secondary" style="text-align: center">
+              Let’s set up your account in just a couple of steps.
+            </p>
+            <hr />
+            <div class="container1">
+              <form [formGroup]="registerForm" (ngSubmit)="handlesubmit()"> -->
+  <!--reactive-->
+  <!-- <div class="row m-2">
+                  <label for="input" class="col-md-4 col-form-label"
+                    >First Name</label
+                  >
+                  <div class="col-md-8">
+                    <input
+                      placeholder="Enter Your First Name"
+                      type="text"
+                      class="form-control"
+                      id="firstname"
+                      formControlName="firstname"
+                    />
+                    @if(registerForm.controls['firstname'].invalid &&
+                    registerForm.controls['firstname'].touched ){
+                    @if(registerForm.controls['firstname'].errors?.['minlength'])
+                    {
+                    <span class="form-text text-danger"> min length is 3 </span>
+                    }
+                    @if(registerForm.controls['firstname'].errors?.['required'])
+                    {
+                    <span class="form-text text-danger">
+                      First name is required </span
+                    >} }
+                  </div>
+                </div>
+                <div class="row m-2">
+                  <label for="input" class="col-md-4 col-form-label"
+                    >Last Name</label
+                  >
+                  <div class="col-md-8">
+                    <input
+                      placeholder="Enter Your Last Name"
+                      type="text"
+                      class="form-control"
+                      id="lastname"
+                      formControlName="lastname"
+                    />
+                    @if(registerForm.controls['lastname'].invalid &&
+                    registerForm.controls['lastname'].touched ){
+                    @if(registerForm.controls['lastname'].errors?.['minlength'])
+                    {
+                    <span class="form-text text-danger"> min length is 3 </span>
+                    }@if(registerForm.controls['lastname'].errors?.['required'])
+                    {
+                    <span class="form-text text-danger">
+                      Last name is required </span
+                    >} }
+                  </div>
+                </div>
+                <div class="m-2 row">
+                  <label for="inputEmail" class="col-md-4 col-form-label"
+                    >Email</label
+                  >
+                  <div class="col-md-8">
+                    <input
+                      placeholder="Enter Your Email"
+                      type="text"
+                      class="form-control"
+                      id="Email"
+                      formControlName="email"
+                    />
+                    @if(registerForm.controls['email'].invalid &&
+                    registerForm.controls['email'].touched ){
+                    @if(registerForm.controls['email'].errors?.['required']) {
+                    <span class="form-text text-danger">
+                      Email is required
+                    </span>
+                    } }
+                  </div>
+                </div>
+                <div class="m-2 row">
+                  <label for="inputPassword" class="col-md-4 col-form-label"
+                    >Password</label
+                  >
+                  <div class="col-md-8">
+                    <input
+                      placeholder="Enter Your Password"
+                      type="password"
+                      class="form-control"
+                      id="Password1"
+                      formControlName="password"
+                    />
+                    @if(registerForm.controls['password'].invalid &&
+                    registerForm.controls['password'].touched ){
+                    @if(registerForm.controls['password'].errors?.['required'])
+                    {
+                    <span class="form-text text-danger">
+                      Password is required
+                    </span>
+                    }@if(registerForm.controls['password'].errors?.['minlength'])
+                    {
+                    <span class="form-text text-danger">
+                      Password (10 or more characters)</span
+                    >
+                    } }
+                  </div>
+                </div>
+                <div class="m-2 row">
+                  <label for="inputPassword" class="col-md-4 col-form-label"
+                    >Confirm Password</label
+                  >
+                  <div class="col-md-8">
+                    <input
+                      placeholder="Confirm Your Password"
+                      type="password"
+                      class="form-control"
+                      id="Password"
+                      formControlName="confirmpassword"
+                    />
+                    @if(registerForm.controls['confirmpassword'].invalid &&
+                    registerForm.controls['confirmpassword'].touched ){
+                    @if(registerForm.controls['confirmpassword'].errors?.['required'])
+                    {
+                    <span class="form-text text-danger">
+                      confirm password is required
+                    </span>
+                    }
+                    @if(registerForm.controls['password'].errors?.['minlength'])
+                    {
+                    <span class="form-text text-danger"> minlength is 10</span>
+                    }}
+                  </div>
+                </div>
+
+                <button
+                  class="btn btn-success mb-3"
+                  [disabled]="registerForm.invalid"
+                  id="btn"
+                  routerLink=""
+                >
+                  Create my account
+                </button>
+              </form>
+            </div>
+          </div>
+          <[disabled]="registerForm.invalid" btn disabled when inputs empty
+-->
+  <!-- "password === confirmPassword && password !== ''" class="text-success">Passwords matched successfully</span> -->
+  <!-- <style>
+            .container1 {
+              margin-top: 20px;
+            }
+            #maindiv {
+              margin-top: 50px;
+              width: 30%;
+              border-radius: 6px;
+              border: 2px solid #90bdf6;
+              padding: 27px;
+              box-shadow: 0px 2px 10px #b7b7b7;
+            }
+            input.form-control {
+              margin-bottom: 15px;
+            }
+
+            #btn {
+              text-align: right;
+              margin-top: 15px;
+              margin-left: 130px;
+              border-radius: 20px;
+            }
+          </style>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+  <!-- </form>
+      </div>
+    </div>
+  </div>
+</div> -->
