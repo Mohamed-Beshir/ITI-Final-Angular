@@ -5,17 +5,18 @@ import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import { RouterModule } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AddPropertyService } from '../services/add-property.service';
+
 
 
 @Component({
   selector: 'app-myproperties-agent',
   standalone: true,
-  imports: [NavbarComponent, BigFooterComponent, RouterLink, ButtonModule, ToastModule, ConfirmDialogModule],
+  imports: [NavbarComponent, BigFooterComponent, RouterLink, ButtonModule, ToastModule, ConfirmDialogModule, RouterModule],
   templateUrl: './myproperties-agent.component.html',
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService, MessageService, RouterLink],
   styleUrl: './myproperties-agent.component.css'
 })
 export class MypropertiesAgentComponent {
@@ -167,7 +168,6 @@ export class MypropertiesAgentComponent {
   propertiesArray : any;
   ngOnInit(){
     this.propertiesApi.getAllProperty().subscribe(res => this.propertiesArray = res)
-    console.log(this.propertiesArray)
   }
   confirmDelete(event: Event, propertyId: number) {
     this.confirmationService.confirm({
@@ -179,6 +179,7 @@ export class MypropertiesAgentComponent {
       rejectButtonStyleClass: "p-button-text p-button-text",
       acceptIcon: "none",
       rejectIcon: "none",
+      
 
       accept: () => {
         this.propertiesApi.deletePropertyFromApi(propertyId).subscribe(res => res)
@@ -210,6 +211,7 @@ export class MypropertiesAgentComponent {
   // Function to change the current page
   changePage(newPage: number): void {
     this.currentPage = newPage;
+    console.log(this.propertiesArray)
   }
 
 }

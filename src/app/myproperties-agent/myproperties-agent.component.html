@@ -37,10 +37,10 @@
                                 @for (property of getCurrentPageProperties(); track property.id) {
                                     <tr>
                                         <td class="image">
-                                            <a href="#"><img alt="" src="../../assets/img/properties/{{property.image}}"></a>
+                                            <a [routerLink]="['/property-details', property.id]"><img alt="" src="../../assets/img/properties/{{property['image'][0]}}"></a>
                                         </td>
                                         <td><div class="inner">
-                                            <a href="#"><h2>{{property.street}}</h2></a>
+                                            <a [routerLink]="['/property-details', property.id]"><h2>{{property.street}}</h2></a>
                                             <figure>{{property.property_number}}</figure>
                                             <div class="tag-price">LE {{property.price}}</div>
                                         </div>
@@ -48,7 +48,7 @@
                                         <td>{{property.date}}</td>
                                         <td>{{property.property_number}}</td>
                                         <td class="actions">
-                                            <a href="#" class="edit"><i class="fa fa-pencil"></i>Edit</a>
+                                            <a [routerLink]="['/edit-property', property.id]" class="edit"><i class="fa fa-pencil"></i>Edit</a>
                                             <a (click)="confirmDelete($event,property.id)"><i class="delete fa fa-trash"></i></a>
                                         </td>
                                     </tr>
