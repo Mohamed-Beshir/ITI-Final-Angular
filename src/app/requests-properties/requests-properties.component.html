@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+<h1 class="my-5 container">Requests</h1>
+<div style="min-height: 500px;">
+    <table class="table text-center my-5">
+        <thead class="container">
+          <tr class="border-black ">
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Property Id</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+
+          </tr>
+          <tr *ngFor="let req of requests; let i = index">
+            <td>{{req.user_name}}</td>
+            <td>{{req.user_email}}</td>
+            <td>{{req.property_id}}</td>
+            <td>
+                <button class="btn btn-success me-2">Approve</button>
+                <button (click)='deleteRequest(req.id)' class="btn btn-danger">Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+<app-big-footer></app-big-footer>

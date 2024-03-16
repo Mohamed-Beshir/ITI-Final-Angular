@@ -4,24 +4,24 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AddPropertyService {
+export class RateService {
 
-  api : any = "http://localhost:8000/api/properties";
+  api : any = "https://retoolapi.dev/vm0l58/rate";
 
   constructor(private http : HttpClient) {}
-  getAllProperty () {
+  getAllRate () {
     return this.http.get(this.api);
   }
-  getOneProperty (id : number) {
+  getOneRate (id : number) {
     return this.http.get(`${this.api}/${id}`);
   }
-  savePropertyData (data : any) {
+  saveRateData (data : any) {
     return this.http.post(this.api, data)
   }
-  updateProperty(id: number, updatedProperty: any) {
-    return this.http.put(`${this.api}/${id}`, updatedProperty);
+  updateRate(id: number, updatedRate: any) {
+    return this.http.put(`${this.api}/${id}`, updatedRate);
   }
-  deletePropertyFromApi (id :number) {
+  deleteRateFromApi (id :number) {
     return this.http.delete(`${this.api}/${id}`)
   }
 }

@@ -4,24 +4,24 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AddPropertyService {
+export class CommentService {
 
-  api : any = "http://localhost:8000/api/properties";
+  api : any = "https://retoolapi.dev/mrINvU/comment";
 
   constructor(private http : HttpClient) {}
-  getAllProperty () {
+  getAllComment () {
     return this.http.get(this.api);
   }
-  getOneProperty (id : number) {
+  getOneComment (id : number) {
     return this.http.get(`${this.api}/${id}`);
   }
-  savePropertyData (data : any) {
+  saveCommentData (data : any) {
     return this.http.post(this.api, data)
   }
-  updateProperty(id: number, updatedProperty: any) {
-    return this.http.put(`${this.api}/${id}`, updatedProperty);
+  updateComment(id: number, updatedComment: any) {
+    return this.http.put(`${this.api}/${id}`, updatedComment);
   }
-  deletePropertyFromApi (id :number) {
+  deleteCommentFromApi (id :number) {
     return this.http.delete(`${this.api}/${id}`)
   }
 }

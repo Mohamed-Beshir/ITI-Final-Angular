@@ -1,36 +1,33 @@
-<div style="width: 100%;padding: 4px;" class="col-md-4 col-sm-4">
-  <div class="property equal-height">
-      <!-- <figure class="tag status">For Sale</figure> -->
-      <!-- <figure class="type" title="Apartment"><img src="assets/img/property-types/apartment.png" alt=""></figure> -->
-      <a href="property-detail.html">
-          <div class="property-image">
-              <img alt="" [src]="propertyItem.image">
-          </div>
-          <div class="overlay">
-              <div class="info">
-                  <div class="tag price rounded bg">{{propertyItem.price}}</div>
-                  <h3>{{propertyItem.street}}</h3>
-                  <figure>{{propertyItem.propertyNumber}}</figure>
-              </div>
-              <ul class="additional-info">
-                  <li>
-                      <header>Area:</header>
-                      <figure>{{propertyItem.Area}}<sup>2</sup></figure>
-                  </li>
-                  <li>
-                      <header>Beds:</header>
-                      <figure>{{propertyItem.Beds}}</figure>
-                  </li>
-                  <li>
-                      <header>Baths:</header>
-                      <figure>{{propertyItem.Baths}}</figure>
-                  </li>
-                  <li>
-                      <header>Garages:</header>
-                      <figure>{{propertyItem.Garages}}</figure>
-                  </li>
-              </ul>
-          </div>
-      </a>
-  </div><!-- /.property -->
+<div class="property">
+    <a [routerLink]="['/property-details', property.id]">
+        <div class="property-image">
+            <img alt="" src="assets/img/properties/property-02.jpg">
+        </div>
+        <div class="overlay">
+            <div class="info">
+                <div class="price-tag">LE {{property.title}}</div>
+                <h3>{{property.title}}</h3>
+                <figure>{{property.street}}, {{property.city}}</figure>
+                <figure>{{property.type}}, {{property.property_number}}</figure>
+            </div>
+            <ul class="additional-info">
+                <li>
+                    <header>Area:</header>
+                    <figure>{{property.area}}m<sup>2</sup></figure>
+                </li>
+                <li>
+                    <header>Beds:</header>
+                    <figure>{{property.beds}}</figure>
+                </li>
+                <li>
+                    <header>Baths:</header>
+                    <figure>{{property.baths}}</figure>
+                </li>
+                <li>
+                    <header>Gaarges:</header>
+                    <figure>0</figure>
+                </li>
+            </ul>
+        </div>
+    </a>
 </div>

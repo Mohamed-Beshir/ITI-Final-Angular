@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { UserLoggedService } from '../services/user-logged.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,5 +10,19 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  userLogged : any;
+  constructor(private loggedUser : UserLoggedService, private router: Router){
+    
+  }
 
+  ngOnInit(){
+  this.loggedUser.getuserLogged().subscribe(res => this.userLogged = res);
+}
+
+
+
+logout(){
+  this.loggedUser.deleteUserLoggedFromApi(this.userLogged[1].id).subscribe(res => res)
+  this.router.navigate(['signin']);
+}
 }

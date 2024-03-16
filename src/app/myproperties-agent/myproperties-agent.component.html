@@ -40,8 +40,8 @@
                                             <a [routerLink]="['/property-details', property.id]"><img alt="" src="../../assets/img/properties/{{property['image'][0]}}"></a>
                                         </td>
                                         <td><div class="inner">
-                                            <a [routerLink]="['/property-details', property.id]"><h2>{{property.street}}</h2></a>
-                                            <figure>{{property.property_number}}</figure>
+                                            <a [routerLink]="['/property-details', property.id]"><h2>{{property.title}}</h2></a>
+                                            <figure>{{property.property_number}}, {{property.property_type}}, {{property.street}}, {{property.city}}</figure>
                                             <div class="tag-price">LE {{property.price}}</div>
                                         </div>
                                         </td>

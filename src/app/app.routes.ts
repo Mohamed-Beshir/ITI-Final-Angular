@@ -9,6 +9,8 @@ import { PropertyDetailsComponent } from './property-details/property-details.co
 import { AddPropertyComponent } from './add-property/add-property.component';
 import { PropertiesListingComponent } from './properties-listing/properties-listing.component';
 import { EditPropertyComponent } from './edit-property/edit-property.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { RequestsPropertiesComponent } from './requests-properties/requests-properties.component';
 
 
 export const routes: Routes = [
@@ -20,6 +22,7 @@ export const routes: Routes = [
     { path: 'property-details/:id', component: PropertyDetailsComponent },
     { path: 'add-property', component: AddPropertyComponent},
     { path: 'edit-property/:id', component: EditPropertyComponent},
-    { path: 'property-listing' , component: PropertiesListingComponent}
-
+    { path: 'property-listing' , component: PropertiesListingComponent},
+    { path: 'dashboard' , component: DashboardComponent},
+    { path: 'requests' , component: RequestsPropertiesComponent}
 ];

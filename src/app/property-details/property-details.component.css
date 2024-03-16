@@ -30,7 +30,7 @@ Headers:		'Roboto', sans-serif;
 
 /* 1. Element Styling */
 
-@charset "CP852";
+/* @charset "CP852"; */
 a {
   -moz-transition: 0.2s;
   -webkit-transition: 0.2s;
@@ -67,13 +67,13 @@ blockquote figure {
   vertical-align: middle;
 }
 blockquote figure .image {
-  background-color: #5a5a5a;
+  /* background-color: #5a5a5a; */
   height: 180px;
   position: relative;
   overflow: hidden;
   width: 160px;
 }
-blockquote figure .image:after {
+/* blockquote figure .image:after {
   bottom: 0px;
   content: "";
   height: 0px;
@@ -93,7 +93,7 @@ blockquote figure .image:before {
   width: calc(100% - 20px);
   position: absolute;
   z-index: 1;
-}
+} */
 blockquote .cite {
   display: table-cell;
   vertical-align: middle;
@@ -1625,13 +1625,13 @@ ul.list-links li a:hover {
   top: 0;
 }
 .comments .comment figure .image {
-  background-color: #5a5a5a;
+  /* background-color: #5a5a5a; */
   height: 70px;
   position: relative;
   overflow: hidden;
   width: 60px;
 }
-.comments .comment figure .image:after {
+/* .comments .comment figure .image:after {
   bottom: 0px;
   content: "";
   height: 0px;
@@ -1650,7 +1650,7 @@ ul.list-links li a:hover {
   left: 0;
   width: calc(100% - 10px);
   position: absolute;
-}
+} */
 .comments .comment figure .image img {
   height: 100%;
 }
