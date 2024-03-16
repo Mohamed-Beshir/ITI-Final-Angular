@@ -4,6 +4,7 @@ import { SmallFooterComponent } from '../small-footer/small-footer.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AddUserService } from '../services/add-user.service';
 import { Router } from '@angular/router';
+import { UserLoggedService } from '../services/user-logged.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class SignInComponent {
   signForm : FormGroup;
-  constructor (private formb : FormBuilder, private users : AddUserService, private router : Router) {
+  constructor (private formb : FormBuilder, private users : AddUserService, private router : Router, private userlogged : UserLoggedService) {
     this.signForm = this.formb.group({
       email: ['', [Validators.email,
          Validators.required,
@@ -24,21 +25,37 @@ export class SignInComponent {
     })
   }
   arrOfUsers : any;
+  loggedUser : any;
   ngOnInit(){
     this.users.getAllUsers().subscribe(res=> this.arrOfUsers = res)
+    this.userlogged.getuserLogged().subscribe(res=> this.loggedUser = res);
   }
 
   checkUser(){
     let result = false;
+    let index = 0;
     for(let i = 0; i < this.arrOfUsers.length; i++){
       if(this.signForm.controls['email'].value == this.arrOfUsers[i]['email'] && this.signForm.controls['password'].value == this.arrOfUsers[i]['password']) {
+        index = i;
         result = true
       }
     }
+
     if(!result){
       this.signForm.setErrors({ unauthenticated: true });
     }else{
-      this.router.navigate(['/']);
+      let newUser : any = {
+        id: this.arrOfUsers[index]['id'],
+        name: this.arrOfUsers[index]['name'],
+        isagent: this.arrOfUsers[index]['isagent'],
+        email: this.arrOfUsers[index]['email'],
+        password: this.arrOfUsers[index]['password'],
+      }
+
+      this.userlogged.saveUserLoggedData(newUser).subscribe(res=>res);
+      if(this.loggedUser.length){
+        this.router.navigate(['/']);
+      }
     }
   }
 }

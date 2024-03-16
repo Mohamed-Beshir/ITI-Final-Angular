@@ -109,20 +109,18 @@
                             <!-- /#property-map -->
                             <section id="property-rating">
                                 <header><h2>Rating</h2></header>
-                                <div class="clearfix">
-                                    <aside>
+                                <div class="clearfix text-center">
+                                    <!-- <aside>
                                         <header>Your Rating</header>
                                         <div class="rating rating-user">
                                             <div class="inner">
                                                 <p-rating [(ngModel)]="userValue" [cancel]="false"></p-rating>
                                             </div>
                                         </div>
-                                    </aside>
-                                    <figure>
+                                    </aside> -->
+                                    <figure class="float-none">
                                         <header>Overall Rating</header>
-                                        <div class="rating rating-overall">
-                                            <p-rating [(ngModel)]="overallValue" [readonly]="true" [cancel]="false"></p-rating>
-                                        </div>
+                                        <div class="rating rating-overall" [innerHTML]="finalRatingForProperty | rating"></div>
                                     </figure>
                                 </div>
                                 
@@ -136,82 +134,95 @@
                         </div><!-- /.col-md-8 -->
                         <div class="col-md-12 col-sm-12">
                             
-                            <hr class="thick">
+                            <!-- <hr class="thick">
                             <section id="similar-properties">
                                 <header><h2 class="no-border">Similar Properties</h2></header>
                                 <div class="row">
                                     @for (property of similarProperties; track property.id) {
                                         <div class="col-md-4 col-sm-6">
                                             <app-property-card></app-property-card>
-                                        </div><!-- /.col-md-3 -->
+                                        </div>
                                     }
-                                </div><!-- /.row-->
-                            </section><!-- /#similar-properties -->
+                                </div>
+                            </section> -->
                             <hr class="thick">
                             <section id="comments">
                                 <header><h2 class="no-border">Comments</h2></header>
                                 <ul class="comments">
-                                    <li class="comment">
-                                        <figure>
-                                            <div class="image">
-                                                <img alt="" src="assets/img/client-01.jpg">
-                                            </div>
-                                        </figure>
-                                        <div class="comment-wrapper">
-                                            <div class="name pull-left">Catherine Brown</div>
-                                            <span class="date pull-right"><span class="fa fa-calendar"></span>12.05.2014</span>
-                                            <div class="rating rating-individual" data-score="4"></div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum, sem ut sollicitudin consectetur,
-                                                augue diam ornare massa, ac vehicula leo turpis eget purus. Nunc pellentesque vestibulum mauris, eget suscipit
-                                                mauris imperdiet vel. Nulla et massa metus. Nam porttitor quam eget ante elementum consectetur. Aenean ac nisl
-                                                et nulla placerat suscipit eu a mauris. Curabitur quis augue condimentum, varius mi in, ultricies velit.
-                                                Suspendisse potenti.
-                                            </p>
-                                            <a href="#" class="reply"><span class="fa fa-reply"></span>Reply</a>
-                                            <hr>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <ul class="comments-child">
-                                            <li class="comment">
+                                    @for (comment of commentData; track comment) {
+                                        @if(comment.property_id == id){
+                                            <li class="comment w-100">
                                                 <figure>
                                                     <div class="image">
-                                                        <img alt="" src="assets/img/agent-01.jpg">
+                                                        <img alt="" src="assets/img/user.png">
                                                     </div>
                                                 </figure>
                                                 <div class="comment-wrapper">
-                                                    <div class="name">John Doe</div>
-                                                    <span class="date"><span class="fa fa-calendar"></span>24.06.2014</span>
-                                                    <div class="rating rating-individual" data-score="3"></div>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum, sem ut sollicitudin consectetur,
-                                                        augue diam ornare massa, ac vehicula leo turpis eget purus. Nunc pellentesque vestibulum mauris, eget suscipit
-                                                        mauris.
-                                                    </p>
-                                                    <a href="#" class="reply"><span class="fa fa-reply"></span>Reply</a>
+                                                    <div class="name">{{comment.name}}</div>
+                                                    <span class="date"><span class="fa fa-calendar"></span>{{comment.date}}</span>
+                                                    <div class="rating rating-individual" data-score="5"></div>
+                                                    <p>{{comment.comment}}</p>
+                                                    @if(comment.email ==userLogged[1].email){
+                                                        <a class="reply" style="cursor: pointer;" (click)="deleteComment(comment.id)"><span class="fa fa-reply text-danger"></span>delete</a>
+                                                    }
                                                     <hr>
                                                 </div>
                                             </li>
-                                        </ul>
-                                    </li>
-                                    <li class="comment">
-                                        <figure>
-                                            <div class="image">
-                                                <img alt="" src="assets/img/user-02.jpg">
-                                            </div>
-                                        </figure>
-                                        <div class="comment-wrapper">
-                                            <div class="name">John Doe</div>
-                                            <span class="date"><span class="fa fa-calendar"></span>08.05.2014</span>
-                                            <div class="rating rating-individual" data-score="5"></div>
-                                            <p>Quisque iaculis neque at dui cursus posuere. Sed tristique pharetra orci, eu malesuada ante tempus nec.
-                                                Phasellus enim odio, facilisis et ante vel, tempor congue sapien. Praesent eget ligula
-                                                eu libero cursus facilisis vel non arcu. Sed vitae quam enim.
-                                            </p>
-                                            <a href="#" class="reply"><span class="fa fa-reply"></span>Reply</a>
-                                            <hr>
-                                        </div>
-                                    </li>
+                                        }
+                                    }
                                 </ul>
+                            </section>
+                            <hr class="thick">
+                            <section id="comments">
+                                <header>
+                                    <h2 class="no-border">Reviews</h2>
+                                </header>
+                                <form role="form" id="form-create-account" method="post" [formGroup]="registerForm">
+                                    <div id="agency">
+                                        <div class="form-group">
+                                            <label for="account-agency" class="text-secondary my-2" style="opacity: 0.6"
+                                                formControlName="dropdownValue">Select your agency:</label>
+                                            <br />
+                                            <select formControlName="rate" class="custom-dropdown" name="account-agency" id="account-agency" class="text-secondary">
+                                                <option value="">Select rate:</option>
+                                                <option value="1">Not very good</option>
+                                                <option value="2">Not good</option>
+                                                <option value="3">acceptable</option>
+                                                <option value="4">good</option>
+                                                <option value="5">very good</option>
+                                            </select>
+                                            @if(registerForm.controls['rate'].invalid &&
+                                            registerForm.controls['rate'].touched ){
+                                            @if(registerForm.controls['rate'].errors?.['required']) {
+                                            <span class="form-text text-danger"> Required </span>
+                                            }}
+                                        </div>
+                                    </div>
+                                
+                                    <hr />
+                                    <div class="form-group mb-3" [formGroup]="registerForm">
+                                        <label for="form-create-account-full-name" style="font-weight: bold; color: rgb(92, 91, 91)">Comment:</label>
+                                        <textarea type="text" class="form-control" id="form-create-account-full-name" required
+                                            style="background-color: rgb(242, 241, 241); border-radius: 0; height: 300px; resize: none;" class="form-control" id="fullname"
+                                            formControlName="comment" ></textarea>
+                                        @if(registerForm.controls['comment'].invalid &&
+                                        registerForm.controls['comment'].touched ){
+                                        @if(registerForm.controls['comment'].errors?.['minlength']) {
+                                        <span class="form-text text-danger"> Min length is 3 </span>
+                                        }}
+                                    </div>
+                                    <div class="checkbox">
+                                        <button (click)="handlesubmit()" disabled [disabled]="registerForm.invalid" type="submit"
+                                            class="btn pull-right btn-default btn-primary" id="bttn">
+                                            Add Review
+                                        </button>
+                                        @if(completedReview){
+                                        <div class="text-success" style="font-size: 15px; margin-top: 10px;">
+                                            completed send review.
+                                        </div>
+                                        }
+                                    </div>
+                                </form>
                             </section>
                         </div><!-- /.col-md-12 -->
                     </div><!-- /.row -->
@@ -222,6 +233,17 @@
             <!-- sidebar -->
             <div class="col-md-3 col-sm-3">
                 <section id="sidebar">
+                    <aside id="edit-search">
+                        <header><h3>Request this property</h3></header>
+                        <form>
+                            <div class="form-group">
+                                <button (click)="sendRequest(property.id)" [disabled]="resultRequest" class="btn btn-default">Request Now</button>
+                                @if(!isRequested){
+                                    <p class="text-danger">You already requested this</p>
+                                }
+                            </div><!-- /.form-group -->
+                        </form>
+                    </aside><!-- /#edit-search -->
                     <aside id="edit-search">
                         <header><h3>Search Properties</h3></header>
                         <form role="form" id="form-sidebar" class="form-search">

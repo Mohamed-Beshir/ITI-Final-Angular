@@ -17,9 +17,9 @@
         </div>
     </div>
     <div class="row">
-        @for (property of priceDropProperties; track property.id) {
+        @for (property of propertiesHome; track property.id) {
             <div class="col-lg-3 col-md-6">
-                <app-property-card></app-property-card>
+                <app-property-card [property]="property"></app-property-card>
             </div>
         }
     </div>
@@ -33,9 +33,9 @@
         </div>
     </div>
     <div class="row">
-        @for (property of newProperties; track property.id) {
+        @for (property of propertiesHome; track property.id) {
             <div class="col-lg-3 col-md-6">
-                <app-property-card></app-property-card>
+                <app-property-card [property]="property"></app-property-card>
             </div>
         }
     </div>

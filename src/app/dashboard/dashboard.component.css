@@ -1,0 +1,17 @@
+.container-fluid {
+    padding: 20px;
+    background-color: rgb(235, 235, 235);
+    height: 100vh;
+}
+.card-title{
+    color: #1396e2;
+}
+.requests{
+    font-size: 60px;
+    font-weight: bold;
+    color: #073855;
+    margin-bottom: -15px;
+}
+.card-text{
+    padding: 40px 0 50px;
+}

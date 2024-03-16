@@ -39,10 +39,12 @@
                           </figure>
                       </section>
                       <div class="container justify-content-center" id="properties">
-                      <div class="row" >
+                      <div class="d-flex flex-wrap justify-content-between" >
 
-                      @for (item of propertys; track item.id) {
-                        <app-property-card style="width: 33.3%;" [propertyItem]="item" ></app-property-card>
+                      @for (item of data; track item.id) {
+                        <div class="col-md-12 col-lg-6 col-xl-4 px-2 px-xl-1">
+                            <app-property-card [property]="item" ></app-property-card>
+                        </div>
                       }
 
 
