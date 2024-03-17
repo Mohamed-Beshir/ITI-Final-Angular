@@ -55,7 +55,6 @@ export class PropertyDetailsComponent implements OnInit{
     });
     this.property_details.getOneProperty(this.id).subscribe(data => this.property = data);
 
-    this.user_logged.getuserLogged().subscribe(resp => this.userLogged = resp);
     this.request.getAllRequests().subscribe(res => {
       this.requestProperty = res;
       

@@ -2,7 +2,7 @@
 <div class="sign pb-3">
     <nav class="container py-2">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#" class="nav-link text-dark link-secondary">Home</a></li>
+          <li class="breadcrumb-item"><a routerLink="/" class="nav-link text-dark link-secondary">Home</a></li>
           <li class="breadcrumb-item text-secondary">Sign In</li>
         </ol>
     </nav>
@@ -10,10 +10,16 @@
         <header class="border-bottom text-secondary my-4 pb-1"><h2>Sign In</h2></header>
         <div class="row">
             <div class="col-md-4 col-sm-6 m-auto">
+                @if (successMessage) {
+                    <div class="alert alert-success">
+                        {{ successMessage }}
+                    </div>
+                }
+               
                 <form [formGroup]="signForm" (submit)="checkUser()">
                     <div class="form-group mb-2">
                         <label for="email" class="fw-bold text-secondary">Email:</label>
-                        <input type="email" class="form-control bg-secondary bg-opacity-25 rounded-0 py-2" name="email" formControlName="email">
+                        <input type="email" class="form-control bg-secondary bg-opacity-25 rounded-0 py-2" id="email" formControlName="email">
                         @if(signForm.controls["email"].touched && signForm.controls["email"].invalid){
                             @if(signForm.controls["email"].errors?.["required"]){
                                 <div class="error text-danger">Email is required.</div>
@@ -25,27 +31,24 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="password" class="fw-bold text-secondary">Password:</label>
-                        <input type="password" class="form-control bg-secondary bg-opacity-25 rounded-0 py-2" name="password" formControlName="password">
+                        <input type="password" class="form-control bg-secondary bg-opacity-25 rounded-0 py-2" id="password" formControlName="password">
                         @if(signForm.controls["password"].touched && signForm.controls["password"].invalid){
                             @if(signForm.controls["password"].errors?.["required"]){
                                 <div class="error text-danger">Password is required.</div>
                             }
-                            @if(signForm.controls["password"].errors?.["minlength"]){
-                                <div class="error text-danger">The password must not be less than 8 characters</div>
-                            }
                         }
                     </div>
                     <div class="form-group clearfix">
-                        <button type="submit" class="btn btn-primary rounded-0 ms-auto d-block py-2 mb-2" [disabled]="signForm.invalid">Sign to My Account</button>
-                        @if(signForm.errors?.['unauthenticated']){
-                            <div class="text-danger" style="font-size: 12px;">
-                                Username or Password incorrect!
+                        <button type="submit" class="btn btn-primary rounded-0 d-block py-2 mb-2" [disabled]="signForm.invalid">Sign to My Account</button>
+                        @if(signForm.errors?.['apiError']){
+                            <div class="error text-danger">
+                                {{signForm.errors?.['apiError']}}
                             </div>
                         }
                     </div>
                 </form>
                 <hr>
-                <div class="text-center"><a href="#" class="nav-link">I don't remember my password</a></div>
+                <div class="text-center"><a routerLink="/register" class="nav-link">Create an Account</a></div>
             </div>
         </div>
     </div>

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -6,16 +5,34 @@ import { Injectable } from '@angular/core';
 })
 export class UserLoggedService {
 
-  api : any = "https://retoolapi.dev/guv7ZQ/user_logged";
+  private accessTokenKey = 'access_token';
+  private userDataKey = 'user_data';
 
-  constructor(private http : HttpClient) { }
-  getuserLogged () {
-    return this.http.get(this.api);
+  constructor() {}
+
+  setAccessToken(token: string) {
+    localStorage.setItem(this.accessTokenKey, token);
   }
-  saveUserLoggedData (data : any) {
-    return this.http.post(this.api, data)
+
+  getAccessToken() {
+    return localStorage.getItem(this.accessTokenKey);
   }
-  deleteUserLoggedFromApi (id :number) {
-    return this.http.delete(`${this.api}/${id}`)
+
+  setUserData(data: any) {
+    localStorage.setItem(this.userDataKey, JSON.stringify(data));
+  }
+
+  getUserData() {
+    const userDataString = localStorage.getItem(this.userDataKey);
+    return userDataString ? JSON.parse(userDataString) : null;
+  }
+
+  isLoggedIn() {
+    return !!localStorage.getItem(this.accessTokenKey);
+  }
+
+  logout() {
+    localStorage.removeItem(this.accessTokenKey);
+    localStorage.removeItem(this.userDataKey);
   }
 }
