@@ -10,19 +10,28 @@ import { UserLoggedService } from '../services/user-logged.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  userLogged : any;
+
+  isLoggedIn: boolean = false;
+  userRole: string | null = null;
+  userName: string | null = null;
+
   constructor(private loggedUser : UserLoggedService, private router: Router){
-    
   }
 
   ngOnInit(){
-  this.loggedUser.getuserLogged().subscribe(res => this.userLogged = res);
-}
+    // Check if user is logged in
+    this.isLoggedIn = this.loggedUser.isLoggedIn();
+    
+    // Retrieve user data if user is logged in
+    if (this.isLoggedIn) {
+      const userData = this.loggedUser.getUserData();
+      this.userRole = userData ? userData.role : null;
+      this.userName = userData ? userData.name : null;
+    }
+  }
 
-
-
-logout(){
-  this.loggedUser.deleteUserLoggedFromApi(this.userLogged[1].id).subscribe(res => res)
-  this.router.navigate(['signin']);
-}
+  logout(){
+    this.loggedUser.logout();
+    this.router.navigate(['signin']);
+  }
 }

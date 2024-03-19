@@ -18,6 +18,7 @@ form .form-group input:hover {
 nav .breadcrumb,
 .row > div > div,
 .error {
+    margin-top: 5px;
     font-size: 14px;
 }
 .row > div > div a {

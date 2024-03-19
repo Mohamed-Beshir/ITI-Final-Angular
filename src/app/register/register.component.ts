@@ -1,16 +1,17 @@
 import { Component} from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SmallFooterComponent } from '../small-footer/small-footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { AddUserService } from '../services/add-user.service';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -21,16 +22,17 @@ import { AddUserService } from '../services/add-user.service';
     RouterLink,
     RouterLinkActive,
     SmallFooterComponent,
-    NavbarComponent
+    NavbarComponent,
+    NgIf,NgFor
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  constructor(private router: Router, private formBuilder: FormBuilder, private users : AddUserService) {
+  constructor(private router: Router, private users : AddUserService) {
     this.registerForm = new FormGroup({
-      fullname: new FormControl('', [
+      name: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
       ]),
@@ -39,46 +41,68 @@ export class RegisterComponent {
         Validators.required,
         Validators.minLength(8)
       ]),
-      confirmpassword: new FormControl('', [
+      password_confirmation: new FormControl('', [
         Validators.required,
-        Validators.minLength(8)
+        this.confirmPasswordValidator,
       ]),
-      isagent: new FormControl('user')
+      role: new FormControl('user')
     });
   }
   
-  arrOfUsers : any;
-  ngOnInit(){
-    this.users.getAllUsers().subscribe(res=> this.arrOfUsers = res)
-  }
-
-  handlesubmit() {
-    // save register data in object
-    let form = this.registerForm.controls;
-    let newUser : any = {
-      name: form["fullname"].value,
-      isagent: form["isagent"].value == "agent" ? true : false,
-      email: form["email"].value,
-      password: form["password"].value,
+  confirmPasswordValidator = (control: FormControl): ValidationErrors | null => {
+    if (!control.value) {
+      return null; // Don't validate if confirm password is empty
     }
   
-    let result = false;
-    for(let i = 0; i < this.arrOfUsers.length; i++){
-      if(this.registerForm.controls['email'].value == this.arrOfUsers[i]['email']) {
-        result = true;
-      }
+    const password = this.registerForm.get('password');
+  
+    if (password && control.value !== password.value) {
+      return { passwordMismatch: true };
     }
-    if(result){
-      this.registerForm.setErrors({ unauthenticated: true });
-    }else {
-      this.users.saveUserData(newUser).subscribe((res)=> res);
-      this.router.navigate(['signin']);
-    }
-
-    
+  
+    return null;
   }
 
-  handledropdown (){}
+  showSuccessMessage=false;
 
+  handlesubmit() {
+    // Collect form data
+    const formData = this.registerForm.value;
+  
+    // Prepare data to be sent to the API
+    const newUser = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      password_confirmation: formData.password_confirmation,
+      role: formData.role
+    };
+  
+    // Send data to the API
+    this.users.saveUserData(newUser).subscribe(
+      (response: any) => {
+        // Handle successful response from the API
+        console.log('Response from API:', response);
+        // Redirect the user to the login page with success message
+        this.router.navigate(['signin'], { queryParams: { successMessage: 'User registered successfully. Please log in.' } });
+      },
+      (error) => {
+        // Handle error response from the API
+        console.error('Error from API:', error);
+  
+        // Check if there are validation errors in the response
+        if (error && error.error && error.error.errors) {
+          // Loop through the validation errors and update form errors
+          for (const fieldName in error.error.errors) {
+            if (error.error.errors.hasOwnProperty(fieldName)) {
+              const errorMessage = error.error.errors[fieldName];
+              this.registerForm.get(fieldName)?.setErrors({ apiError: errorMessage });
+            }
+          }
+        }
+      }
+    );
+  }
+  
 
 }

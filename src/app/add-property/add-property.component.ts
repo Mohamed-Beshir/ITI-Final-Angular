@@ -139,4 +139,3 @@ deleteImage(index: number): void {
 }
   //
 }
-

@@ -3,59 +3,65 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { SmallFooterComponent } from '../small-footer/small-footer.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AddUserService } from '../services/add-user.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { UserLoggedService } from '../services/user-logged.service';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [NavbarComponent, SmallFooterComponent, ReactiveFormsModule],
+  imports: [NavbarComponent, SmallFooterComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
   signForm : FormGroup;
-  constructor (private formb : FormBuilder, private users : AddUserService, private router : Router, private userlogged : UserLoggedService) {
+  constructor (private formb : FormBuilder, private users : AddUserService, private router : Router, private userlogged : UserLoggedService, private route: ActivatedRoute) {
     this.signForm = this.formb.group({
       email: ['', [Validators.email,
          Validators.required,
           Validators.pattern('^[a-z][a-z 0-9 (-_.)]{3,40}@[a-z]{3,15}(.com|.net|.edu|.org)$')]],
       
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required]]
     })
   }
-  arrOfUsers : any;
-  loggedUser : any;
+  
+  successMessage: string | any;
   ngOnInit(){
-    this.users.getAllUsers().subscribe(res=> this.arrOfUsers = res)
-    this.userlogged.getuserLogged().subscribe(res=> this.loggedUser = res);
+    // Retrieve the success message from the query parameter
+    this.route.queryParams.subscribe(params => {
+      this.successMessage = params['successMessage'] || null;
+    });
+
   }
 
-  checkUser(){
-    let result = false;
-    let index = 0;
-    for(let i = 0; i < this.arrOfUsers.length; i++){
-      if(this.signForm.controls['email'].value == this.arrOfUsers[i]['email'] && this.signForm.controls['password'].value == this.arrOfUsers[i]['password']) {
-        index = i;
-        result = true
-      }
-    }
-
-    if(!result){
-      this.signForm.setErrors({ unauthenticated: true });
-    }else{
-      let newUser : any = {
-        id: this.arrOfUsers[index]['id'],
-        name: this.arrOfUsers[index]['name'],
-        isagent: this.arrOfUsers[index]['isagent'],
-        email: this.arrOfUsers[index]['email'],
-        password: this.arrOfUsers[index]['password'],
-      }
-
-      this.userlogged.saveUserLoggedData(newUser).subscribe(res=>res);
-      if(this.loggedUser.length){
-        this.router.navigate(['/']);
-      }
+  checkUser() {
+    if (this.signForm.valid) {
+      const formData = this.signForm.value;
+      // Send login data to the API
+      this.users.loginUser(formData).subscribe(
+        (response: any) => {
+          // Handle successful login response
+          console.log('Response from API:', response);
+          if (response.access_token) {
+            // User authenticated successfully
+            // Store access token and user data returned from api 
+            this.userlogged.setAccessToken(response.access_token);
+            this.userlogged.setUserData(response.user); 
+            // Redirect the user to the home page
+            this.router.navigate(['/']);
+          }
+        },
+        (error) => {
+          // Handle error response from the API
+          console.error('Error from API:', error);
+          if (error.error && error.error.message === 'Invalid credentials') {
+            // Invalid credentials error
+            // Set error message for display in the template
+            this.signForm.setErrors({ apiError: 'Invalid credentials' });
+          }
+        }
+      );
     }
   }
+  
 }
