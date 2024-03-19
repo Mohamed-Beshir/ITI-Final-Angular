@@ -4,18 +4,18 @@
       <aside id="edit-search">
 
           <header><h3>Search Properties</h3></header>
-          <form role="form" id="form-sidebar" class="form-search" action="http://themestarz.net/html/zoner/properties-listing.html">
+          <form role="form" id="form-sidebar" class="form-search" (submit)="search(status.value, city.value, district.value, propertyType.value, area.value, beds.value, baths.value, price.value)">
               <div class="form-group select_container">
-                  <select name="type">
-                      <option value="" >Status</option>
-                      <option value="1">Rent</option>
-                      <option value="2">Sale</option>
+                  <select #status>
+                      <option style="color: #777;" value="" >Status</option>
+                      <option value="for_rent">Rent</option>
+                      <option value="for_sale">Sale</option>
                   </select>
                   <div class="icon-dropdown">
                     <fa-icon [icon]="arrowdown"></fa-icon>
                   </div>
               </div><!-- /.form-group -->
-              <div class="form-group select_container">
+              <!-- <div class="form-group select_container">
                   <select name="country">
                       <option value="">Country</option>
                       <option value="1">France</option>
@@ -27,56 +27,146 @@
                   <div class="icon-dropdown">
                     <fa-icon [icon]="arrowdown"></fa-icon>
                   </div>
+              </div> -->
+              <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
+                <input  type="text" class="form-control rounded-0 h-100" placeholder="City" #city>
+              </div><!-- /.form-group -->
+              <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
+                <input type="text" class="form-control rounded-0 h-100" placeholder="District" #district>
               </div><!-- /.form-group -->
               <div class="form-group select_container">
-                  <select name="city">
-                      <option value="">City</option>
-                      <option value="1">New York</option>
-                      <option value="2">Los Angeles</option>
-                      <option value="3">Chicago</option>
-                      <option value="4">Houston</option>
-                      <option value="5">Philadelphia</option>
+                  <select name="property-type" #propertyType>
+                      <option style="color: #777;" value="">Property Type</option>
+                      <option value="Apartment">Apartment</option>
+                      <option value="Condominium">Condominium</option>
+                      <option value="Cottage">Cottage</option>
+                      <option value="Flat">Flat</option>
+                      <option value="House">House</option>
                   </select>
                   <div class="icon-dropdown">
                     <fa-icon [icon]="arrowdown"></fa-icon>
                   </div>
-              </div><!-- /.form-group -->
-              <div class="form-group select_container">
-                  <select name="district">
-                      <option value="">District</option>
-                      <option value="1">Manhattan</option>
-                      <option value="2">The Bronx</option>
-                      <option value="3">Brooklyn</option>
-                      <option value="4">Queens</option>
-                      <option value="5">Staten Island</option>
-                  </select>
+                </div><!-- /.form-group -->
+                <div class="form-group select_container">
+                  <select #area>
+                    <option style="color: #777;" value="">Area</option>
+                    <option value="50">+50</option>
+                    <option value="100">+100</option>
+                    <option value="150">+150</option>
+                    <option value="200">+200</option>
+                    <option value="300">+300</option>
+                    <option value="350">+350</option>
+                    <option value="400">+400</option>
+                    <option value="450">+450</option>
+                    <option value="500">+500</option>
+                    <option value="550">+550</option>
+                    <option value="600">+600</option>
+                    <option value="650">+650</option>
+                    <option value="700">+700</option>
+                    <option value="750">+750</option>
+                    <option value="800">+800</option>
+                    <option value="850">+850</option>
+                    <option value="900">+900</option>
+                    <option value="950">+950</option>
+                    <option value="1000">+1000</option>
+                </select>
                   <div class="icon-dropdown">
                     <fa-icon [icon]="arrowdown"></fa-icon>
                   </div>
-              </div><!-- /.form-group -->
-              <div class="form-group select_container">
-                  <select name="property-type">
-                      <option value="">Property Type</option>
-                      <option value="1">Apartment</option>
-                      <option value="2">Condominium</option>
-                      <option value="3">Cottage</option>
-                      <option value="4">Flat</option>
-                      <option value="5">House</option>
-                  </select>
+                </div><!-- /.form-group -->
+                <div class="form-group select_container">
+                  <select #price>
+                    <option style="color: #777;" value="">Price</option>
+                    <option value="50">+50</option>
+                    <option value="100">+100</option>
+                    <option value="150">+150</option>
+                    <option value="200">+200</option>
+                    <option value="300">+300</option>
+                    <option value="350">+350</option>
+                    <option value="400">+400</option>
+                    <option value="450">+450</option>
+                    <option value="500">+500</option>
+                    <option value="550">+550</option>
+                    <option value="600">+600</option>
+                    <option value="650">+650</option>
+                    <option value="700">+700</option>
+                    <option value="750">+750</option>
+                    <option value="800">+800</option>
+                    <option value="850">+850</option>
+                    <option value="900">+900</option>
+                    <option value="950">+950</option>
+                    <option value="1000">+1000</option>
+                    <option value="1100">+1100</option>
+                    <option value="1200">+1200</option>
+                    <option value="1300">+1300</option>
+                    <option value="1400">+1400</option>
+                    <option value="1500">+1500</option>
+                    <option value="1600">+1600</option>
+                    <option value="1700">+1700</option>
+                    <option value="1800">+1800</option>
+                    <option value="1900">+1900</option>
+                    <option value="2000">+2000</option>
+                    <option value="2500">+2500</option>
+                    <option value="3000">+3000</option>
+                    <option value="50">+5000</option>
+                    <option value="100">+10000</option>
+                    <option value="150">+15000</option>
+                    <option value="200">+20000</option>
+                    <option value="300">+30000</option>
+                    <option value="350">+35000</option>
+                    <option value="400">+40000</option>
+                    <option value="450">+45000</option>
+                    <option value="500">+50000</option>
+                    <option value="550">+55000</option>
+                    <option value="600">+60000</option>
+                    <option value="650">+65000</option>
+                    <option value="700">+70000</option>
+                    <option value="750">+75000</option>
+                    <option value="800">+80000</option>
+                    <option value="850">+85000</option>
+                    <option value="900">+90000</option>
+                    <option value="950">+95000</option>
+                    <option value="1000">+100000</option>
+                    <option value="1100">+110000</option>
+                    <option value="1200">+120000</option>
+                    <option value="1300">+130000</option>
+                    <option value="1400">+140000</option>
+                    <option value="1500">+150000</option>
+                    <option value="1600">+160000</option>
+                    <option value="1700">+170000</option>
+                    <option value="1800">+180000</option>
+                    <option value="1900">+190000</option>
+                    <option value="2000">+200000</option>
+                    <option value="2500">+250000</option>
+                    <option value="3000">+300000</option>
+                    <option value="400000">+400000</option>
+                    <option value="500000">+500000</option>
+                    <option value="600000">+600000</option>
+                    <option value="700000">+700000</option>
+                    <option value="800000">+800000</option>
+                    <option value="900000">+900000</option>
+                    <option value="1000000">+1000000</option>
+                </select>
                   <div class="icon-dropdown">
                     <fa-icon [icon]="arrowdown"></fa-icon>
                   </div>
-              </div><!-- /.form-group -->
-              <div class="form-group">
+                </div><!-- /.form-group -->
+                <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
+                  <input type="number" class="form-control rounded-0 h-100" min="0" placeholder="Beds" #beds>
+                </div>
+                <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
+                  <input type="number" class="form-control rounded-0 h-100" min="0" placeholder="Baths" #baths>
+                </div>
+              <!-- <div class="form-group">
                   <div class="price-range">
-                    <!-- <mat-slider min="1000" max="299000" discrete="true">
+                    <mat-slider min="1000" max="299000" discrete="true">
                       <input  matSliderStartThumb>
                       <input  matSliderEndThumb>
-                    </mat-slider> -->
+                    </mat-slider>
                   </div>
-              </div>
-              <div class="form-group ">
-                  <button style="width: 100%;" type="submit" class="btn btn-primary ">Search Now</button>
+              </div> -->
+              <div class="form-group p-0 mt-3" style="height: 43px;">
+                  <button style="width: 100%;" type="submit" class="btn btn-primary h-100">Search Now</button>
               </div><!-- /.form-group -->
           </form><!-- /#form-map -->
       </aside><!-- /#edit-search -->

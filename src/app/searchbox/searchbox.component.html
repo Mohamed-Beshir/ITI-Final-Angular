@@ -13,45 +13,202 @@
         <hr>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-sale" role="tabpanel" aria-labelledby="pills-sale-tab">
-                <form action="#" class="row">
-                    <div class="col-lg-2 col-md-4">
-                        <p-dropdown [options]="cities" placeholder="City"></p-dropdown>
+                <form class="row" (submit)="search(saleStatus.value, saleCity.value, saleDistrict.value, salePropertyType.value, saleArea.value, saleBeds.value, saleBaths.value, salePrice.value)">
+                    <input type="text" class="d-none" value="for_sale" #saleStatus>
+                    <div class="col-md-2 mb-2">
+                        <input type="text" class="form-control rounded-0 h-100" placeholder="City" #saleCity>
+                        <!-- <p-dropdown [options]="cities" placeholder="City"></p-dropdown> -->
                     </div>
-                    <div class="col-lg-2 col-md-4">
-                        <p-dropdown [options]="districts" placeholder="District"></p-dropdown>
+                    <div class="col-md-2 mb-2">
+                        <input type="text" class="form-control rounded-0 h-100" placeholder="District" #saleDistrict>
+                        <!-- <p-dropdown [options]="districts" placeholder="District"></p-dropdown> -->
                     </div>
-                    <div class="col-lg-2 col-md-4">
-                        <p-dropdown [options]="propertyTypes" placeholder="Property Type"></p-dropdown>
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select rounded-0 h-100" #salePropertyType>
+                            <option style="color: #777;" value="" selected>Property Type</option>
+                            <option value="Apartment">Apartment</option>
+                            <option value="Condominium">Condominium</option>
+                            <option value="Cottage">Cottage</option>
+                            <option value="Flat">Flat</option>
+                            <option value="House">House</option>
+                        </select>
                     </div>
-                    <div class="col-lg-2 col-md-4">
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select rounded-0 h-100" #salePrice>
+                            <option style="color: #777;" value="">Price</option>
+                            <option value="50">+5000</option>
+                            <option value="100">+10000</option>
+                            <option value="150">+15000</option>
+                            <option value="200">+20000</option>
+                            <option value="300">+30000</option>
+                            <option value="350">+35000</option>
+                            <option value="400">+40000</option>
+                            <option value="450">+45000</option>
+                            <option value="500">+50000</option>
+                            <option value="550">+55000</option>
+                            <option value="600">+60000</option>
+                            <option value="650">+65000</option>
+                            <option value="700">+70000</option>
+                            <option value="750">+75000</option>
+                            <option value="800">+80000</option>
+                            <option value="850">+85000</option>
+                            <option value="900">+90000</option>
+                            <option value="950">+95000</option>
+                            <option value="1000">+100000</option>
+                            <option value="1100">+110000</option>
+                            <option value="1200">+120000</option>
+                            <option value="1300">+130000</option>
+                            <option value="1400">+140000</option>
+                            <option value="1500">+150000</option>
+                            <option value="1600">+160000</option>
+                            <option value="1700">+170000</option>
+                            <option value="1800">+180000</option>
+                            <option value="1900">+190000</option>
+                            <option value="2000">+200000</option>
+                            <option value="2500">+250000</option>
+                            <option value="3000">+300000</option>
+                            <option value="400000">+400000</option>
+                            <option value="500000">+500000</option>
+                            <option value="600000">+600000</option>
+                            <option value="700000">+700000</option>
+                            <option value="800000">+800000</option>
+                            <option value="900000">+900000</option>
+                            <option value="1000000">+1000000</option>
+                        </select>
+                      </div><!-- /.form-group -->
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select rounded-0 h-100" #saleArea>
+                            <option style="color: #777;" value="">Area</option>
+                            <option value="50">+50</option>
+                            <option value="100">+100</option>
+                            <option value="150">+150</option>
+                            <option value="200">+200</option>
+                            <option value="300">+300</option>
+                            <option value="350">+350</option>
+                            <option value="400">+400</option>
+                            <option value="450">+450</option>
+                            <option value="500">+500</option>
+                            <option value="550">+550</option>
+                            <option value="600">+600</option>
+                            <option value="650">+650</option>
+                            <option value="700">+700</option>
+                            <option value="750">+750</option>
+                            <option value="800">+800</option>
+                            <option value="850">+850</option>
+                            <option value="900">+900</option>
+                            <option value="950">+950</option>
+                            <option value="1000">+1000</option>
+                        </select>
+                      </div><!-- /.form-group -->
+                      <div class="col-md-2 mb-2">
+                        <input type="number" class="form-control rounded-0 h-100" min="0" placeholder="Beds" #saleBeds>
+                      </div>
+                      <div class="col-md-2 mb-2">
+                        <input type="number" class="form-control rounded-0 h-100" min="0" placeholder="Baths" #saleBaths>
+                      </div>
+                    <!-- <div class="col-lg-2 col-md-4">
                         <p-dropdown [options]="prices" placeholder="Price"></p-dropdown>
                     </div>
                     <div class="col-lg-2 col-md-4">
                         <p-dropdown [options]="paymentMethods" placeholder="Payment"></p-dropdown>
-                    </div>
-                    <div class="col-lg-2 col-md-4">
-                        <button type="submit" class="w-100 search-button">Search Sale</button>
+                    </div> -->
+                    <div class="col-md-4">
+                        <button type="submit" class="w-100 search-button h-100">Search Sale</button>
                     </div>
                 </form>
             </div>
             <div class="tab-pane fade" id="pills-rent" role="tabpanel" aria-labelledby="pills-rent-tab">
-                <form action="#" class="row">
-                    <div class="col-lg-2 col-md-4">
-                        <p-dropdown [options]="cities" placeholder="City"></p-dropdown>
+                <form class="row" (submit)="search(status.value, city.value, district.value, propertyType.value, area.value, beds.value, baths.value, price.value)">
+                    <input type="text" class="d-none" value="for_rent" #status>
+                    <div class="col-md-2 mb-2">
+                        <input type="text" class="form-control rounded-0 h-100" placeholder="City" #city>
                     </div>
-                    <div class="col-lg-2 col-md-4">
-                        <p-dropdown [options]="districts" placeholder="District"></p-dropdown>
+                    <div class="col-md-2 mb-2">
+                        <input type="text" class="form-control rounded-0 h-100" placeholder="District" #district>
                     </div>
-                    <div class="col-lg-2 col-md-4">
-                        <p-dropdown [options]="propertyTypes" placeholder="Property Type"></p-dropdown>
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select rounded-0 h-100" #propertyType>
+                            <option style="color: #777;" value="" selected>Property Type</option>
+                            <option value="Apartment">Apartment</option>
+                            <option value="Condominium">Condominium</option>
+                            <option value="Cottage">Cottage</option>
+                            <option value="Flat">Flat</option>
+                            <option value="House">House</option>
+                        </select>
                     </div>
-                    <div class="col-lg-2 col-md-4">
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select rounded-0 h-100" #price>
+                            <option style="color: #777;" value="">Price</option>
+                            <option value="50">+50</option>
+                            <option value="100">+100</option>
+                            <option value="150">+150</option>
+                            <option value="200">+200</option>
+                            <option value="300">+300</option>
+                            <option value="350">+350</option>
+                            <option value="400">+400</option>
+                            <option value="450">+450</option>
+                            <option value="500">+500</option>
+                            <option value="550">+550</option>
+                            <option value="600">+600</option>
+                            <option value="650">+650</option>
+                            <option value="700">+700</option>
+                            <option value="750">+750</option>
+                            <option value="800">+800</option>
+                            <option value="850">+850</option>
+                            <option value="900">+900</option>
+                            <option value="950">+950</option>
+                            <option value="1000">+1000</option>
+                            <option value="1100">+1100</option>
+                            <option value="1200">+1200</option>
+                            <option value="1300">+1300</option>
+                            <option value="1400">+1400</option>
+                            <option value="1500">+1500</option>
+                            <option value="1600">+1600</option>
+                            <option value="1700">+1700</option>
+                            <option value="1800">+1800</option>
+                            <option value="1900">+1900</option>
+                            <option value="2000">+2000</option>
+                            <option value="2500">+2500</option>
+                            <option value="3000">+3000</option>
+                        </select>
+                      </div><!-- /.form-group -->
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select rounded-0 h-100" #area>
+                            <option style="color: #777;" value="">Area</option>
+                            <option value="50">+50</option>
+                            <option value="100">+100</option>
+                            <option value="150">+150</option>
+                            <option value="200">+200</option>
+                            <option value="300">+300</option>
+                            <option value="350">+350</option>
+                            <option value="400">+400</option>
+                            <option value="450">+450</option>
+                            <option value="500">+500</option>
+                            <option value="550">+550</option>
+                            <option value="600">+600</option>
+                            <option value="650">+650</option>
+                            <option value="700">+700</option>
+                            <option value="750">+750</option>
+                            <option value="800">+800</option>
+                            <option value="850">+850</option>
+                            <option value="900">+900</option>
+                            <option value="950">+950</option>
+                            <option value="1000">+1000</option>
+                        </select>
+                      </div><!-- /.form-group -->
+                      <div class="col-md-2 mb-2">
+                        <input type="number" class="form-control rounded-0 h-100" min="0" placeholder="Beds" #beds>
+                      </div>
+                      <div class="col-md-2 mb-2">
+                        <input type="number" class="form-control rounded-0 h-100" min="0" placeholder="Baths" #baths>
+                      </div>
+                    <!-- <div class="col-lg-2 col-md-4">
                         <p-dropdown [options]="rentalPeriods" placeholder="Rental Period"></p-dropdown>
                     </div>
                     <div class="col-lg-2 col-md-4">
                         <p-dropdown [options]="rentalPrices" placeholder="Price"></p-dropdown>
-                    </div>
-                    <div class="col-lg-2 col-md-4">
+                    </div> -->
+                    <div class="col-md-4">
                         <button type="submit" class="w-100 search-button">Search Rent</button>
                     </div>
                 </form>

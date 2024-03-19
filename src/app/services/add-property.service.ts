@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -23,5 +23,22 @@ export class AddPropertyService {
   }
   deletePropertyFromApi (id :number) {
     return this.http.delete(`${this.api}/${id}`)
+  }
+
+  searchProperties(city: string, district: string, propertyType: string, status : string, area : string, beds : string, baths : string, price : string){
+    let params = new HttpParams();
+    if (city) params = params.set('city', city);
+    if (district) params = params.set('district', district);
+    if (propertyType) params = params.set('propertyType', propertyType);
+    if (status) params = params.set('status', status);
+    if (area) params = params.set('area', area);
+    if (beds) params = params.set('beds', beds);
+    if (baths) params = params.set('baths', baths);
+    if (price) params = params.set('price', price);
+    return this.http.get(`${this.api}-search`, { params });
+  }
+
+  getAllPropertyOrderBy(orderBy: string) {
+    return this.http.get(`${this.api}?order_by=${orderBy}`);
   }
 }

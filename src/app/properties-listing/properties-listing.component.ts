@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 // import {MatSliderModule} from '@angular/material/slider';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
 import { SmallFooterComponent } from '../small-footer/small-footer.component';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterEvent, RouterLink } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
 import { AddPropertyService } from '../services/add-property.service';
 
@@ -42,10 +42,27 @@ arrow=faAngleRight;
 arrowdown=faAngleDown;
 
 data: any;
-constructor(private apiService: AddPropertyService) { }
-ngOnInit(): void {
-  this.fetchDataFromApi();
+queryParams : any;
+properties: any;
+constructor(private apiService: AddPropertyService, private route : ActivatedRoute) {
+  const myArray = this.route.snapshot.queryParamMap.get('myArray');
+  if (myArray === null) {
+    this.properties = new Array();
+  } else {
+    this.properties = JSON.parse(myArray);
+  }
 }
+
+
+ngOnInit(): void {
+  const myArray = this.route.snapshot.queryParamMap.get('myArray')
+  if(myArray){
+    this.data = this.properties;
+  }else{
+    this.fetchDataFromApi();
+  }
+}
+
 fetchDataFromApi() {
   this.apiService.getAllProperty().subscribe((data) => {
     this.data = data;
@@ -53,7 +70,13 @@ fetchDataFromApi() {
 }
 
 
-
+sort (order_by : string) {
+  console.log(order_by)
+  this.apiService.getAllPropertyOrderBy(order_by)
+      .subscribe(data => {
+        this.data = data;
+  })
+}
   // propertys:Array<any>=
   // [{
   //   "id":1,

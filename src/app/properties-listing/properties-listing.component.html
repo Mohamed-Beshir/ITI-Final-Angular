@@ -25,10 +25,12 @@
                               <!-- <span class="search-count">28</span> -->
                               <div class="sorting ">
                                   <div class="form-group select_container1">
-                                      <select name="sorting" >
+                                      <select name="sorting" #order (click)="sort(order.value)">
                                           <option value="">Sort By</option>
                                           <option value="1">Lowest price first</option>
                                           <option value="2">Highest price first</option>
+                                          <option value="Lowest_area">Lowest area first</option>
+                                          <option  value="Highest_area">Highest area first</option>
                                           <option value="3">Date added</option>
                                       </select>
                                       <div class="icon-dropdown">
@@ -76,5 +78,4 @@
     <!-- end Page Content -->
 
     <app-big-footer></app-big-footer>
-    <app-small-footer></app-small-footer>
   </div>
