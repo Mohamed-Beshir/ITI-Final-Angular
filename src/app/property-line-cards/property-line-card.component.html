@@ -2,7 +2,7 @@
     <div class="row">
 
         <div class="image col-12 col-lg-4 p-0">
-            <figure class="type position-absolute bg-white" title="Apartment"><img src="assets/img/property-types/apartment.png" alt=""></figure>
+            <figure class="type position-absolute bg-white" title="{{property.type}}"><img src="assets/img/property-types/{{property.type}}.png" alt=""></figure>
             <a [routerLink]="['/property-details', property.id]">
                 <img alt="" src="assets/img/properties/property-01.jpg" class="w-100">
             </a>
