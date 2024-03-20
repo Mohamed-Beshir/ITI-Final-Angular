@@ -10,21 +10,26 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
 import { Property_RentsService } from '../services/property-rents.service';
 import { PropertySalesService } from '../services/property-sales.service';
+import { HttpClientModule,HttpClient } from '@angular/common/http';
 
 
 @Component({
   selector: 'app-add-property',
   standalone: true,
-  imports: [FontAwesomeModule,ReactiveFormsModule,CommonModule, NavbarComponent, BigFooterComponent],
+  imports: [FontAwesomeModule,ReactiveFormsModule,CommonModule, NavbarComponent, BigFooterComponent,HttpClientModule],
   templateUrl: './add-property.component.html',
   styleUrl: './add-property.component.css'
 })
 export class AddPropertyComponent{
   chech=faCheck;
   upload=faUpload;
-  
-  myForm : FormGroup; 
-  constructor(private formBuilder : FormBuilder, private property : AddPropertyService, private router : Router, private property_rents : Property_RentsService, private property_sales : PropertySalesService){
+//image
+errorMessage: string | null = null;
+successMessage: string | null = null;
+selectedImages: { file: File, url: string }[] = [];
+//
+  myForm : FormGroup;
+  constructor(private formBuilder : FormBuilder, private property : AddPropertyService, private router : Router, private property_rents : Property_RentsService, private property_sales : PropertySalesService,private http: HttpClient){
 
     this.myForm = this.formBuilder.group({
       title: ["", [Validators.required]],
@@ -45,9 +50,9 @@ export class AddPropertyComponent{
   img_1:any;
   img_2:any;
   img_3:any;
-
+  // add async
   lastRow: any;
-  onSubmit() {
+  async onSubmit() {
     let file = this.myForm.get('image')?.value;
     let imgName = file.split("\\");
     let currentDate = new Date()
@@ -94,48 +99,83 @@ export class AddPropertyComponent{
       });
 
       // this.router.navigate(["my-properties"])
-      
+
     }
+    const formData = new FormData();
+    for (let i = 0; i < this.selectedImages.length; i++) {
+      formData.append('images[]', this.selectedImages[i].file);
+    }
+
+    try {
+      const response = await this.http.post('http://localhost:8000/api/images', formData).toPromise();
+      this.successMessage = 'Images uploaded successfully.';
+    } catch (error) {
+      console.error('Error:', error);
+      this.errorMessage = 'Error uploading images. Please try again later.';
+    }
+    //
   }
 
   //
   upload1 = 'upload'; // Assuming you have defined the 'upload' icon
   images: { url: string }[] = []; // Define the images property
 
-  onFileSelected(event: any): void {
+//   onFileSelected(event: any): void {
+//     const files: FileList = event.target.files;
+//     if (files && files.length > 0) {
+//       // Clear existing images
+//       this.images = [];
+
+//       for (let i = 0; i < files.length; i++) {
+//         const img: File = files[i];
+//         i == 0 ? this.img_1 = img.name : "";
+//         i == 1 ? this.img_2 = img.name : "";
+//         i == 2 ? this.img_3 = img.name : "";
+//       }
+//       // Process the selected files
+//       for (let i = 0; i < files.length; i++) {
+//         const imgs: FileList = event.target.files;
+
+//         const file: File | null = files.item(i); // Allow file to be null
+//         if (file) {
+//           const reader = new FileReader();
+
+//           reader.onload = (e: any) => {
+//             // Push the image URL to the array
+//             this.images.push({ url: e.target.result });
+//           };
+
+//           // Read the file as a data URL
+//           reader.readAsDataURL(file);
+//         }
+//       }
+//     }
+//   }
+// //
+// deleteImage(index: number): void {
+//   this.images.splice(index, 1); // Remove the image at the specified index
+// }
+  //
+  onFileChange(event: any) {
     const files: FileList = event.target.files;
-    if (files && files.length > 0) {
-      // Clear existing images
-      this.images = [];
+    const remainingSlots = 4 - this.selectedImages.length;
 
-      for (let i = 0; i < files.length; i++) {
-        const img: File = files[i];
-        i == 0 ? this.img_1 = img.name : "";
-        i == 1 ? this.img_2 = img.name : "";
-        i == 2 ? this.img_3 = img.name : "";
-      }
-      // Process the selected files
-      for (let i = 0; i < files.length; i++) {
-        const imgs: FileList = event.target.files;
+    if (files.length > remainingSlots) {
+      alert("You can only select up to 4 images.");
+      return;
+    }
 
-        const file: File | null = files.item(i); // Allow file to be null
-        if (file) {
-          const reader = new FileReader();
-
-          reader.onload = (e: any) => {
-            // Push the image URL to the array
-            this.images.push({ url: e.target.result });
-          };
-
-          // Read the file as a data URL
-          reader.readAsDataURL(file);
-        }
-      }
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.selectedImages.push({ file, url: reader.result as string });
+      };
+      reader.readAsDataURL(file);
     }
   }
-//
-deleteImage(index: number): void {
-  this.images.splice(index, 1); // Remove the image at the specified index
+
+onDelete(index: number) {
+  this.selectedImages.splice(index, 1);
 }
-  //
 }
