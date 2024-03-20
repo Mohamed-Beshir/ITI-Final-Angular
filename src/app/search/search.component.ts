@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 //
 
@@ -27,6 +27,8 @@ export class SearchComponent {
   arrow=faAngleRight;
   arrowdown=faAngleDown;
 
+  @Input() dataStatus : any;
+
   constructor(private propertyService: AddPropertyService, private route: Router) { }
 
   search(status : string, city : string, district : string, propertyType : string, area : string, beds : string, baths : string, price : string): void {
@@ -39,9 +41,21 @@ export class SearchComponent {
         const navigationExtras: NavigationExtras = {
           queryParams
         };
-        this.route.navigateByUrl('').then(()=>{
-          this.route.navigate(['property-listing'] , navigationExtras );
-        })
+        if(!this.dataStatus){
+          this.route.navigateByUrl('').then(()=>{
+            this.route.navigate(['property-listing'] , navigationExtras );
+          })
+        }else {
+          if(status == 'for_sale'){
+            this.route.navigateByUrl('').then(()=>{
+              this.route.navigate(['property-sale'] , navigationExtras );
+            })
+          }else{
+            this.route.navigateByUrl('').then(()=>{
+              this.route.navigate(['property-rent'] , navigationExtras );
+            })
+          }
+        }
       });
   }
 

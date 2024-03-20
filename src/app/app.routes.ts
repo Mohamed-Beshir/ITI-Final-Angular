@@ -11,6 +11,8 @@ import { PropertiesListingComponent } from './properties-listing/properties-list
 import { EditPropertyComponent } from './edit-property/edit-property.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RequestsPropertiesComponent } from './requests-properties/requests-properties.component';
+import { PropertiesRentComponent } from './properties-rent/properties-rent.component';
+import { PropertiesSaleComponent } from './properties-sale/properties-sale.component';
 
 
 export const routes: Routes = [
@@ -23,6 +25,8 @@ export const routes: Routes = [
     { path: 'add-property', component: AddPropertyComponent},
     { path: 'edit-property/:id', component: EditPropertyComponent},
     { path: 'property-listing' , component: PropertiesListingComponent},
+    { path: 'property-rent' , component: PropertiesRentComponent},
+    { path: 'property-sale' , component: PropertiesSaleComponent},
     { path: 'dashboard' , component: DashboardComponent},
     { path: 'requests' , component: RequestsPropertiesComponent}
 ];

@@ -1,0 +1,12 @@
+@media (max-width: 991) {
+  .property > div > .image {
+    position: relative;
+  }
+}
+figure.type {
+  right: 10px;
+  top: 0px;
+}
+aside {
+  font-size: 12px
+}
