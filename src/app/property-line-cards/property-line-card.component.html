@@ -4,7 +4,7 @@
         <div class="image col-12 col-lg-4 p-0">
             <figure class="type position-absolute bg-white" title="{{property.type}}"><img src="assets/img/property-types/{{property.type}}.png" alt=""></figure>
             <a [routerLink]="['/property-details', property.id]">
-                <img alt="" src="assets/img/properties/property-01.jpg" class="w-100">
+                <img alt="" src="http://localhost:8000/images/{{property.image}}" class="w-100">
             </a>
         </div>
         <div class="col-12 col-lg-8 p-0">
@@ -13,7 +13,7 @@
                     <a class="text-decoration-none" [routerLink]="['/property-details', property.id]"><h3 style="color: #073855;">{{property.title}}</h3></a>
                     <figure class="m-0">{{property.type}}, {{property.street}}, {{property.city}}</figure>
                 </header>
-                <div class="rounded-0 my-2 badge px-3 py-2" style="background-color: #1396e2;">LE {{property.title}}</div>
+                <div class="rounded-0 my-2 badge px-3 py-2" style="background-color: #1396e2;">LE {{property.price ?? 'd'}}</div>
                 <aside class="row px-3 px-lg-0">
                     <div class="col-12 col-lg-7 col-xl-8">
                         <p class="m-0 lh-lg">{{property.description}}</p>

@@ -5,7 +5,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddPropertyService } from '../services/add-property.service';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { UserLoggedService } from '../services/user-logged.service';
 import { RequestPropertyService } from '../services/request-property.service';
 import { ReviewComponent } from '../review/review.component';
@@ -18,7 +18,7 @@ import { RatingPipe } from '../pipe/rating.pipe';
 @Component({
   selector: 'app-property-details',
   standalone: true,
-  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe],
+  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe, NgFor],
   templateUrl: './property-details.component.html',
   styleUrl: './property-details.component.css'
 })

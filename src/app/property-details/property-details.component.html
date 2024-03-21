@@ -18,14 +18,8 @@
                     </header>
                     <div id="carouselExampleFade" class="carousel slide carousel-fade mb-4" *ngIf="property">
                         <div class="carousel-inner">
-                          <div class="carousel-item active">
-                            <img src="../../assets/img/properties/{{property.image[0]}}" class="d-block w-100" style="height: 514px">
-                          </div>
-                          <div class="carousel-item">
-                            <img src="../../assets/img/properties/{{property.image[1]}}" class="d-block w-100" style="height:514px">
-                          </div>
-                          <div class="carousel-item">
-                            <img src="../../assets/img/properties/{{property.image[2]}}" class="d-block w-100" style="height:514px">
+                          <div class="carousel-item" *ngFor="let image of property.image; let i = index" [class.active]="i === 0">
+                            <img src="http://localhost:8000/images/{{image}}" class="d-block w-100" style="height: 514px">
                           </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">

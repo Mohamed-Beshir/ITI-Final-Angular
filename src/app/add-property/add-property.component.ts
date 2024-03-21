@@ -95,24 +95,19 @@ selectedImages: { file: File, url: string }[] = [];
             }
             this.property_sales.saveProperty_salesData(property_sale).subscribe(res => console.log(res));
           }
+          const formData = new FormData();
+          for (let i = 0; i < this.selectedImages.length; i++) {
+            formData.append('images[]', this.selectedImages[i].file);
+          }
+          this.http.post(`http://localhost:8000/api/images?property_id=${resp.id.toString()}`, formData).subscribe(res => console.log(res));
         });
+        
       });
 
       // this.router.navigate(["my-properties"])
-
-    }
-    const formData = new FormData();
-    for (let i = 0; i < this.selectedImages.length; i++) {
-      formData.append('images[]', this.selectedImages[i].file);
+//
     }
 
-    try {
-      const response = await this.http.post('http://localhost:8000/api/images', formData).toPromise();
-      this.successMessage = 'Images uploaded successfully.';
-    } catch (error) {
-      console.error('Error:', error);
-      this.errorMessage = 'Error uploading images. Please try again later.';
-    }
     //
   }
 
