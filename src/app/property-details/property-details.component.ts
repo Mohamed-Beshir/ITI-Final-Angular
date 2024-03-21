@@ -5,7 +5,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddPropertyService } from '../services/add-property.service';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { UserLoggedService } from '../services/user-logged.service';
 import { RequestPropertyService } from '../services/request-property.service';
 import { ReviewComponent } from '../review/review.component';
@@ -18,7 +18,7 @@ import { RatingPipe } from '../pipe/rating.pipe';
 @Component({
   selector: 'app-property-details',
   standalone: true,
-  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe],
+  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe, CommonModule],
   templateUrl: './property-details.component.html',
   styleUrl: './property-details.component.css'
 })
@@ -28,11 +28,12 @@ export class PropertyDetailsComponent implements OnInit{
   userLogged : any;
   requestProperty : any;
   resultRequest : boolean = false;
-
   rateData : any;
   commentData : any;
-
   registerForm: FormGroup;
+  userId: any;
+  addReviewService: any;
+  completedReview!: boolean;
   constructor(private route: ActivatedRoute, private property_details : AddPropertyService, private user_logged : UserLoggedService, private request : RequestPropertyService,  private formBuilder: FormBuilder, private rateApi : RateService, private commentApi : CommentService, private router : Router) {
     this.registerForm = new FormGroup({
       comment: new FormControl('', [
@@ -65,16 +66,6 @@ export class PropertyDetailsComponent implements OnInit{
       }
     });
 
-    // this.requestProperty.forEach((req : any) => {
-      
-    //   this.userLogged.forEach((user :any) => {
-    //     if(req.user_id == user.id && req.property_id == this.property.id ){
-    //       this.resultRequest = true;
-    //       console.log(this.resultRequest);
-    //     }
-    //   })
-    // });
-
     this.rateApi.getAllRate().subscribe(res => {
       this.rateData = res;
       for(let i = 0; i < this.rateData.length; i++){
@@ -89,8 +80,29 @@ export class PropertyDetailsComponent implements OnInit{
     });
     this.commentApi.getAllComment().subscribe(res => this.commentData = res);
 
+//////////////////////////////////////////////////////////////////////////////////////
+
+    this.id = this.route.snapshot.params['id'];
+    // Get the user ID from wherever you have it available, e.g., from authentication service
+    this.userId = getUserData(); 
+
+    this.registerForm = this.formBuilder.group({
+      rate: ['', Validators.required],
+      comment: ['', [Validators.required, Validators.minLength(3)]]
+    });
+
+    this.getComments();
 
   }
+
+
+  getComments() {
+    this.commentData = []; // Fetch comments based on the property ID and populate commentData
+  }
+  
+  
+
+ 
 
 isRequested : boolean = true;
   sendRequest(property_id : number){
@@ -118,63 +130,6 @@ isRequested : boolean = true;
   }
 
 
-  rateId : any;
- rateChange : boolean = false;
- completedReview : boolean = false;
-  handlesubmit() {
-    // save register data in object
-    let form = this.registerForm.controls;
-    let currentDate = new Date()
-    let commentUser = {
-      name: this.userLogged[1].name,
-      email: this.userLogged[1].email,
-      date: currentDate.getDate()+"."+currentDate.getMonth()+"."+currentDate.getFullYear(),
-      comment: form["comment"].value,
-      property_id: this.id
-    }
-    let rateUser = {
-      email: this.userLogged[1].email,
-      rate: form["rate"].value,
-      property_id: this.id
-    }
-
-
-
-
-    // this.rateData.forEach((rate : any) => {
-    //   this.userLogged.forEach((user : any) => {
-    //     if(rate.email == user.email){
-    //       this.rateChange  = true;
-    //       this.rateId = rate.id;
-    //     }
-    //   })
-    // });
-
-    for(let i = 0; i < this.rateData.length; i++){
-      if(this.userLogged[1].email == this.rateData[i].email && this.id == this.rateData[i].property_id){
-        this.rateChange = true;
-        this.rateId = this.rateData[i].id;
-        i = this.rateData.length
-        console.log("hello");
-      }
-    }
-    
-    this.commentApi.saveCommentData(commentUser).subscribe(res => res);
-    this.completedReview = true;
-
-    if(this.rateChange){
-      this.rateApi.updateRate(this.rateId, rateUser).subscribe(res => res);
-      console.log(true);
-    }else {
-      this.rateApi.saveRateData(rateUser).subscribe(res => res);
-      console.log(false);
-      this.router.navigate(['/property-listing']);
-    }
-
-    
-    this.reloadComponent()
-  }
-
   reloadComponent(): void {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
       this.router.navigate(['/property-details', this.id]);
@@ -187,20 +142,9 @@ isRequested : boolean = true;
     });
   }
 
-  deleteComment(id:number){
-    this.commentApi.deleteCommentFromApi(id).subscribe()
-    this.reloadComponent()
-  }
-
-  updateComment(id:number){
-    // this.commentApi.updateComment(id, ).subscribe()
-    this.reloadComponent()
-  }
 
 
-
-
-  @ViewChild('modal') modal: any;
+@ViewChild('modal') modal: any;
 
   openModal(item: any): void {
       // Populate modal content with item-specific data
@@ -215,4 +159,51 @@ isRequested : boolean = true;
   userValue!: number;
   overallValue: number = 4;
   similarProperties = [{id : 1},{id : 2},{id : 3}];
+
+
+
+
+  handlesubmit() {
+    if (this.registerForm.valid) {
+      const reviewData = {
+        property_id: this.id,
+        user_id: this.userId, // Include user ID in the review data
+        rating: this.registerForm.value.rate,
+        comment: this.registerForm.value.comment
+      };
+
+      this.addReviewService.createReview(reviewData).subscribe(
+        (response: any) => {
+          console.log('Review submitted successfully:', response);
+          this.completedReview = true;
+          this.registerForm.reset();
+          this.getComments();
+        },
+        (error: any) => {
+          console.error('Failed to submit review:', error);
+        }
+      );
+    }
+  }
+
+  deleteComment(commentId: any) {
+    console.log('Deleting comment with ID:', commentId);
+    this.getComments();
+  }
+
+  
 }
+
+
+
+
+
+
+
+
+
+
+function getUserData(): any {
+  throw new Error('Function not implemented.');
+}
+

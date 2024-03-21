@@ -4,24 +4,29 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
+
 export class AddReviewService {
-  api: any = 'https://retoolapi.dev/LToEEu/review';
+  private apiUrl = 'http://localhost:8000/api/reviews';
 
   constructor(private http: HttpClient) {}
 
-  getAllReview() {
-    return this.http.get(this.api);
+  getAllReviews() {
+    return this.http.get(this.apiUrl);
   }
-  getReview(id: string) {
-    return this.http.get(`${this.api}${id}`);
+
+  getReviewById(id: string) {
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
-  createReview(data: any) {
-    return this.http.post(this.api, data);
+
+  createReview(reviewData: any) {
+    return this.http.post(this.apiUrl, reviewData);
   }
-  updateReview(id: string, updateReview: any) {
-    return this.http.put(`${this.api}/${id}`, updateReview);
+
+  updateReview(id: string, updatedReview: any) {
+    return this.http.put(`${this.apiUrl}/${id}`, updatedReview);
   }
+
   deleteReview(id: string) {
-    return this.http.delete(`${this.api}/${id}`);
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

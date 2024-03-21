@@ -1,8 +1,6 @@
 <app-navbar></app-navbar>
 <!-- Page Content -->
 <div id="page-content">
-   
-
     <div class="container my-5">
         <div class="row">
             <!-- Property Detail Content -->
@@ -147,29 +145,29 @@
                             </section> -->
                             <hr class="thick">
                             <section id="comments">
-                                <header><h2 class="no-border">Comments</h2></header>
+                                <header>
+                                    <h2 class="no-border">Comments</h2>
+                                </header>
                                 <ul class="comments">
-                                    @for (comment of commentData; track comment) {
-                                        @if(comment.property_id == id){
-                                            <li class="comment w-100">
-                                                <figure>
-                                                    <div class="image">
-                                                        <img alt="" src="assets/img/user.png">
-                                                    </div>
-                                                </figure>
-                                                <div class="comment-wrapper">
-                                                    <div class="name">{{comment.name}}</div>
-                                                    <span class="date"><span class="fa fa-calendar"></span>{{comment.date}}</span>
-                                                    <div class="rating rating-individual" data-score="5"></div>
-                                                    <p>{{comment.comment}}</p>
-                                                    @if(comment.email ==userLogged[1].email){
-                                                        <a class="reply" style="cursor: pointer;" (click)="deleteComment(comment.id)"><span class="fa fa-reply text-danger"></span>delete</a>
-                                                    }
-                                                    <hr>
+                                    <li *ngFor="let comment of commentData">
+                                        <div class="comment w-100" *ngIf="comment.property_id == id">
+                                            <figure>
+                                                <div class="image">
+                                                    <img alt="" src="assets/img/user.png">
                                                 </div>
-                                            </li>
-                                        }
-                                    }
+                                            </figure>
+                                            <div class="comment-wrapper">
+                                                <div class="name">{{comment.name}}</div>
+                                                <span class="date"><span class="fa fa-calendar"></span>{{comment.date}}</span>
+                                                <div class="rating rating-individual" data-score="5"></div>
+                                                <p>{{comment.comment}}</p>
+                                                <a class="reply" style="cursor: pointer;" *ngIf="comment.email == userLogged[1].email" (click)="deleteComment(comment.id)">
+                                                    <span class="fa fa-reply text-danger"></span>delete
+                                                </a>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </section>
                             <hr class="thick">
@@ -181,7 +179,7 @@
                                     <div id="agency">
                                         <div class="form-group">
                                             <label for="account-agency" class="text-secondary my-2" style="opacity: 0.6"
-                                                formControlName="dropdownValue">Select your agency:</label>
+                                                formControlName="dropdownValue">Select your Rate</label>
                                             <br />
                                             <select formControlName="rate" class="custom-dropdown" name="account-agency" id="account-agency" class="text-secondary">
                                                 <option value="">Select rate:</option>
@@ -191,39 +189,32 @@
                                                 <option value="4">good</option>
                                                 <option value="5">very good</option>
                                             </select>
-                                            @if(registerForm.controls['rate'].invalid &&
-                                            registerForm.controls['rate'].touched ){
-                                            @if(registerForm.controls['rate'].errors?.['required']) {
-                                            <span class="form-text text-danger"> Required </span>
-                                            }}
+                                            <span *ngIf="registerForm.controls['rate'].invalid && registerForm.controls['rate'].touched"
+                                                class="form-text text-danger">Required</span>
                                         </div>
                                     </div>
-                                
+                            
                                     <hr />
                                     <div class="form-group mb-3" [formGroup]="registerForm">
                                         <label for="form-create-account-full-name" style="font-weight: bold; color: rgb(92, 91, 91)">Comment:</label>
                                         <textarea type="text" class="form-control" id="form-create-account-full-name" required
-                                            style="background-color: rgb(242, 241, 241); border-radius: 0; height: 300px; resize: none;" class="form-control" id="fullname"
-                                            formControlName="comment" ></textarea>
-                                        @if(registerForm.controls['comment'].invalid &&
-                                        registerForm.controls['comment'].touched ){
-                                        @if(registerForm.controls['comment'].errors?.['minlength']) {
-                                        <span class="form-text text-danger"> Min length is 3 </span>
-                                        }}
+                                            style="background-color: rgb(242, 241, 241); border-radius: 0; height: 300px; resize: none;"
+                                            class="form-control" id="fullname" formControlName="comment"></textarea>
+                                        <span *ngIf="registerForm.controls['comment'].invalid && registerForm.controls['comment'].touched"
+                                            class="form-text text-danger">Min length is 3</span>
                                     </div>
                                     <div class="checkbox">
-                                        <button (click)="handlesubmit()" disabled [disabled]="registerForm.invalid" type="submit"
+                                        <button (click)="handlesubmit()" [disabled]="registerForm.invalid" type="submit"
                                             class="btn pull-right btn-default btn-primary" id="bttn">
                                             Add Review
                                         </button>
-                                        @if(completedReview){
-                                        <div class="text-success" style="font-size: 15px; margin-top: 10px;">
+                                        <div *ngIf="completedReview" class="text-success" style="font-size: 15px; margin-top: 10px;">
                                             completed send review.
                                         </div>
-                                        }
                                     </div>
                                 </form>
                             </section>
+                            
                         </div><!-- /.col-md-12 -->
                     </div><!-- /.row -->
                 </section><!-- /#property-detail -->
