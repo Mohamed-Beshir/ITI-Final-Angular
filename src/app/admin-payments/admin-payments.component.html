@@ -1,0 +1,116 @@
+<!-- SIDEBAR -->
+<section id="sidebar" [ngClass]="status ? 'hide' : ''">
+    <a routerLink="/admin" class="brand">
+      <i class='bx bxs-home'></i>
+      <span class="text">BAZAR</span>
+    </a>
+    <ul class="side-menu top">
+      <li>
+        <a routerLink="/admin">
+          <i class='bx bxs-dashboard' ></i>
+          <span class="text">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/sale-offers">
+          <i class='bx bxs-shopping-bag-alt' ></i>
+          <span class="text">Sale Offers</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/rent-offers">
+          <i class='bx bxs-doughnut-chart' ></i>
+          <span class="text">Rent Offers</span>
+        </a>
+      </li>
+      <li class="active">
+        <a routerLink="/admin/payments">
+          <i class='bx bxs-message-dots' ></i>
+          <span class="text">Payments</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/users">
+          <i class='bx bxs-group' ></i>
+          <span class="text">Users</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="side-menu">
+      <li>
+        <a href="javascript:void(0)" class="logout" (click)="logout()">
+          <i class='bx bxs-log-out-circle' ></i>
+          <span class="text">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+  <!-- SIDEBAR -->
+  
+  
+  
+  <!-- CONTENT -->
+  <section id="content">
+    <!-- NAVBAR -->
+    <nav>
+      <i (click)="addToggle()" class='bx bx-menu' ></i>
+    </nav>
+    <!-- NAVBAR -->
+  
+    <!-- MAIN -->
+    @if (paymentsData.payments.length > 0) {
+      <main>
+        <div class="head-title">
+          <div class="left">
+            <h1>Payments</h1>
+            <ul class="breadcrumb">
+              <li>
+                <a routerLink="/admin">Dashboard</a>
+              </li>
+              <li><i class='bx bx-chevron-right' ></i></li>
+              <li>
+                <a class="active" routerLink="/admin/payments">Payments</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="table-data">
+          <div class="order">
+            <table>
+              <thead>
+                <tr>
+                  <th>User Name</th>
+                  <th>Payment Date</th>
+                  <th>Property Title</th>
+                  <th>Payment Type</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Transaction ID</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (payment of paymentsData.payments; track payment.payment_date) {
+                  <tr>
+                    <td>
+                      <p>{{ payment.user_name }}</p>
+                    </td>
+                    <td>{{ payment.payment_date }}</td>
+                    <td>{{ payment.property_title }}</td>
+                    <td>{{ payment.payment_type }}</td>
+                    <td>LE {{ payment.amount_paid }}</td>
+                    <td><span class="status {{ payment.status }}">{{ payment.status }}</span></td>
+                    <td>{{ payment.transaction_id }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    }@else {
+      <h3 class="text-center mt-5 mb-4">Waiting for data to be loaded...</h3>
+    }
+    <!-- MAIN -->
+  </section>
+  <!-- CONTENT -->
+

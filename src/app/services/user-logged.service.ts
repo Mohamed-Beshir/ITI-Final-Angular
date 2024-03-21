@@ -7,6 +7,7 @@ export class UserLoggedService {
 
   private accessTokenKey = 'access_token';
   private userDataKey = 'user_data';
+  private adminTokenKey = 'admin_token';
 
   constructor() {}
 
@@ -16,6 +17,14 @@ export class UserLoggedService {
 
   getAccessToken() {
     return localStorage.getItem(this.accessTokenKey);
+  }
+
+  setAdminToken(token: string) {
+    localStorage.setItem(this.adminTokenKey, token);
+  }
+
+  getAdminToken() {
+    return localStorage.getItem(this.adminTokenKey);
   }
 
   setUserData(data: any) {
@@ -31,8 +40,13 @@ export class UserLoggedService {
     return !!localStorage.getItem(this.accessTokenKey);
   }
 
+  isAdminLoggedIn() {
+    return !!localStorage.getItem(this.adminTokenKey);
+  }
+
   logout() {
     localStorage.removeItem(this.accessTokenKey);
     localStorage.removeItem(this.userDataKey);
+    localStorage.removeItem(this.adminTokenKey);
   }
 }

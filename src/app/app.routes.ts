@@ -11,6 +11,11 @@ import { PropertiesListingComponent } from './properties-listing/properties-list
 import { EditPropertyComponent } from './edit-property/edit-property.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RequestsPropertiesComponent } from './requests-properties/requests-properties.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminSaleOffersComponent } from './admin-sale-offers/admin-sale-offers.component';
+import { AdminRentOffersComponent } from './admin-rent-offers/admin-rent-offers.component';
+import { AdminPaymentsComponent } from './admin-payments/admin-payments.component';
+import { AdminUsersComponent } from './admin-users/admin-users.component';
 
 
 export const routes: Routes = [
@@ -24,5 +29,20 @@ export const routes: Routes = [
     { path: 'edit-property/:id', component: EditPropertyComponent},
     { path: 'property-listing' , component: PropertiesListingComponent},
     { path: 'dashboard' , component: DashboardComponent},
-    { path: 'requests' , component: RequestsPropertiesComponent}
+    { path: 'requests' , component: RequestsPropertiesComponent},
+    { path: 'admin' , component: AdminComponent , canActivate: [() => {
+        return !!localStorage.getItem('admin_token');
+    }]},
+    { path: 'admin/sale-offers' , component: AdminSaleOffersComponent , canActivate: [() => {
+        return !!localStorage.getItem('admin_token');
+    }]},
+    { path: 'admin/rent-offers' , component: AdminRentOffersComponent , canActivate: [() => {
+        return !!localStorage.getItem('admin_token');
+    }]},
+    { path: 'admin/payments' , component: AdminPaymentsComponent , canActivate: [() => {
+        return !!localStorage.getItem('admin_token');
+    }]},
+    { path: 'admin/users' , component: AdminUsersComponent , canActivate: [() => {
+        return !!localStorage.getItem('admin_token');
+    }]},
 ];
