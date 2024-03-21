@@ -10,13 +10,14 @@ import {faAngleDown} from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';
 import { AddPropertyService } from '../services/add-property.service';
 import { NavigationExtras, Router } from '@angular/router';
+import { NgIf } from '@angular/common';
 // import { MatSliderModule } from '@angular/material/slider';
 // import { PropertyCardComponent } from '../property-card/property-card.component';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [FontAwesomeModule,FormsModule],
+  imports: [FontAwesomeModule,FormsModule, NgIf],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
@@ -27,7 +28,7 @@ export class SearchComponent {
   arrow=faAngleRight;
   arrowdown=faAngleDown;
 
-  @Input() dataStatus : any;
+  @Input() dataStatus : string | null = null;
 
   constructor(private propertyService: AddPropertyService, private route: Router) { }
 

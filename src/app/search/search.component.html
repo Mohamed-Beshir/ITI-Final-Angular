@@ -4,9 +4,19 @@
       <aside id="edit-search">
 
           <header><h3>Search Properties</h3></header>
-          <form role="form" id="form-sidebar" class="form-search" (submit)="search(status? status.value : '', city.value, district.value, propertyType.value, area.value, beds.value, baths.value, price.value)">
-            <input type="text" class="d-none" #status [value]="dataStatus">
-            @if(!dataStatus){
+          <form role="form" id="form-sidebar" class="form-search" (submit)="search(status.value, city.value, district.value, propertyType.value, area.value, beds.value, baths.value, price.value)">
+              <div class="form-group select_container" *ngIf="!dataStatus">
+                <select #status>
+                  <option style="color: #777;" value="">Status</option>
+                  <option value="for_rent">Rent</option>
+                  <option value="for_sale">Sale</option>
+                </select>
+                <div class="icon-dropdown">
+                  <fa-icon [icon]="arrowdown"></fa-icon>
+                </div>
+              </div><!-- /.form-group -->
+              <input type="text" class="d-none" #status [value]="dataStatus">
+            <!-- @if(!dataStatus){
               <div class="form-group select_container">
                   <select #status>
                       <option style="color: #777;" value="" >Status</option>
@@ -16,8 +26,10 @@
                   <div class="icon-dropdown">
                     <fa-icon [icon]="arrowdown"></fa-icon>
                   </div>
-              </div><!-- /.form-group -->
-            }
+              </div>
+            }@else{
+              <input type="text" class="d-none" #status [value]="dataStatus">
+            } -->
               <!-- <div class="form-group select_container">
                   <select name="country">
                       <option value="">Country</option>
