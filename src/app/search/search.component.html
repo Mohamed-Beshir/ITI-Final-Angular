@@ -5,8 +5,8 @@
 
           <header><h3>Search Properties</h3></header>
           <form role="form" id="form-sidebar" class="form-search" (submit)="search(status.value, city.value, district.value, propertyType.value, area.value, beds.value, baths.value, price.value)">
-              <div class="form-group select_container" *ngIf="!dataStatus">
-                <select #status>
+              <div class="form-group select_container" [class]="dataStatus ? 'd-none' : ''" >
+                <select #status [value]="dataStatus ? dataStatus : ''">
                   <option style="color: #777;" value="">Status</option>
                   <option value="for_rent">Rent</option>
                   <option value="for_sale">Sale</option>
@@ -15,34 +15,7 @@
                   <fa-icon [icon]="arrowdown"></fa-icon>
                 </div>
               </div><!-- /.form-group -->
-              <input type="text" class="d-none" #status [value]="dataStatus">
-            <!-- @if(!dataStatus){
-              <div class="form-group select_container">
-                  <select #status>
-                      <option style="color: #777;" value="" >Status</option>
-                      <option value="for_rent">Rent</option>
-                      <option value="for_sale">Sale</option>
-                  </select>
-                  <div class="icon-dropdown">
-                    <fa-icon [icon]="arrowdown"></fa-icon>
-                  </div>
-              </div>
-            }@else{
-              <input type="text" class="d-none" #status [value]="dataStatus">
-            } -->
-              <!-- <div class="form-group select_container">
-                  <select name="country">
-                      <option value="">Country</option>
-                      <option value="1">France</option>
-                      <option value="2">Great Britain</option>
-                      <option value="3">Spain</option>
-                      <option value="4">Russia</option>
-                      <option value="5">United States</option>
-                  </select>
-                  <div class="icon-dropdown">
-                    <fa-icon [icon]="arrowdown"></fa-icon>
-                  </div>
-              </div> -->
+                
               <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
                 <input  type="text" class="form-control rounded-0 h-100" placeholder="City" #city>
               </div><!-- /.form-group -->
@@ -172,23 +145,12 @@
                 <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
                   <input type="number" class="form-control rounded-0 h-100" min="0" placeholder="Baths" #baths>
                 </div>
-              <!-- <div class="form-group">
-                  <div class="price-range">
-                    <mat-slider min="1000" max="299000" discrete="true">
-                      <input  matSliderStartThumb>
-                      <input  matSliderEndThumb>
-                    </mat-slider>
-                  </div>
-              </div> -->
               <div class="form-group p-0 mt-3" style="height: 43px;">
                   <button style="width: 100%;" type="submit" class="btn btn-primary h-100">Search Now</button>
               </div><!-- /.form-group -->
           </form><!-- /#form-map -->
       </aside><!-- /#edit-search -->
       <aside style="margin-top: 10px;" id="featured-properties">
-          <!-- <app-property-card></app-property-card>
-          <app-property-card></app-property-card>
-          <app-property-card></app-property-card> -->
       </aside><!-- /#featured-properties -->
 
   </section><!-- /#sidebar -->

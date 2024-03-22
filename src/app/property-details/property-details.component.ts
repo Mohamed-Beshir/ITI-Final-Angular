@@ -17,12 +17,13 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SearchComponent } from '../search/search.component';
 
 
 @Component({
   selector: 'app-property-details',
   standalone: true,
-  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe, NgFor, ButtonModule, ToastModule, ConfirmDialogModule, RouterLink, RouterModule],
+  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe, NgFor, ButtonModule, ToastModule, ConfirmDialogModule, RouterLink, RouterModule, SearchComponent],
   templateUrl: './property-details.component.html',
   providers: [ConfirmationService, MessageService, RouterLink],
   styleUrl: './property-details.component.css'

@@ -31,8 +31,7 @@ export class SearchComponent {
   @Input() dataStatus : string | null = null;
 
   constructor(private propertyService: AddPropertyService, private route: Router) { }
-
-  search(status : string, city : string, district : string, propertyType : string, area : string, beds : string, baths : string, price : string): void {
+  search(status : string | null, city : string, district : string, propertyType : string, area : string, beds : string, baths : string, price : string): void {
     this.propertyService.searchProperties(city, district, propertyType, status, area, beds, baths, price)
       .subscribe(data => {
         // this.properties = data;

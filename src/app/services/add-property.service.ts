@@ -25,7 +25,7 @@ export class AddPropertyService {
     return this.http.delete(`${this.api}/${id}`)
   }
 
-  searchProperties(city: string, district: string, propertyType: string, status : string, area : string, beds : string, baths : string, price : string){
+  searchProperties(city: string, district: string, propertyType: string, status : string | null, area : string, beds : string, baths : string, price : string){
     let params = new HttpParams();
     if (city) params = params.set('city', city);
     if (district) params = params.set('district', district);
