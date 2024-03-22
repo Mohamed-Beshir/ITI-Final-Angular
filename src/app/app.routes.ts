@@ -19,13 +19,14 @@ import { PropertiesRentComponent } from './properties-rent/properties-rent.compo
 import { PropertiesSaleComponent } from './properties-sale/properties-sale.component';
 import { UserOfferedPropertiesComponent } from './user-offered-properties/user-offered-properties.component';
 import { PaymentComponent } from './payment/payment.component';
+import { RentOffersComponent } from './rent-offers/rent-offers.component';
 
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'signin', component: SignInComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'profile', component: ProfileAgentComponent },
+    { path:'profile', component:ProfileAgentComponent},
     { path: 'my-properties', component: MypropertiesAgentComponent },
     { path: 'property-details/:id', component: PropertyDetailsComponent },
     { path: 'add-property', component: AddPropertyComponent},
@@ -53,4 +54,7 @@ export const routes: Routes = [
     { path: 'offered-properties' , component: UserOfferedPropertiesComponent},
     { path: 'payment' , component: PaymentComponent},
 
+
+    { path: 'offers' , component: RequestsPropertiesComponent},
+    { path: 'rent_offers', component:RentOffersComponent}
 ];

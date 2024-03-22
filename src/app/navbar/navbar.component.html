@@ -48,12 +48,14 @@
                             <a routerLink='/property-rent' class="nav-link">Rent</a>
                         </li>
                         <li class="nav-item">
+
                             <a routerLink="/offered-properties" class="nav-link">Offered Properties</a>
+
                         </li>
                         <li class="nav-item">
                             <a routerLink='/property-listing' class="nav-link">All Properties</a>
                         </li>
-                        <li class="nav-item"><a href="#" class="nav-link">Profile</a></li>
+                        <li class="nav-item"><a href="#" routerLink="/profile" class="nav-link">Profile</a></li>
                     }
                     @else if (userRole === "agent") {
                         <li class="nav-item">
@@ -63,9 +65,9 @@
                             <a routerLink='/property-listing' class="nav-link">All Properties</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Offers Management</a>
+                            <a href="#" routerLink="/offers" class="nav-link">Offers Management</a>
                         </li>
-                        <li class="nav-item"><a href="#" class="nav-link">Profile</a></li>
+                        <li class="nav-item"><a href="#" routerLink="/profile" class="nav-link">Profile</a></li>
                     }
                     @else {
                         <li class="nav-item">
@@ -86,7 +88,7 @@
             @if (userRole !== "user") {
                 <div class="add-property position-absolute">
                     <a href="add-property" class="d-flex align-items-center"><!-- In any component template -->
-                        <i class="fa-solid fa-plus fs-6 p-2 badge bg-primary rounded-0 d-inline-block"></i>                    
+                        <i class="fa-solid fa-plus fs-6 p-2 badge bg-primary rounded-0 d-inline-block"></i>
                         <span class="badge bg-info rounded-0 position-absolute p-2">Add Your Property</span>
                     </a>
                 </div>
