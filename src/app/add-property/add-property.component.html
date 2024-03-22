@@ -156,16 +156,18 @@
                                 <header><h2>Gallery</h2></header>
                                 <div class="image-container">
                                   <div class="upload">
-                                    <input id="file-upload" type="file" (change)="onFileSelected($event)" multiple class=" " multiple="true" data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-default" data-browse-label="Browse Images" formControlName="image">
+                                    <input id="file-upload" name="images[]" type="file" (change)="onFileChange($event)"  multiple class=" " multiple="true"
+                                      data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png"
+                                      data-browse-class="btn btn-default" data-browse-label="Browse Images" formControlName="image">
                                     <label for="file-upload">
                                       <fa-icon [icon]="upload"></fa-icon>&nbsp;
                                       chose image
                                     </label>
                                   </div>
                                   <div class="preview-container">
-                                    <div   *ngFor="let image of images let i = index" class="image-preview">
-                                      <img  [src]="image.url" alt="Preview">
-                                      <button  class="btn btn-danger" (click)="deleteImage(i)">Delete</button>
+                                    <div   *ngFor="let image of selectedImages let i = index" class="image-preview">
+                                      <img  [src]="image.url" alt="Selected Image">
+                                      <button  class="btn btn-danger" (click)="onDelete(i)">Delete</button>
                                     </div>
                                   </div>
                                 </div>

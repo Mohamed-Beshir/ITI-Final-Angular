@@ -41,4 +41,11 @@ export class AddPropertyService {
   getAllPropertyOrderBy(orderBy: string) {
     return this.http.get(`${this.api}?order_by=${orderBy}`);
   }
+  
+  getAllPropertyRentOrSale (status: string) {
+    return this.http.get(`${this.api}-rent-or-sale?status=${status}`);
+  }
+  getAllPropertyRentOrSaleOrderBy(status: string, orderBy: string) {
+    return this.http.get(`${this.api}-rent-or-sale?status=${status}&order_by=${orderBy}`);
+  }
 }

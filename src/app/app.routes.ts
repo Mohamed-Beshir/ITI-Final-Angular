@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
@@ -16,6 +15,10 @@ import { AdminSaleOffersComponent } from './admin-sale-offers/admin-sale-offers.
 import { AdminRentOffersComponent } from './admin-rent-offers/admin-rent-offers.component';
 import { AdminPaymentsComponent } from './admin-payments/admin-payments.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { PropertiesRentComponent } from './properties-rent/properties-rent.component';
+import { PropertiesSaleComponent } from './properties-sale/properties-sale.component';
+import { UserOfferedPropertiesComponent } from './user-offered-properties/user-offered-properties.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 export const routes: Routes = [
@@ -28,6 +31,8 @@ export const routes: Routes = [
     { path: 'add-property', component: AddPropertyComponent},
     { path: 'edit-property/:id', component: EditPropertyComponent},
     { path: 'property-listing' , component: PropertiesListingComponent},
+    { path: 'property-rent' , component: PropertiesRentComponent},
+    { path: 'property-sale' , component: PropertiesSaleComponent},
     { path: 'dashboard' , component: DashboardComponent},
     { path: 'requests' , component: RequestsPropertiesComponent},
     { path: 'admin' , component: AdminComponent , canActivate: [() => {
@@ -45,4 +50,7 @@ export const routes: Routes = [
     { path: 'admin/users' , component: AdminUsersComponent , canActivate: [() => {
         return !!localStorage.getItem('admin_token');
     }]},
+    { path: 'offered-properties' , component: UserOfferedPropertiesComponent},
+    { path: 'payment' , component: PaymentComponent},
+
 ];

@@ -1,11 +1,11 @@
 <div class="property">
     <a [routerLink]="['/property-details', property.id]">
         <div class="property-image">
-            <img alt="" src="assets/img/properties/property-02.jpg">
+            <img alt="" src="http://localhost:8000/images/{{property.image}}">
         </div>
         <div class="overlay">
             <div class="info">
-                <div class="price-tag">LE {{property.title}}</div>
+                <div class="price-tag">LE {{property.price}}</div>
                 <h3>{{property.title}}</h3>
                 <figure>{{property.street}}, {{property.city}}</figure>
                 <figure>{{property.type}}, {{property.property_number}}</figure>

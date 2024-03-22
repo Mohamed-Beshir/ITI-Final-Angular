@@ -3,11 +3,11 @@ import { RatingModule } from 'primeng/rating';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AddPropertyService } from '../services/add-property.service';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { UserLoggedService } from '../services/user-logged.service';
-import { RequestPropertyService } from '../services/request-property.service';
+import { SubmitOfferService } from '../services/submit-offer.service';
 import { ReviewComponent } from '../review/review.component';
 import { RateService } from '../reviewServices/rate.service';
 import { CommentService } from '../reviewServices/comment.service';
@@ -15,10 +15,11 @@ import { RatingPipe } from '../pipe/rating.pipe';
 
 
 
+
 @Component({
   selector: 'app-property-details',
   standalone: true,
-  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe],
+  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe, NgFor, RouterLink],
   templateUrl: './property-details.component.html',
   styleUrl: './property-details.component.css'
 })
@@ -26,14 +27,18 @@ export class PropertyDetailsComponent implements OnInit{
   id?: any;
   property : any;
   userLogged : any;
-  requestProperty : any;
-  resultRequest : boolean = false;
+
+  isLoggedIn: boolean = false;
+  userRole: string | null = null;
+  userId: number | null = null;
+  offerForm: FormGroup;
+  offerSubmittedBefore: boolean = false;
 
   rateData : any;
   commentData : any;
 
   registerForm: FormGroup;
-  constructor(private route: ActivatedRoute, private property_details : AddPropertyService, private user_logged : UserLoggedService, private request : RequestPropertyService,  private formBuilder: FormBuilder, private rateApi : RateService, private commentApi : CommentService, private router : Router) {
+  constructor(private route: ActivatedRoute, private property_details : AddPropertyService, private loggedUser : UserLoggedService, private submitOfferService : SubmitOfferService, private formBuilder: FormBuilder, private rateApi : RateService, private commentApi : CommentService, private router : Router) {
     this.registerForm = new FormGroup({
       comment: new FormControl('', [
         Validators.required,
@@ -42,6 +47,12 @@ export class PropertyDetailsComponent implements OnInit{
       rate: new FormControl('', [
         Validators.required,
       ]),
+    });
+
+
+    this.offerForm = this.formBuilder.group({
+      offeredPrice: ['', [Validators.required, Validators.min(0)]],
+      message: ['', Validators.required]
     });
   }
 
@@ -53,27 +64,25 @@ export class PropertyDetailsComponent implements OnInit{
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-    this.property_details.getOneProperty(this.id).subscribe(data => this.property = data);
+    this.property_details.getOneProperty(this.id).subscribe(data => {
+      this.property = data
+      this.checkOfferSubmittedBefore();});
 
-    this.request.getAllRequests().subscribe(res => {
-      this.requestProperty = res;
-      
-      for(let i = 0; i < this.requestProperty.length; i++){
-          if(this.requestProperty[i].user_id == this.userLogged[this.userLogged.length -1].id && this.requestProperty[i].property_id == this.id ){
-            this.resultRequest = true;
-          }
-      }
-    });
+    
 
-    // this.requestProperty.forEach((req : any) => {
-      
-    //   this.userLogged.forEach((user :any) => {
-    //     if(req.user_id == user.id && req.property_id == this.property.id ){
-    //       this.resultRequest = true;
-    //       console.log(this.resultRequest);
-    //     }
-    //   })
-    // });
+    // Check if user is logged in
+    this.isLoggedIn = this.loggedUser.isLoggedIn();
+    
+    // Retrieve user data if user is logged in
+    if (this.isLoggedIn) {
+      const userData = this.loggedUser.getUserData();
+      this.userRole = userData ? userData.role : null;
+      this.userId = userData ? userData.id : null;
+    }
+
+    
+
+    
 
     this.rateApi.getAllRate().subscribe(res => {
       this.rateData = res;
@@ -91,29 +100,67 @@ export class PropertyDetailsComponent implements OnInit{
 
 
   }
-
-isRequested : boolean = true;
-  sendRequest(property_id : number){
-    let currentDate = new Date()
-    let newRequest : any = {
-      user_id: this.userLogged[this.userLogged.length - 1].id,
-      user_name : this.userLogged[this.userLogged.length - 1].name,
-      user_email : this.userLogged[this.userLogged.length - 1].email,
-      property_id : property_id,
-      request_date: currentDate.getDate()+"."+currentDate.getMonth()+"."+currentDate.getFullYear(),
-      is_approve: false
+  
+  private checkOfferSubmittedBefore(): void {
+    if (this.property.property_rent_id) {
+      this.submitOfferService.getAllRentOffers().subscribe(
+        (rentOffers: any) => {
+          console.log(rentOffers);
+          this.offerSubmittedBefore = rentOffers.data.some((offer: any) =>
+            offer.property_rent_id === this.property.property_rent_id && offer.buyer_id === this.userId
+          );
+        },
+        error => {
+          console.error('Error fetching rent offers:', error);
+        }
+      );
+    } else if (this.property.property_sale_id) {
+      this.submitOfferService.getAllSaleOffers().subscribe(
+        (saleOffers: any) => {
+          console.log(saleOffers)
+          this.offerSubmittedBefore = saleOffers.data.some((offer: any) =>
+            offer.property_sale_id === this.property.property_sale_id && offer.buyer_id === this.userId
+          );
+        },
+        error => {
+          console.error('Error fetching sale offers:', error);
+        }
+      );
     }
+  }
 
-    for(let i = 0; i < this.requestProperty.length; i++){
-      if(this.requestProperty[i].user_id == this.userLogged[this.userLogged.length -1].id && this.requestProperty[i].property_id == this.id ){
-        this.resultRequest = true;
+  submitOffer() {
+    if (this.offerForm.valid) {
+      console.log('Form submitted:', this.offerForm.value);
+
+      const formData = this.offerForm.value;
+      formData.buyer_id = this.userId;
+      formData.offered_price = formData.offeredPrice;
+      if(this.property.property_rent_id){
+        formData.property_rent_id = this.property.property_rent_id;
+        this.submitOfferService.submitRentOffer(formData).subscribe(
+          () => {
+            console.log('Offer submitted successfully');
+          },
+          error => {
+            console.error('Error submitting offer:', error);
+          }
+        );
+      }else if(this.property.property_sale_id){
+        formData.property_sale_id = this.property.property_sale_id;
+        this.submitOfferService.submitSaleOffer(formData).subscribe(
+          () => {
+            console.log('Offer submitted successfully');
+          },
+          error => {
+            console.error('Error submitting offer:', error);
+          }
+        );
       }
-    }
-    if(!this.resultRequest){
-      this.request.saveRequests(newRequest).subscribe(res => res);
-      this.resultRequest = true;
-    }else{
-      this.isRequested = false;
+      this.offerForm.reset();
+    } else {
+      // Mark all form fields as touched to display validation messages
+      this.offerForm.markAllAsTouched();
     }
   }
 
