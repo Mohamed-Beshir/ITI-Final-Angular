@@ -48,7 +48,7 @@
 
 
                                   <div class="container">
-                                          <div>
+                                            <div>
                                               <section id="summary">
                                                   <header><h2>Summary</h2></header>
                                                   <div class="form-group">
@@ -136,9 +136,9 @@
                                     </label>
                                   </div>
                                   <div class="preview-container">
-                                    <div   *ngFor="let image of selectedImages let i = index" class="image-preview">
-                                      <img  [src]="image.url" alt="Selected Image">
-                                      <button  class="btn btn-danger" (click)="onDelete(i)">Delete</button>
+                                    <div  style="position: relative;" *ngFor="let image of selectedImages let i = index" class="image-preview">
+                                      <img  style="width:200px;height: 150px;"[src]="image.url" alt="Selected Image" >
+                                      <div style="position: absolute;top:0;"><button  class="btn btn-danger" (click)="onDelete(i)" style="right: 0;top: 0; width: 30px;height: 30px;position: relative;"><p style="position: absolute;top: 0;color: white;">x</p></button></div>
                                     </div>
                                   </div>
                                 </div>

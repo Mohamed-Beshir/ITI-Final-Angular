@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+<h1 class="my-5 container">Requests</h1>
+<div class="container d-flex justify-content-between">
+  <h3>Rent_offers</h3>
+  <button class="btn btn-primary" routerLink="/offers">Sales_offers</button>
+</div>
+<div class="container " style="min-height: 500px; ">
+    <table class="table table border text-center my-5 ">
+        <thead class="container  table-dark">
+          <tr class="border-black ">
+            <th scope="col">Buyer_Name</th>
+            <th scope="col">Buyer_Email</th>
+            <th scope="col">Property_Title</th>
+            <th scope="col">offer_price</th>
+            <th scope="col">Buyer_message</th>
+            <th scope="col">Status</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let offer of rentsOffers">
+            <td>{{ offer.buyer_name }}</td>
+            <td>{{ offer.buyer_email }}</td>
+            <td>{{ offer.title }} </td>
+            <td>{{ offer.offered_price }}</td>
+            <td> {{ offer.message }}</td>
+            <td>{{ offer.status }}</td>
+            <td>
+              <ng-container *ngIf="offer.status !== 'accepted' && offer.status !== 'rejected'">
+                <button class="btn btn-success mx-1" (click)="acceptOffer(offer.id)">Accept</button>
+                <button class="btn btn-danger" (click)="rejectOffer(offer.id)">Reject</button>
+              </ng-container>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+</div>
+<app-big-footer></app-big-footer>

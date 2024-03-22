@@ -49,6 +49,10 @@ export class SignInComponent {
             this.userlogged.setUserData(response.user); 
             // Redirect the user to the home page
             this.router.navigate(['/']);
+          }else if(response.admin_token){
+            // Admin authenticated successfully
+            this.userlogged.setAdminToken(response.admin_token);
+            this.router.navigate(['admin']);
           }
         },
         (error) => {

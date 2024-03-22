@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { RatingModule } from 'primeng/rating';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { AddPropertyService } from '../services/add-property.service';
-import { NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { UserLoggedService } from '../services/user-logged.service';
-import { RequestPropertyService } from '../services/request-property.service';
+import { SubmitOfferService } from '../services/submit-offer.service';
 import { ReviewComponent } from '../review/review.component';
 import { RatingPipe } from '../pipe/rating.pipe';
 import { ReviewService } from '../services/review.service';
@@ -18,22 +18,28 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SearchComponent } from '../search/search.component';
+import { DateFormatPipe } from '../pipe/date.pipe';
 
 
 @Component({
   selector: 'app-property-details',
   standalone: true,
-  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe, NgFor, ButtonModule, ToastModule, ConfirmDialogModule, RouterLink, RouterModule, SearchComponent],
+  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe, NgFor, ButtonModule, ToastModule, ConfirmDialogModule, RouterLink, RouterModule, SearchComponent, DateFormatPipe],
   templateUrl: './property-details.component.html',
   providers: [ConfirmationService, MessageService, RouterLink],
   styleUrl: './property-details.component.css'
 })
+
 export class PropertyDetailsComponent implements OnInit{
   id?: any;
   property : any;
   userLogged : any;
-  requestProperty : any;
-  resultRequest : boolean = false;
+
+  isLoggedIn: boolean = false;
+  userRole: string | null = null;
+  userId: number | null = null;
+  offerForm: FormGroup;
+  offerSubmittedBefore: boolean = false;
 
 
   userLoggedData : any = [];
@@ -41,7 +47,7 @@ export class PropertyDetailsComponent implements OnInit{
   registerForm: FormGroup;
   commentForm : any;
   rateForm : any;
-  constructor(private route: ActivatedRoute, private property_details : AddPropertyService, private user_logged : UserLoggedService, private request : RequestPropertyService,  private formBuilder: FormBuilder, private review : ReviewService, private router : Router, private modalService: NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService) {
+  constructor(private route: ActivatedRoute, private property_details : AddPropertyService, private loggedUser : UserLoggedService, private submitOfferService : SubmitOfferService,  private formBuilder: FormBuilder, private review : ReviewService, private router : Router, private modalService: NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService) {
     this.registerForm = new FormGroup({
       comment: new FormControl('', [
         Validators.required,
@@ -53,8 +59,10 @@ export class PropertyDetailsComponent implements OnInit{
     });
     this.commentForm = this.registerForm.controls['comment']
     this.rateForm = this.registerForm.controls['rate']
-    
-
+    this.offerForm = this.formBuilder.group({
+      offeredPrice: ['', [Validators.required, Validators.min(0)]],
+      message: ['', Validators.required]
+    });
   }
 
 
@@ -70,18 +78,21 @@ export class PropertyDetailsComponent implements OnInit{
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-    this.property_details.getOneProperty(this.id).subscribe(data => this.property = data);
+    this.property_details.getOneProperty(this.id).subscribe(data => {
+      this.property = data
+      this.checkOfferSubmittedBefore();});
 
-    this.request.getAllRequests().subscribe(res => {
-      this.requestProperty = res;
-      
-      for(let i = 0; i < this.requestProperty.length; i++){
-          if(this.requestProperty[i].user_id == this.userLogged[this.userLogged.length -1].id && this.requestProperty[i].property_id == this.id ){
-            this.resultRequest = true;
-          }
-      }
-    });
+    
 
+    // Check if user is logged in
+    this.isLoggedIn = this.loggedUser.isLoggedIn();
+    
+    // Retrieve user data if user is logged in
+    if (this.isLoggedIn) {
+      const userData = this.loggedUser.getUserData();
+      this.userRole = userData ? userData.role : null;
+      this.userId = userData ? userData.id : null;
+    }
 
     let userDataString = localStorage.getItem('user_data');
     // Check if user data exists in localStorage
@@ -103,29 +114,67 @@ export class PropertyDetailsComponent implements OnInit{
     
     
   }
-
-isRequested : boolean = true;
-  sendRequest(property_id : number){
-    let currentDate = new Date()
-    let newRequest : any = {
-      user_id: this.userLogged[this.userLogged.length - 1].id,
-      user_name : this.userLogged[this.userLogged.length - 1].name,
-      user_email : this.userLogged[this.userLogged.length - 1].email,
-      property_id : property_id,
-      request_date: currentDate.getDate()+"."+currentDate.getMonth()+"."+currentDate.getFullYear(),
-      is_approve: false
+  
+  private checkOfferSubmittedBefore(): void {
+    if (this.property.property_rent_id) {
+      this.submitOfferService.getAllRentOffers().subscribe(
+        (rentOffers: any) => {
+          console.log(rentOffers);
+          this.offerSubmittedBefore = rentOffers.data.some((offer: any) =>
+            offer.property_rent_id === this.property.property_rent_id && offer.buyer_id === this.userId
+          );
+        },
+        error => {
+          console.error('Error fetching rent offers:', error);
+        }
+      );
+    } else if (this.property.property_sale_id) {
+      this.submitOfferService.getAllSaleOffers().subscribe(
+        (saleOffers: any) => {
+          console.log(saleOffers)
+          this.offerSubmittedBefore = saleOffers.data.some((offer: any) =>
+            offer.property_sale_id === this.property.property_sale_id && offer.buyer_id === this.userId
+          );
+        },
+        error => {
+          console.error('Error fetching sale offers:', error);
+        }
+      );
     }
+  }
 
-    for(let i = 0; i < this.requestProperty.length; i++){
-      if(this.requestProperty[i].user_id == this.userLogged[this.userLogged.length -1].id && this.requestProperty[i].property_id == this.id ){
-        this.resultRequest = true;
+  submitOffer() {
+    if (this.offerForm.valid) {
+      console.log('Form submitted:', this.offerForm.value);
+
+      const formData = this.offerForm.value;
+      formData.buyer_id = this.userId;
+      formData.offered_price = formData.offeredPrice;
+      if(this.property.property_rent_id){
+        formData.property_rent_id = this.property.property_rent_id;
+        this.submitOfferService.submitRentOffer(formData).subscribe(
+          () => {
+            console.log('Offer submitted successfully');
+          },
+          error => {
+            console.error('Error submitting offer:', error);
+          }
+        );
+      }else if(this.property.property_sale_id){
+        formData.property_sale_id = this.property.property_sale_id;
+        this.submitOfferService.submitSaleOffer(formData).subscribe(
+          () => {
+            console.log('Offer submitted successfully');
+          },
+          error => {
+            console.error('Error submitting offer:', error);
+          }
+        );
       }
-    }
-    if(!this.resultRequest){
-      this.request.saveRequests(newRequest).subscribe(res => res);
-      this.resultRequest = true;
-    }else{
-      this.isRequested = false;
+      this.offerForm.reset();
+    } else {
+      // Mark all form fields as touched to display validation messages
+      this.offerForm.markAllAsTouched();
     }
   }
 
@@ -164,63 +213,40 @@ isRequested : boolean = true;
     });
   }
 
-  // goToListComponent(): void {
-  //   this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
-  //     this.router.navigate(['/property-listing', this.id]);
-  //   });
-  // }
 
-  deleteComment(id:number){
-    this.review.deleteReview(id).subscribe();
-    this.reloadComponent();
-  }
-
-  // updateComment(id:number){
-  //   this.review.updateReview(id, "D").subscribe()
-  //   this.reloadComponent()
-  // }
-  // updateComment(id: number, comment : string) {
-  //   this.openUpdateCommentModal(id, comment);
-  // }
-  // openUpdateCommentModal(commentId: number, initialComment: string) {
-  //   const modalRef = this.modalService.open(UpdateCommentModalComponent);
-  //   modalRef.componentInstance.commentId = commentId;
-  //   modalRef.componentInstance.initialComment = initialComment;
-
-  //   // Subscribe to the event emitter from the modal to get updated comment value
-  //   modalRef.componentInstance.commentUpdated.subscribe((updatedComment: string) => {
-  //     // Update the comment value in the component
-  //     // Here you would update the comment in the property or wherever it's stored
-  //     console.log('Updated comment:', updatedComment);
-  //   });
-  // }
-  confirmDelete(event: Event, reviewId: number) {
+  updatedComment: string = '';
+  action: string = ''; 
+  confirmDelete(event: Event, reviewId: number, action : string) {
+    this.action = action;
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Are you sure you want to delete this comment?',
-      header: 'Delete Confirmation',
-      icon: 'pi pi-info-circle',
+      header: action == 'delete' ? 'Delete Confirmation' : 'Update Confirmation',
+      icon: action == 'delete' ?'pi pi-info-circle' : '',
       acceptButtonStyleClass: "p-button-danger p-button-text",
       rejectButtonStyleClass: "p-button-text p-button-text",
       acceptIcon: "none",
       rejectIcon: "none",
       
-
       accept: () => {
-        this.review.deleteReview(reviewId).subscribe()
-        const index = this.reviewData.findIndex((review : any) => review.id === reviewId);
-        if (index !== -1) {
-          this.reviewData.splice(index, 1);
+        if(action == 'delete'){
+          this.review.deleteReview(reviewId).subscribe(res=>res)
+          const index = this.reviewData.findIndex((review : any) => review.id === reviewId);
+          if (index !== -1) {
+            this.reviewData.splice(index, 1);
+          }
+          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Comment deleted' });
+        }else {
+          let comment = {'comment': this.updatedComment}
+          this.review.updateReview(reviewId, comment).subscribe(res=>res)
+          this.reloadComponent()
         }
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Comment deleted' });
       },
       reject: () => {
         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
       }
     });
   }
-
-
 
 
   @ViewChild('modal') modal: any;

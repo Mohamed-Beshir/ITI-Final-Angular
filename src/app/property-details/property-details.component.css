@@ -5897,3 +5897,6 @@ a{
 #page-content{
     font-family: 'Roboto';
 }
+.small{
+  font-size : 12px;
+}
