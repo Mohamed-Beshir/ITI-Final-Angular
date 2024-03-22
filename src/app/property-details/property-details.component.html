@@ -54,7 +54,10 @@
                                         <dd>2</dd>
                                     <dt>Rating:</dt>
                                         <dd><div class="pt-1">
-                                            <p-rating [(ngModel)]="overallValue" [readonly]="true" [cancel]="false"></p-rating>
+                                            <div class="d-flex align-items-center justify-content-end">
+                                                <div>({{rating.rowCount}})</div>
+                                                <div class="rating rating-overall" style="margin-bottom: -8px;margin-left: 8px;" [innerHTML]="finalRatingForProperty | rating"></div>
+                                            </div>
                                         </div></dd>
                                 </dl>
                             </section><!-- /#quick-summary -->
@@ -114,7 +117,10 @@
                                     </aside> -->
                                     <figure class="float-none">
                                         <header>Overall Rating</header>
-                                        <div class="rating rating-overall" [innerHTML]="finalRatingForProperty | rating"></div>
+                                        <div>
+                                            <div>({{rating.rowCount}})</div>
+                                            <div class="rating rating-overall" [innerHTML]="finalRatingForProperty | rating"></div>
+                                        </div>
                                     </figure>
                                 </div>
                                 
@@ -143,27 +149,27 @@
                             <section id="comments">
                                 <header><h2 class="no-border">Comments</h2></header>
                                 <ul class="comments">
-                                    @for (comment of commentData; track comment) {
-                                        @if(comment.property_id == id){
-                                            <li class="comment w-100">
-                                                <figure>
-                                                    <div class="image">
-                                                        <img alt="" src="assets/img/user.png">
-                                                    </div>
-                                                </figure>
-                                                <div class="comment-wrapper">
-                                                    <div class="name">{{comment.name}}</div>
-                                                    <span class="date"><span class="fa fa-calendar"></span>{{comment.date}}</span>
-                                                    <div class="rating rating-individual" data-score="5"></div>
-                                                    <p>{{comment.comment}}</p>
-                                                    @if(comment.email ==userLogged[1].email){
-                                                        <a class="reply" style="cursor: pointer;" (click)="deleteComment(comment.id)"><span class="fa fa-reply text-danger"></span>delete</a>
-                                                    }
-                                                    <hr>
+                                    @for (review of reviewData; track review) {
+                                        <li class="comment w-100">
+                                            <figure>
+                                                <div class="image">
+                                                    <img alt="" src="assets/img/user.png">
                                                 </div>
-                                            </li>
-                                        }
+                                            </figure>
+                                            <div class="comment-wrapper">
+                                                <div class="name">{{review.user_name}}</div>
+                                                <span class="date"><span class="fa fa-calendar"></span>{{review.updated_at}}</span>
+                                                <div class="rating rating-individual" data-score="5"></div>
+                                                <p>{{review.comment}}</p>
+                                                <a *ngIf="review.user_email === userLoggedData.email" class="reply" style="cursor: pointer;" (click)="deleteComment(review.id)"><span class="fa fa-reply text-danger"></span>Delete</a>
+                                                <a *ngIf="review.user_email === userLoggedData.email" class="reply" style="cursor: pointer;" (click)="confirmDelete($event,review.id)"><span class="fa fa-reply text-danger"></span>Delete</a>
+                                                <!-- <a *ngIf="review.user_email === userLoggedData.email" class="reply" style="cursor: pointer;" (click)="updateComment(review.id, review.comment)"><span class="fa fa-reply text-primary"></span>Edit</a> -->
+                                                <hr>
+                                            </div>
+                                        </li>
                                     }
+                                    <p-toast></p-toast>
+                                    <p-confirmDialog></p-confirmDialog>
                                 </ul>
                             </section>
                             <hr class="thick">
@@ -185,11 +191,6 @@
                                                 <option value="4">good</option>
                                                 <option value="5">very good</option>
                                             </select>
-                                            @if(registerForm.controls['rate'].invalid &&
-                                            registerForm.controls['rate'].touched ){
-                                            @if(registerForm.controls['rate'].errors?.['required']) {
-                                            <span class="form-text text-danger"> Required </span>
-                                            }}
                                         </div>
                                     </div>
                                 
@@ -206,15 +207,10 @@
                                         }}
                                     </div>
                                     <div class="checkbox">
-                                        <button (click)="handlesubmit()" disabled [disabled]="registerForm.invalid" type="submit"
+                                        <button (click)="handlesubmit()" disabled [disabled]="commentForm.invalid&&rateForm.invalid" type="submit"
                                             class="btn pull-right btn-default btn-primary" id="bttn">
                                             Add Review
                                         </button>
-                                        @if(completedReview){
-                                        <div class="text-success" style="font-size: 15px; margin-top: 10px;">
-                                            completed send review.
-                                        </div>
-                                        }
                                     </div>
                                 </form>
                             </section>

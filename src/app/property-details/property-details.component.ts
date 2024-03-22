@@ -3,23 +3,28 @@ import { RatingModule } from 'primeng/rating';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { AddPropertyService } from '../services/add-property.service';
 import { NgFor, NgIf } from '@angular/common';
 import { UserLoggedService } from '../services/user-logged.service';
 import { RequestPropertyService } from '../services/request-property.service';
 import { ReviewComponent } from '../review/review.component';
-import { RateService } from '../reviewServices/rate.service';
-import { CommentService } from '../reviewServices/comment.service';
 import { RatingPipe } from '../pipe/rating.pipe';
-
+import { ReviewService } from '../services/review.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateCommentModalComponent } from '../update-comment-modal/update-comment-modal.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @Component({
   selector: 'app-property-details',
   standalone: true,
-  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe, NgFor],
+  imports: [RatingModule, FormsModule, NavbarComponent, BigFooterComponent, NgIf, ReviewComponent, FormsModule, ReactiveFormsModule, RatingPipe, NgFor, ButtonModule, ToastModule, ConfirmDialogModule, RouterLink, RouterModule],
   templateUrl: './property-details.component.html',
+  providers: [ConfirmationService, MessageService, RouterLink],
   styleUrl: './property-details.component.css'
 })
 export class PropertyDetailsComponent implements OnInit{
@@ -29,11 +34,13 @@ export class PropertyDetailsComponent implements OnInit{
   requestProperty : any;
   resultRequest : boolean = false;
 
-  rateData : any;
-  commentData : any;
+
+  userLoggedData : any = [];
 
   registerForm: FormGroup;
-  constructor(private route: ActivatedRoute, private property_details : AddPropertyService, private user_logged : UserLoggedService, private request : RequestPropertyService,  private formBuilder: FormBuilder, private rateApi : RateService, private commentApi : CommentService, private router : Router) {
+  commentForm : any;
+  rateForm : any;
+  constructor(private route: ActivatedRoute, private property_details : AddPropertyService, private user_logged : UserLoggedService, private request : RequestPropertyService,  private formBuilder: FormBuilder, private review : ReviewService, private router : Router, private modalService: NgbModal, private confirmationService: ConfirmationService, private messageService: MessageService) {
     this.registerForm = new FormGroup({
       comment: new FormControl('', [
         Validators.required,
@@ -43,12 +50,21 @@ export class PropertyDetailsComponent implements OnInit{
         Validators.required,
       ]),
     });
+    this.commentForm = this.registerForm.controls['comment']
+    this.rateForm = this.registerForm.controls['rate']
+    
+
   }
 
-  rating : number = 0;
+
+  rating : any = [];
+  sumOfRates : number = 0;
   numberOfRating : number = 0;
   finalRatingForProperty : number = 0;
 
+
+  reviewData : any;
+  commentsForThisProperty : any = [];
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];
@@ -65,31 +81,26 @@ export class PropertyDetailsComponent implements OnInit{
       }
     });
 
-    // this.requestProperty.forEach((req : any) => {
-      
-    //   this.userLogged.forEach((user :any) => {
-    //     if(req.user_id == user.id && req.property_id == this.property.id ){
-    //       this.resultRequest = true;
-    //       console.log(this.resultRequest);
-    //     }
-    //   })
-    // });
 
-    this.rateApi.getAllRate().subscribe(res => {
-      this.rateData = res;
-      for(let i = 0; i < this.rateData.length; i++){
-        if(this.rateData[i].property_id == this.id){
-          this.rating += parseInt(this.rateData[i].rate);
-          this.numberOfRating++
-        }
+    let userDataString = localStorage.getItem('user_data');
+    // Check if user data exists in localStorage
+    if (userDataString) {
+      // Convert the JSON string to an object
+      this.userLoggedData = JSON.parse(userDataString);
+    }
+
+    this.review.getAllComment(this.id).subscribe(res => {
+      this.reviewData = res;
+    })
+
+    this.review.getAllRating(this.id).subscribe(res => {
+      this.rating = res;
+      if(this.rating.rowCount){
+        this.finalRatingForProperty = this.rating.sumOfRates / this.rating.rowCount;
       }
-      if(this.numberOfRating){
-        this.finalRatingForProperty = this.rating / this.numberOfRating;
-      }
-    });
-    this.commentApi.getAllComment().subscribe(res => this.commentData = res);
-
-
+    })
+    
+    
   }
 
 isRequested : boolean = true;
@@ -118,83 +129,94 @@ isRequested : boolean = true;
   }
 
 
-  rateId : any;
- rateChange : boolean = false;
- completedReview : boolean = false;
+  reviewId : any;
+ reviewChange : boolean = false;
   handlesubmit() {
-    // save register data in object
+    const userDataString = localStorage.getItem('user_data');
+    let userData = [];
+    // Check if user data exists in localStorage
+    if (userDataString) {
+      // Convert the JSON string to an object
+      userData= JSON.parse(userDataString);
+    }else{
+      this.router.navigate(['/signin']);
+    }
+
     let form = this.registerForm.controls;
-    let currentDate = new Date()
-    let commentUser = {
-      name: this.userLogged[1].name,
-      email: this.userLogged[1].email,
-      date: currentDate.getDate()+"."+currentDate.getMonth()+"."+currentDate.getFullYear(),
-      comment: form["comment"].value,
-      property_id: this.id
-    }
-    let rateUser = {
-      email: this.userLogged[1].email,
-      rate: form["rate"].value,
-      property_id: this.id
+    let reviewUser = {
+      user_id: userData.id,
+      property_id: this.id,
+      comment: form["comment"].value??null,
+      rating: form["rate"].value??null,
     }
 
-
-
-
-    // this.rateData.forEach((rate : any) => {
-    //   this.userLogged.forEach((user : any) => {
-    //     if(rate.email == user.email){
-    //       this.rateChange  = true;
-    //       this.rateId = rate.id;
-    //     }
-    //   })
-    // });
-
-    for(let i = 0; i < this.rateData.length; i++){
-      if(this.userLogged[1].email == this.rateData[i].email && this.id == this.rateData[i].property_id){
-        this.rateChange = true;
-        this.rateId = this.rateData[i].id;
-        i = this.rateData.length
-        console.log("hello");
+      if(this.commentForm.valid || this.rateForm.valid){
+        this.review.createReview(reviewUser).subscribe(res => console.log(res));
       }
-    }
-    
-    this.commentApi.saveCommentData(commentUser).subscribe(res => res);
-    this.completedReview = true;
 
-    if(this.rateChange){
-      this.rateApi.updateRate(this.rateId, rateUser).subscribe(res => res);
-      console.log(true);
-    }else {
-      this.rateApi.saveRateData(rateUser).subscribe(res => res);
-      console.log(false);
-      this.router.navigate(['/property-listing']);
-    }
-
-    
     this.reloadComponent()
   }
 
   reloadComponent(): void {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+    this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
       this.router.navigate(['/property-details', this.id]);
     });
   }
 
-  goToListComponent(): void {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-      this.router.navigate(['/property-listing', this.id]);
-    });
-  }
+  // goToListComponent(): void {
+  //   this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+  //     this.router.navigate(['/property-listing', this.id]);
+  //   });
+  // }
 
   deleteComment(id:number){
-    this.commentApi.deleteCommentFromApi(id).subscribe()
-    this.reloadComponent()
+    this.review.deleteReview(id).subscribe();
+    this.reloadComponent();
   }
 
-  updateComment(id:number){
-    // this.commentApi.updateComment(id, ).subscribe()
-    this.reloadComponent()
+  // updateComment(id:number){
+  //   this.review.updateReview(id, "D").subscribe()
+  //   this.reloadComponent()
+  // }
+  // updateComment(id: number, comment : string) {
+  //   this.openUpdateCommentModal(id, comment);
+  // }
+  // openUpdateCommentModal(commentId: number, initialComment: string) {
+  //   const modalRef = this.modalService.open(UpdateCommentModalComponent);
+  //   modalRef.componentInstance.commentId = commentId;
+  //   modalRef.componentInstance.initialComment = initialComment;
+
+  //   // Subscribe to the event emitter from the modal to get updated comment value
+  //   modalRef.componentInstance.commentUpdated.subscribe((updatedComment: string) => {
+  //     // Update the comment value in the component
+  //     // Here you would update the comment in the property or wherever it's stored
+  //     console.log('Updated comment:', updatedComment);
+  //   });
+  // }
+  confirmDelete(event: Event, reviewId: number) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Are you sure you want to delete this comment?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      
+
+      accept: () => {
+        this.review.deleteReview(reviewId).subscribe()
+        const index = this.reviewData.findIndex((review : any) => review.id === reviewId);
+        if (index !== -1) {
+          this.reviewData.splice(index, 1);
+        }
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Comment deleted' });
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+      }
+    });
   }
 
 

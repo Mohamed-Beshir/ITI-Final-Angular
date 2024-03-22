@@ -43,20 +43,20 @@
                     </section>
                     <section class="display-lines">
 
-                        @for (item of data; track item.id) {
+                        @for (item of getCurrentPageProperties(); track item.id) {
                                 <app-property-line-card [property]="item" ></app-property-line-card>
                         }
 
                         
                         
                         <!-- Pagination -->
-                        <div class="text-center" >
-                            <ul class="pagination" style="display: inline-block !important;">
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
+                        <div class="text-center my-2">
+                            <ul class="pagination">
+                                @for (page of getPageNumbers(); track page) {
+                                <li [class.active]="page === currentPage">
+                                    <a (click)="changePage(page)">{{ page }}</a>
+                                </li>
+                                }  
                             </ul><!-- /.pagination-->
                         </div><!-- /.center-->
                         

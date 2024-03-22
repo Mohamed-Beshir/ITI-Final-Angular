@@ -76,6 +76,29 @@ sort (order_by : string) {
         this.data = data;
   })
 }
+
+
+
+itemsPerPage = 6; // Number of items to show per page
+currentPage = 1; // Current page
+  // Function to get the properties for the current page
+  getCurrentPageProperties(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.data.slice(startIndex, endIndex);
+  }
+
+  // Function to get an array of page numbers based on the total number of properties and items per page
+  getPageNumbers(): number[] {
+    const totalPages = Math.ceil(this.data.length / this.itemsPerPage);
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  // Function to change the current page
+  changePage(newPage: number): void {
+    this.currentPage = newPage;
+    console.log(this.data)
+  }
   // propertys:Array<any>=
   // [{
   //   "id":1,

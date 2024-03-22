@@ -43,7 +43,7 @@
                     <div class="container justify-content-center" id="properties">
                     <div class="d-flex flex-wrap justify-content-between" >
 
-                    @for (item of data; track item.id) {
+                    @for (item of getCurrentPageProperties(); track item.id) {
                       <div class="col-md-12 col-lg-6 col-xl-4 px-2 px-xl-1">
                           <app-property-card [property]="item" ></app-property-card>
                       </div>
@@ -54,13 +54,13 @@
                     </div><!-- /.row-->
 
                     <!-- Pagination -->
-                    <div class="text-center" >
-                        <ul class="pagination" style="display: inline-block !important;">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
+                    <div class="text-center my-2">
+                        <ul class="pagination">
+                            @for (page of getPageNumbers(); track page) {
+                            <li [class.active]="page === currentPage">
+                                <a (click)="changePage(page)">{{ page }}</a>
+                            </li>
+                            }  
                         </ul><!-- /.pagination-->
                     </div><!-- /.center-->
 

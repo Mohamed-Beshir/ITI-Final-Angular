@@ -37,13 +37,12 @@ selectedImages: { file: File, url: string }[] = [];
       description: ["", [Validators.required]],
       city: ["", [Validators.required]],
       street: ["", [Validators.required]],
-      property_number: ["", [Validators.required]],
+      district: ["", [Validators.required]],
       property_type: ["", [Validators.required]],
       status: ["", [Validators.required]],
       beds: ["", [Validators.required]],
       baths: ["", [Validators.required]],
       area: ["", [Validators.required]],
-      garages: ["", [Validators.required]],
       image: ["", [Validators.required]],
     })
   }
@@ -64,13 +63,12 @@ selectedImages: { file: File, url: string }[] = [];
       street : this.myForm.get('street')?.value,
       type : this.myForm.get('property_type')?.value,
       city : this.myForm.get('city')?.value,
-      district : this.myForm.get('property_number')?.value,
+      district : this.myForm.get('district')?.value,
       area : this.myForm.get('area')?.value,
       status : this.myForm.get('status')?.value,
       baths : this.myForm.get('baths')?.value,
       beds : this.myForm.get('beds')?.value,
       // image : [this.img_1,this.img_2,this.img_3],
-      // date: currentDate.getDate()+"."+currentDate.getMonth()+"."+currentDate.getFullYear()
     }
     if(this.myForm.valid){
       console.log(newProperty)

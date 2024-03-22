@@ -48,36 +48,26 @@
 
 
                                   <div class="container">
-                                      <div class="row">
-                                          <div class="col-md-6 col-sm-6">
+                                          <div>
                                               <section id="summary">
                                                   <header><h2>Summary</h2></header>
                                                   <div class="form-group">
                                                       <label for="submit-city">City</label>
-                                                      <div class="select_container">
-                                                        <select name="type" id="submit-city" formControlName="city">
-                                                            <option value="New York">New York</option>
-                                                            <option value="Los Angeles">Los Angeles</option>
-                                                            <option value="Chicago">Chicago</option>
-                                                            <option value="Houston">Houston</option>
-                                                            <option value="Philadelphia">Philadelphia</option>
-                                                        </select>
-                                                      </div>
+                                                      <input type="text" class="form-control input1" id="submit-city" name="city" required formControlName="city">
                                                   </div>
                                                   <!--  -->
                                                   <div class="col-md-6 col-sm-6" style="width: 100%;">
                                                     <div class="form-group" >
-                                                        <label for="submit-street">street</label>
+                                                        <label for="submit-street">Street</label>
                                                         <input type="text" class="form-control input1" id="submit-street" name="street" required formControlName="street">
                                                     </div><!-- /.form-group -->
-                                                </div><!-- /.col-md-6 -->
-                                                <div class="col-md-6 col-sm-6" style="width: 100%;">
-                                                  <div class="form-group">
-                                                      <label for="submit-property_number">property number</label>
-                                                      <input type="text" class="form-control input1" id="submit-property_number" name="property_number" pattern="\d*" required formControlName="property_number">
-                                                  </div><!-- /.form-group -->
-                                              </div><!-- /.col-md-6 -->
-                                                  <!--  -->
+                                                    </div><!-- /.col-md-6 -->
+                                                  <div class="col-md-6 col-sm-6" style="width: 100%;">
+                                                    <div class="form-group" >
+                                                        <label for="submit-district">District</label>
+                                                        <input type="text" class="form-control input1" id="submit-district" name="district" required formControlName="district">
+                                                    </div><!-- /.form-group -->
+                                                    </div><!-- /.col-md-6 -->
                                                   <div class="row">
                                                       <div class="col-md-6 col-sm-6" >
                                                           <div class="form-group">
@@ -118,10 +108,9 @@
                                                               <input type="text" class="form-control input1" id="submit-Baths" name="Baths" pattern="\d*" required formControlName="baths">
                                                           </div><!-- /.form-group -->
                                                       </div><!-- /.col-md-6 -->
-                                                  </div><!-- /.row -->
-                                                  <div class="row">
-                                                      <div class="col-md-6 col-sm-6">
-                                                          <div class="form-group">
+                                                  </div>
+                                                      <div class="row">
+                                                          <div class="form-group col-12 col-xl-6">
                                                               <label for="submit-area">Area</label>
                                                               <div class="input-group">
                                                                   <input type="text" class="form-control input-area" id="submit-area" name="area" pattern="\d*" required formControlName="area">
@@ -129,26 +118,8 @@
                                                               </div>
                                                           </div><!-- /.form-group -->
                                                       </div><!-- /.col-md-6 -->
-                                                      <div class="col-md-6 col-sm-6">
-                                                          <div class="form-group">
-                                                              <label for="submit-garages">Garages</label>
-                                                              <input type="text" class="form-control input1" id="submit-garages" name="garages" pattern="\d*" required formControlName="garages">
-                                                          </div><!-- /.form-group -->
-                                                      </div><!-- /.col-md-6 -->
-                                                  </div><!-- /.row -->
                                               </section><!-- /#summary -->
                                           </div><!-- /.col-md-6 -->
-                                          <!-- map -->
-                                          <div class="col-md-6 col-sm-6">
-                                            <section id="place-on-map">
-                                                <header class="section-title">
-                                                    <h2>Place on Map</h2>
-                                                </header>
-                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110502.77769395754!2d31.340866811853022!3d30.05946276096188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2z2KfZhNmC2KfZh9ix2KnYjCDZhdit2KfZgdi42Kkg2KfZhNmC2KfZh9ix2KnigKw!5e0!3m2!1sar!2seg!4v1708135131469!5m2!1sar!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                            </section><!-- /#place-on-map -->
-                                        </div><!-- /.col-md-6 -->
-                                          <!-- end map -->
-                                      </div><!-- /.block -->
                                   </div><!-- /.row -->
 
                               <!-- gallary -->
