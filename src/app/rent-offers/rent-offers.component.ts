@@ -1,39 +1,37 @@
+import { RentofferActionsService } from './../services/rentoffer-actions.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { Component ,OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
-import { RequestPropertyService } from '../services/request-property.service';
-import { SaleOffersService } from '../services/sale-offers.service';
-import { OfferActionsService } from '../services/offer-actions.service';
+import { RentOffersService } from '../services/rent-offers.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-requests-properties',
+  selector: 'app-rent-offers',
   standalone: true,
-  imports: [NgFor, NavbarComponent, BigFooterComponent,RouterLink,CommonModule],
-  templateUrl: './requests-properties.component.html',
-  styleUrl: './requests-properties.component.css'
+  imports: [NgFor, NavbarComponent, BigFooterComponent,CommonModule,RouterLink],
+  templateUrl: './rent-offers.component.html',
+  styleUrl: './rent-offers.component.css'
 })
-export class RequestsPropertiesComponent implements OnInit {
- salesOffers: any[] = [];
-  offerId: number=0;
+export class RentOffersComponent {
+  rentsOffers: any[] = [];
+  offerId: number = 0;
 
-  constructor(private saleOffersService: SaleOffersService,private offerActionsService: OfferActionsService) { }
+  constructor(private rentOffersService: RentOffersService, private RentofferActionsService: RentofferActionsService) { }
 
   ngOnInit(): void {
-    this.getSaleOffers();
+    this.getRentOffers();
   }
 
-  getSaleOffers(): void {
-    this.saleOffersService.getSaleOffers()
+  getRentOffers(): void {
+    this.rentOffersService.getRentOffers()
       .subscribe((data: any) => {
-        this.salesOffers = data.salesOffers;
+        this.rentsOffers = data.rentsOffers;
       });
   }
 
-
   acceptOffer(offerId: number): void {
-    this.offerActionsService.acceptOffer(offerId).subscribe({
+    this.RentofferActionsService.acceptOffer(offerId).subscribe({
       next: response => {
         console.log('Offer accepted successfully:', response);
         // Handle success response
@@ -46,7 +44,7 @@ export class RequestsPropertiesComponent implements OnInit {
   }
 
   rejectOffer(offerId: number): void {
-    this.offerActionsService.rejectOffer(offerId).subscribe({
+    this.RentofferActionsService.rejectOffer(offerId).subscribe({
       next: response => {
         console.log('Offer rejected successfully:', response);
         // Handle success response
@@ -57,4 +55,5 @@ export class RequestsPropertiesComponent implements OnInit {
       }
     });
   }
+
 }

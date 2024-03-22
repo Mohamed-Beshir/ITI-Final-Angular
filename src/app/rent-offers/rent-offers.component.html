@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
 <h1 class="my-5 container">Requests</h1>
 <div class="container d-flex justify-content-between">
-  <h3>Sales_offers</h3>
-  <button class="btn btn-primary" routerLink="/rent_offers">Rent_offers</button>
+  <h3>Rent_offers</h3>
+  <button class="btn btn-primary" routerLink="/offers">Sales_offers</button>
 </div>
 <div class="container " style="min-height: 500px; ">
     <table class="table table border text-center my-5 ">
@@ -19,7 +19,7 @@
         </thead>
         <tbody>
 
-          <tr *ngFor="let offer of salesOffers">
+          <tr *ngFor="let offer of rentsOffers">
             <td>{{ offer.buyer_name }}</td>
             <td>{{ offer.buyer_email }}</td>
             <td>{{ offer.title }} </td>
