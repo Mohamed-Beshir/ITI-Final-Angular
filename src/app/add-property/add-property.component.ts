@@ -115,7 +115,6 @@ selectedImages: { file: File, url: string }[] = [];
           }
           this.http.post(`http://localhost:8000/api/images?property_id=${resp.id.toString()}`, formData).subscribe(res => console.log(res));
         });
-        
       });
 
       this.router.navigate(["my-properties"])
