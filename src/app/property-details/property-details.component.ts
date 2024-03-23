@@ -146,7 +146,6 @@ export class PropertyDetailsComponent implements OnInit{
   submitOffer() {
     if (this.offerForm.valid) {
       console.log('Form submitted:', this.offerForm.value);
-
       const formData = this.offerForm.value;
       formData.buyer_id = this.userId;
       formData.offered_price = formData.offeredPrice;

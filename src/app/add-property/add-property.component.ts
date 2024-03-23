@@ -113,12 +113,12 @@ selectedImages: { file: File, url: string }[] = [];
           for (let i = 0; i < this.selectedImages.length; i++) {
             formData.append('images[]', this.selectedImages[i].file);
           }
-          this.http.post(`http://localhost:8000/api/images?property_id=${resp.id.toString()}`, formData).subscribe(res => console.log(res));
+          this.http.post(`http://localhost:8000/api/images?property_id=${resp.id.toString()}`, formData).subscribe(res => {
+            console.log(res)
+            this.router.navigate(['my-properties']);
+          });
         });
-        
       });
-
-      this.router.navigate(["my-properties"])
     }
 
     //
