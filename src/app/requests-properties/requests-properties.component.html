@@ -1,35 +1,39 @@
 <app-navbar></app-navbar>
 <h1 class="my-5 container">Requests</h1>
 <div class="container d-flex justify-content-between">
-  <h3>Sales_offers</h3>
-  <button class="btn btn-primary" routerLink="/rent_offers">Rent_offers</button>
+  <h3>Offers</h3>
+
 </div>
-<div class="container " style="min-height: 500px; ">
-    <table class="table table border text-center my-5 ">
-        <thead class="container  table-dark">
+<div class="container table-wrap" style="min-height: 500px; ">
+    <table class="table table-responsive-xl">
+        <thead class=" ">
           <tr class="border-black ">
-            <th scope="col">Buyer_Name</th>
-            <th scope="col">Buyer_Email</th>
-            <th scope="col">Property_Title</th>
-            <th scope="col">offer_price</th>
-            <th scope="col">Buyer_message</th>
+            <th scope="col">Buyer Name</th>
+            <th scope="col">Buyer Email</th>
+            <th scope="col">Property Title</th>
+            <th scope="col">Property Image</th>
+            <th scope="col">offer price</th>
+            <th scope="col">Buyer message</th>
             <th scope="col">Status</th>
+            <th scope="col">Property Type</th>
             <th scope="col">Handle</th>
           </tr>
         </thead>
         <tbody>
 
-          <tr *ngFor="let offer of salesOffers">
+          <tr *ngFor="let offer of offers">
             <td>{{ offer.buyer_name }}</td>
             <td>{{ offer.buyer_email }}</td>
-            <td>{{ offer.title }} </td>
-            <td>{{ offer.offered_price }}</td>
-            <td> {{ offer.message }}</td>
-            <td>{{ offer.status }}</td>
+            <td>{{ offer.property_title }} </td>
+            <td><img src="http://localhost:8000/images/{{offer.property_image}}" alt="not found"></td>
+            <td>{{ offer.offer_price }}</td>
+            <td> {{ offer.offer_message }}</td>
+            <td class="status"><span class="{{ offer.offer_status }}">{{ offer.offer_status }}</span></td>
+            <td>{{offer.offer_for}}</td>
             <td>
-              <ng-container *ngIf="offer.status !== 'accepted' && offer.status !== 'rejected'">
-                <button class="btn btn-success mx-1" (click)="acceptOffer(offer.id)">Accept</button>
-                <button class="btn btn-danger" (click)="rejectOffer(offer.id)">Reject</button>
+              <ng-container *ngIf="offer.offer_status !== 'accepted' && offer.offer_status !== 'rejected'">
+                <button class="btn btn-success mx-1" (click)="acceptOffer(offer.offer_id)">Accept</button>
+                <button class="btn btn-danger" (click)="rejectOffer(offer.offer_id)">Reject</button>
               </ng-container>
             </td>
 
@@ -38,4 +42,23 @@
       </table>
 
 </div>
+<table>
+  <thead>
+    <tr>
+      <th>Offer ID</th>
+      <th>Property Title</th>
+      <th>Property Image</th>
+      <!-- Add more table headers as needed -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let offer of offers">
+      <td>{{ offer.offer_id }}</td>
+      <td>{{ offer.property_title }}</td>
+      <td><img [src]="offer.property_image" alt="Property Image"></td>
+      <!-- Add more table cells as needed -->
+    </tr>
+  </tbody>
+</table>
+
 <app-big-footer></app-big-footer>

@@ -7,30 +7,47 @@ import { SaleOffersService } from '../services/sale-offers.service';
 import { OfferActionsService } from '../services/offer-actions.service';
 import { RouterLink } from '@angular/router';
 
+interface Offer {
+  offer_id: number;
+  property_title: string;
+  property_image: string;
+  offer_for: string;
+  lister_name: string;
+  buyer_name: string;
+  buyer_email: string;
+  offer_price: number;
+  offer_message: string;
+  offer_status: string;
+}
+
+
+
 @Component({
   selector: 'app-requests-properties',
   standalone: true,
-  imports: [NgFor, NavbarComponent, BigFooterComponent,RouterLink,CommonModule],
+  imports: [NgFor, NavbarComponent, BigFooterComponent,RouterLink,CommonModule,],
   templateUrl: './requests-properties.component.html',
   styleUrl: './requests-properties.component.css'
 })
 export class RequestsPropertiesComponent implements OnInit {
- salesOffers: any[] = [];
-  offerId: number=0;
+  offers: Offer[] = [];
+  userId: number=0;
 
-  constructor(private saleOffersService: SaleOffersService,private offerActionsService: OfferActionsService) { }
+  constructor(private dataService: SaleOffersService, private offerActionsService: OfferActionsService,) { }
 
   ngOnInit(): void {
-    this.getSaleOffers();
-  }
+    // Retrieve user ID from localStorage
+    const userData = JSON.parse(localStorage.getItem('user_data') ?? '0');
+    this.userId = userData ? userData.id : null;
 
-  getSaleOffers(): void {
-    this.saleOffersService.getSaleOffers()
-      .subscribe((data: any) => {
-        this.salesOffers = data.salesOffers;
-      });
+    // Fetch offers data using the user ID
+    if (this.userId) {
+      this.dataService.getAllOffersByListerId(this.userId)
+        .subscribe((offers: Offer[]) => {
+          this.offers = offers;
+        });
+    }
   }
-
 
   acceptOffer(offerId: number): void {
     this.offerActionsService.acceptOffer(offerId).subscribe({
