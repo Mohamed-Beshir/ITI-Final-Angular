@@ -26,10 +26,8 @@
                     <header><h1>Profile</h1></header>
                     <div class="account-profile">
                         <div class="row">
-                            <div class="col-md-3 col-sm-3">
-                                <img alt="" class="image" src="assets/img/agent-01.jpg">
-                            </div>
-                            <div class="col-md-9 col-sm-9">
+
+                            <div class="col-md-12 col-sm-9">
                                 <form role="form" id="form-account-profile" method="post" >
 
 
@@ -61,29 +59,49 @@
                                 <section id="change-password" *ngIf="showEditForm" >
                                     <header><h2>Edit your information</h2></header>
                                     <!--  -->
-                                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                                    <dl class="contact-fields" >
-                                      <dt><label for="form-account-name">Your Name:</label></dt>
-                                      <dd><div class="form-group">
-                                          <input type="text" formControlName="name" class="form-control" id="form-account-name" name="form-account-name">
-                                      </div><!-- /.form-group --></dd>
+                                   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <dl class="contact-fields">
+    <dt><label for="form-account-name">Your Name:</label></dt>
+    <dd>
+      <div class="form-group">
+        <input type="text" formControlName="name" class="form-control" id="form-account-name" name="form-account-name">
+        <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-danger">
+          Name is required
+        </div>
 
-                                      <dt><label for="form-account-email">Email:</label></dt>
-                                      <dd><div class="form-group">
-                                          <input type="text"  formControlName="email" placeholder="Email" id="form-account-email" name="form-account-phone" >
-                                      </div><!-- /.form-group --></dd>
-                                      <dt><label for="form-account-email">Password:</label></dt>
-                                      <dd><div class="form-group">
-                                          <input type="password" class="form-control" formControlName="password" id="form-account-password" name="form-account-password" >
-                                      </div><!-- /.form-group --></dd>
+      </div>
+    </dd>
+
+    <dt><label for="form-account-email">Email:</label></dt>
+    <dd>
+      <div class="form-group">
+        <input type="text" formControlName="email" placeholder="Email" id="form-account-email" name="form-account-phone">
+        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+          <div *ngIf="userForm.get('email')?.errors?.['required']">Email is required</div>
+          <div *ngIf="userForm.get('email')?.errors?.['email']">Invalid email format</div>
+        </div>
+
+      </div>
+    </dd>
+
+    <dt><label for="form-account-password">Password:</label></dt>
+    <dd>
+      <div class="form-group">
+        <input type="password" class="form-control" formControlName="password" id="form-account-password" name="form-account-password">
+        <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-danger">
+          <div *ngIf="userForm.get('password')?.errors?.['required'] ?? false">Password is required</div>
+          <div *ngIf="userForm.get('password')?.errors?.['minlength'] ?? false">Password must be at least 8 characters</div>
+        </div>
 
 
-                                  </dl>
-                                  <div class="form-group" style="text-align: right;">
-                                    <button  type="submit" class="btn btn-default"   id="account-submit" routerLink="/profile">Save Changes</button>
-                                    <button routerLink="/profile" type="submit" class="btn btn-default"  (click)="cancelEdit()" id="account-submit">Cancel</button>
-                                </div><!-- /.form-group -->
-                              </form>
+      </div>
+    </dd>
+  </dl>
+  <div class="form-group" style="text-align: right;">
+    <button type="submit" class="btn btn-default" id="account-submit" [disabled]="!userForm.valid">Save Changes</button>
+    <button type="button" class="btn btn-default" (click)="cancelEdit()" id="account-submit">Cancel</button>
+  </div>
+</form>
                                     <!--  -->
                                     <!-- <div *ngIf="notificationMessage" class="alert alert-success">
                                       {{ notificationMessage }}
