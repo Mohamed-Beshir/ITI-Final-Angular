@@ -84,18 +84,8 @@
       </div>
     </dd>
 
-    <dt><label for="form-account-password">Password:</label></dt>
-    <dd>
-      <div class="form-group">
-        <input type="password" class="form-control" formControlName="password" id="form-account-password" name="form-account-password">
-        <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-danger">
-          <div *ngIf="userForm.get('password')?.errors?.['required'] ?? false">Password is required</div>
-          <div *ngIf="userForm.get('password')?.errors?.['minlength'] ?? false">Password must be at least 8 characters</div>
-        </div>
+    
 
-
-      </div>
-    </dd>
   </dl>
   <div class="form-group" style="text-align: right;">
     <button type="submit" class="btn btn-default" id="account-submit" [disabled]="!userForm.valid">Save Changes</button>

@@ -30,7 +30,11 @@ export class ProfileAgentComponent implements OnInit {
   ngOnInit(): void {
 
     //
-  
+    this.userForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
     //
 
     const userData = localStorage.getItem('user_data');
@@ -49,7 +53,7 @@ export class ProfileAgentComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -69,13 +73,8 @@ export class ProfileAgentComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Check if userForm is null or undefined
-    if (!this.userForm) {
-      console.error('User form is not available.');
-      return;
-    }
 
-    // Check if userForm is valid
+
     if (this.userForm.valid) {
       // Form is valid, perform form submission logic here
       console.log('Form submitted:', this.userForm.value);
@@ -85,13 +84,10 @@ export class ProfileAgentComponent implements OnInit {
       // Optionally, you can mark all fields as touched to display validation errors
       this.userForm.markAllAsTouched();
     }
-
-    // Check if userId is null or undefined
     if (!this.userId) {
       console.error('User ID is not available.');
       return;
     }
-
     this.notificationMessage = 'User data saved successfully.';
 
     const updatedUserData = this.userForm.value;
@@ -103,6 +99,11 @@ export class ProfileAgentComponent implements OnInit {
       console.error('Error updating data:', error);
       // You can handle error response here
     });
-  }
 
+
+
+    this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+      this.router.navigate(['/profile']);
+    });
+  }
 }
