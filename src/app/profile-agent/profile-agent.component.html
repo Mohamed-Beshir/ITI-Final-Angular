@@ -12,7 +12,9 @@
                 <aside>
                     <ul class="sidebar-navigation">
                         <li class="active"><a routerLink="/profile"><i class="fa fa-user"></i><span>Profile</span></a></li>
-                        <li><a routerLink="/my-properties"><i class="fa fa-home"></i><span>My Properties</span></a></li>
+                        @if(userloggedData.role !== 'user'){
+                            <li><a routerLink="/my-properties"><i class="fa fa-home"></i><span>My Properties</span></a></li>
+                        }
                     </ul>
                 </aside>
             </section><!-- /#sidebar -->

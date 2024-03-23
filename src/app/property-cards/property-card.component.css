@@ -26,6 +26,32 @@
   top: 0;
 }
 
+@media (min-width: 576px){
+  .property-image img{
+    height: 387px;
+  }
+}
+@media (min-width: 768px){
+  .property-image img{
+    height: 252px;
+  }
+}
+@media (min-width: 992px){
+  .property-image img{
+    height: 162px;
+  }
+}
+@media (min-width: 1200px){
+  .property-image img{
+    height: 196px;
+  }
+}
+@media (min-width: 1400px){
+  .property-image img{
+    height: 230px;
+  }
+}
+
 .overlay {
   transition: 0.4s;
   bottom: -65px;

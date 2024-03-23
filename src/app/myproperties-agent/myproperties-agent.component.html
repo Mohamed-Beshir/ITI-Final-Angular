@@ -37,7 +37,7 @@
                                 @for (property of getCurrentPageProperties(); track property.id) {
                                     <tr>
                                         <td class="image">
-                                            <a [routerLink]="['/property-details', property.id]"><img alt="" height="79" src="http://localhost:8000/images/{{property.image}}"></a>
+                                            <a [routerLink]="['/property-details', property.id]"><img alt="" height="79" style="width: 102px;" src="http://localhost:8000/images/{{property.image}}"></a>
                                         </td>
                                         <td><div class="inner">
                                             <a [routerLink]="['/property-details', property.id]"><h2>{{property.title}}</h2></a>

@@ -46,6 +46,21 @@ selectedImages: { file: File, url: string }[] = [];
       image: ["", [Validators.required]],
     })
   }
+  userData : any = [];
+  ngOnInit(){
+    const userDataString = localStorage.getItem('user_data');
+    // Check if user data exists in localStorage
+    if (userDataString) {
+      // Convert the JSON string to an object
+      this.userData= JSON.parse(userDataString);
+    }else{
+      this.router.navigate(['/signin']);
+    }
+    if(this.userData.role == 'user'){
+      this.router.navigate(['']);
+    }
+  }
+
   img_1:any;
   img_2:any;
   img_3:any;
@@ -77,10 +92,11 @@ selectedImages: { file: File, url: string }[] = [];
         console.log(resp.id);
 
         this.property.getAllProperty().subscribe((data : any) => {
+
           if(this.myForm.get('status')?.value == 'for_rent'){
             let property_rent = {
                 "property_id": resp.id,
-                "lister_id": 1,
+                "lister_id": this.userData.id,
                 "period": "monthly",
                 "price": this.myForm.get('price')?.value
             }
@@ -88,7 +104,7 @@ selectedImages: { file: File, url: string }[] = [];
           }else {
             let property_sale = {
               "property_id": resp.id,
-              "lister_id": 1,
+              "lister_id": this.userData.id,
               "price": this.myForm.get('price')?.value
             }
             this.property_sales.saveProperty_salesData(property_sale).subscribe(res => console.log(res));
@@ -102,8 +118,7 @@ selectedImages: { file: File, url: string }[] = [];
         
       });
 
-      // this.router.navigate(["my-properties"])
-//
+      this.router.navigate(["my-properties"])
     }
 
     //

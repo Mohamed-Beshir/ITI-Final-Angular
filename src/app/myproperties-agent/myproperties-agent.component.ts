@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -164,10 +164,23 @@ export class MypropertiesAgentComponent {
   // ]
   itemsPerPage = 5; // Number of items to show per page
   currentPage = 1; // Current page
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private propertiesApi : AddPropertyService) {}
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private propertiesApi : AddPropertyService, private router : Router) {
+    const userDataString = localStorage.getItem('user_data');
+    // Check if user data exists in localStorage
+    if (userDataString) {
+      // Convert the JSON string to an object
+      this.userData= JSON.parse(userDataString);
+    }else{
+      this.router.navigate(['/signin']);
+    }
+    if(this.userData.role == 'user'){
+      this.router.navigate([""])
+    }
+  }
   propertiesArray : any;
+  userData : any = [];
   ngOnInit(){
-    this.propertiesApi.getAllProperty().subscribe(res => this.propertiesArray = res)
+    this.propertiesApi.getAllPropertyAgent(this.userData.id).subscribe(res => this.propertiesArray = res)
   }
   confirmDelete(event: Event, propertyId: number) {
     this.confirmationService.confirm({

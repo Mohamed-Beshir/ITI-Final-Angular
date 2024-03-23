@@ -48,4 +48,7 @@ export class AddPropertyService {
   getAllPropertyRentOrSaleOrderBy(status: string, orderBy: string) {
     return this.http.get(`${this.api}-rent-or-sale?status=${status}&order_by=${orderBy}`);
   }
+  getAllPropertyAgent(agent_id : number){
+    return this.http.get(`${this.api}-agent?agent_id=${agent_id}`);
+  }
 }

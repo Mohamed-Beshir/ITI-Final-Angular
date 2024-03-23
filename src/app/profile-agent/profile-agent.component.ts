@@ -1,7 +1,7 @@
 import { Component ,OnInit} from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AddUserService } from './../services/add-user.service';
 import { UserServiceService } from '../services/user-service.service';
 import { FormsModule } from '@angular/forms';
@@ -21,12 +21,20 @@ export class ProfileAgentComponent implements OnInit {
   showEditForm = false; // Initialize flag for edit form visibility
   notificationMessage: string | null = null;
 
-  constructor(private userService: UserServiceService, private formBuilder: FormBuilder) { }
+  constructor(private userService: UserServiceService, private formBuilder: FormBuilder, private router : Router) {
+
+  }
+  userloggedData : any = [];
 
   ngOnInit(): void {
+
     const userData = localStorage.getItem('user_data');
     if (userData) {
+      this.userloggedData= JSON.parse(userData);
       this.userId = JSON.parse(userData).id;
+    }else{
+      this.router.navigate(['/signin']);
+
     }
 
     if (this.userId) {
