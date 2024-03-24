@@ -49,8 +49,10 @@ export class RequestsPropertiesComponent implements OnInit {
         });
     }
   }
-
+  isLoading: boolean = false;
   acceptOffer(offerId: number, offerFor: string): void {
+    this.isLoading = true;
+    console.log(offerFor)
     if (offerFor === 'Sale') {
       this.offerActionsService.acceptOffer(offerId).subscribe({
         next: response => {
@@ -85,6 +87,7 @@ export class RequestsPropertiesComponent implements OnInit {
   }
 
   rejectOffer(offerId: number, offerFor: string): void {
+    this.isLoading = true;
     if (offerFor === 'Sale') {
       this.offerActionsService.rejectOffer(offerId).subscribe({
         next: response => {
@@ -100,22 +103,22 @@ export class RequestsPropertiesComponent implements OnInit {
         }
       });
     } else if (offerFor === 'Rent') {
-      this.rentofferActionsService.rejectOffer(offerId).subscribe({
-        next: response => {
-          console.log('Rent offer rejected successfully:', response);
-          // Handle success response
-          this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
-            this.router.navigate(['/requests']);
-          });
-      },
-      error: error => {
-        console.error('Error rejecting offer:', error);
-        // Handle error response
-      }
-    });
-  } else {
-    console.error('Invalid offer type:', offerFor);
-  }
+        this.rentofferActionsService.rejectOffer(offerId).subscribe({
+          next: response => {
+            console.log('Rent offer rejected successfully:', response);
+            // Handle success response
+            this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+              this.router.navigate(['/requests']);
+            });
+          },
+          error: error => {
+            console.error('Error rejecting offer:', error);
+            // Handle error response
+          }
+        });
+    } else {
+      console.error('Invalid offer type:', offerFor);
+    }
   }
 
 }

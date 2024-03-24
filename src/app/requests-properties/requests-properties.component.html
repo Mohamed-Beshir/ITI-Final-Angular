@@ -32,8 +32,15 @@
             <td>{{offer.offer_for}}</td>
             <td>
               <ng-container *ngIf="offer.offer_status !== 'accepted' && offer.offer_status !== 'rejected'">
-                <button style="width:fit-content; font-size: 11px;font-weight: bold;" class="btn btn-success mx-1" (click)="acceptOffer(offer.offer_id, offer.offer_for)">Accept</button>
-                <button style="width:fit-content; font-size: 11px;font-weight: bold;" class="btn btn-danger" (click)="rejectOffer(offer.offer_id, offer.offer_for)">Reject</button>
+                <div>
+                  <button style="width:fit-content; font-size: 11px;font-weight: bold;" class="btn btn-success mx-1" (click)="acceptOffer(offer.offer_id, offer.offer_for)">Accept</button>
+                  <button style="width:fit-content; font-size: 11px;font-weight: bold;" class="btn btn-danger" (click)="rejectOffer(offer.offer_id, offer.offer_for)">Reject</button>
+                </div>
+                <div class="text-center" [class.d-none]="!isLoading" [class.d-block]="isLoading">
+                  <div class="spinner-border text-warning" style="width: 15px;height: 15px;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
               </ng-container>
             </td>
 
