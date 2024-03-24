@@ -1,93 +1,176 @@
-
-  <app-navbar></app-navbar>
-  <!-- Page Content -->
-  <div id="page-content">
+<app-navbar></app-navbar>
+<!-- Page Content -->
+<div id="page-content">
 
     <div class="container my-4">
         <div class="row">
-        <!-- sidebar -->
-        <div class="col-md-3">
-            <section id="sidebar">
-                <header><h3>Account</h3></header>
-                <aside>
-                    <ul class="sidebar-navigation">
-                        <li class="active"><a routerLink="/profile"><i class="fa fa-user"></i><span>Profile</span></a></li>
-                        @if(userloggedData.role !== 'user'){
-                            <li><a routerLink="/my-properties"><i class="fa fa-home"></i><span>My Properties</span></a></li>
-                        }
-                    </ul>
-                </aside>
-            </section><!-- /#sidebar -->
-        </div><!-- /.col-md-3 -->
-        <!-- end Sidebar -->
+            <!-- sidebar -->
+            <div class="col-md-3">
+                <section id="sidebar">
+                    <header>
+                        <h3>Account</h3>
+                    </header>
+                    <aside>
+                        <ul class="sidebar-navigation">
+                            <li class="active"><a routerLink="/profile"><i
+                                        class="fa fa-user"></i><span>Profile</span></a></li>
+                            @if(userloggedData.role !== 'user'){
+                            <li><a routerLink="/my-properties"><i class="fa fa-home"></i><span>My Properties</span></a>
+                            </li>
+                            }
+                        </ul>
+                    </aside>
+                </section><!-- /#sidebar -->
+            </div><!-- /.col-md-3 -->
+            <!-- end Sidebar -->
             <!-- My Properties -->
             <div class="col-md-9 col-sm-10">
                 <section id="profile">
-                    <header><h1>Profile</h1></header>
+                    <header>
+                        <h1>Profile</h1>
+                    </header>
                     <div class="account-profile">
                         <div class="row">
-                            <div class="col-md-3 col-sm-3">
+
+                            <div class="col-md-3">
                                 <img alt="" class="image" src="assets/img/user.png">
                             </div>
-                            <div class="col-md-9 col-sm-9">
-                                <form role="form" id="form-account-profile" method="post" >
+                            <div class="col-md-9">
+
+                                <form role="form" id="form-account-profile" method="post">
 
 
                                     <section id="contact">
                                         <dl class="contact-fields" *ngIf="userData">
                                             <dt><label for="form-account-name">Your Name</label></dt>
-                                            <dd><div class="form-group">
-                                                <input type="text" class="form-control" id="form-account-name" name="form-account-name" value="{{ userData.name  }}" readonly>
-                                            </div><!-- /.form-group --></dd>
+                                            <dd>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="form-account-name"
+                                                        name="form-account-name" value="{{ userData.name  }}" readonly>
+                                                </div><!-- /.form-group -->
+                                            </dd>
 
                                             <dt><label for="form-account-email">Email</label></dt>
-                                            <dd><div class="form-group">
-                                                <input type="text" class="form-control" id="form-account-email" name="form-account-phone" value="{{ userData.email }}" readonly>
-                                            </div><!-- /.form-group --></dd>
+                                            <dd>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="form-account-email"
+                                                        name="form-account-phone" value="{{ userData.email }}" readonly>
+                                                </div><!-- /.form-group -->
+                                            </dd>
                                             <dt><label for="form-account-skype">Role</label></dt>
-                                            <dd><div class="form-group">
-                                                @if(userData.role === "user"){
-                                                    <input type="text" class="form-control" id="form-account-skype" name="form-account-password" value="Regular User" readonly>
-                                                }@else if(userData.role === "agent"){
-                                                    <input type="text" class="form-control" id="form-account-skype" name="form-account-password" value="Agent" readonly>
-                                                }
-                                            </div><!-- /.form-group --></dd>
+                                            <dd>
+                                                <div class="form-group">
+                                                    @if(userData.role === "user"){
+                                                    <input type="text" class="form-control" id="form-account-skype"
+                                                        name="form-account-password" value="Regular User" readonly>
+                                                    }@else if(userData.role === "agent"){
+                                                    <input type="text" class="form-control" id="form-account-skype"
+                                                        name="form-account-password" value="Agent" readonly>
+                                                    }
+                                                </div><!-- /.form-group -->
+                                            </dd>
 
                                         </dl>
                                         <div class="form-group" style="text-align: right;">
-                                          <button  (click)="toggleEdit()" type="submit" class="btn btn-default" id="account-submit">Edit</button>
-                                      </div>
+                                            <button (click)="toggleEdit()" type="submit" class="btn btn-default"
+                                                id="account-submit">Edit</button>
+                                        </div>
                                     </section>
 
 
                                 </form><!-- /#form-contact -->
-                                <section id="change-password" *ngIf="showEditForm">
-                                    <header><h2 class="mb-5">Edit your information</h2></header>
-                                    <!--  -->
-                                    <dl class="contact-fields" >
-                                      <dt><label for="form-account-name">Your Name</label></dt>
-                                      <dd><div class="form-group">
-                                          <input type="text" class="form-control" id="form-account-name" name="form-account-name" [(ngModel)]="userData.name">
-                                      </div><!-- /.form-group --></dd>
 
-                                      <dt><label for="form-account-email">Email</label></dt>
-                                      <dd><div class="form-group">
-                                          <input type="text" class="form-control" id="form-account-email" name="form-account-phone" [(ngModel)]="userData.email">
-                                      </div><!-- /.form-group --></dd>
-                                      <dt><label for="form-account-email">Password</label></dt>
-                                      <dd><div class="form-group">
-                                          <input type="password" class="form-control" id="form-account-password" name="form-account-password" [(ngModel)]="userData.password">
-                                      </div><!-- /.form-group --></dd>
-                                  </dl>
-                                    <div class="form-group" style="text-align: right;">
-                                        <button  type="submit" class="btn btn-default mx-3"  (click)="onSubmit()" id="account-submit" routerLink="/profile">Save Changes</button>
-                                        <button routerLink="/profile" type="submit" class="btn btn-default"  (click)="cancelEdit()" id="account-submit">Cancel</button>
-                                    </div><!-- /.form-group -->
+                                <section id="change-password" *ngIf="showEditForm">
+                                    <header>
+                                        <h2 class="mb-5">Edit your information</h2>
+                                    </header>
                                     <!--  -->
-                                    <!-- <div *ngIf="notificationMessage" class="alert alert-success">
+                                    <dl class="contact-fields">
+                                        <dt><label for="form-account-name">Your Name</label></dt>
+                                        <dd>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="form-account-name"
+                                                    name="form-account-name" [(ngModel)]="userData.name">
+                                            </div><!-- /.form-group -->
+                                        </dd>
+
+                                        <dt><label for="form-account-email">Email</label></dt>
+                                        <dd>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="form-account-email"
+                                                    name="form-account-phone" [(ngModel)]="userData.email">
+                                            </div><!-- /.form-group -->
+                                        </dd>
+                                        <dt><label for="form-account-email">Password</label></dt>
+                                        <dd>
+                                            <div class="form-group">
+                                                <input type="password" class="form-control" id="form-account-password"
+                                                    name="form-account-password" [(ngModel)]="userData.password">
+                                            </div><!-- /.form-group -->
+                                        </dd>
+                                    </dl>
+                                    <div class="form-group" style="text-align: right;">
+                                        <button type="submit" class="btn btn-default mx-3" (click)="onSubmit()"
+                                            id="account-submit" routerLink="/profile">Save Changes</button>
+                                        <button routerLink="/profile" type="submit" class="btn btn-default"
+                                            (click)="cancelEdit()" id="account-submit">Cancel</button>
+                                    </div><!-- /.form-group -->
+
+
+                                    <section id="change-password" *ngIf="showEditForm">
+                                        <header>
+                                            <h2>Edit your information</h2>
+                                        </header>
+                                        <!--  -->
+                                        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                                            <dl class="contact-fields">
+                                                <dt><label for="form-account-name">Your Name:</label></dt>
+                                                <dd>
+                                                    <div class="form-group">
+                                                        <input type="text" formControlName="name" class="form-control"
+                                                            id="form-account-name" name="form-account-name">
+                                                        <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+                                                            class="text-danger">
+                                                            Name is required
+                                                        </div>
+
+                                                    </div>
+                                                </dd>
+
+                                                <dt><label for="form-account-email">Email:</label></dt>
+                                                <dd>
+                                                    <div class="form-group">
+                                                        <input type="text" formControlName="email" placeholder="Email"
+                                                            id="form-account-email" name="form-account-phone">
+                                                        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+                                                            class="text-danger">
+                                                            <div *ngIf="userForm.get('email')?.errors?.['required']">
+                                                                Email is required</div>
+                                                            <div *ngIf="userForm.get('email')?.errors?.['email']">
+                                                                Invalid email format</div>
+                                                        </div>
+
+                                                    </div>
+                                                </dd>
+
+
+
+                                            </dl>
+                                            <div class="form-group" style="text-align: right;">
+                                                <button type="submit" class="btn btn-default" id="account-submit"
+                                                    [disabled]="!userForm.valid">Save Changes</button>
+                                                <button type="button" class="btn btn-default" (click)="cancelEdit()"
+                                                    id="account-submit">Cancel</button>
+                                            </div>
+                                        </form>
+
+                                        <!--  -->
+                                        <!-- <div *ngIf="notificationMessage" class="alert alert-success">
                                       {{ notificationMessage }}
                                     </div> -->
+                                    </section>
                                 </section>
+
                             </div><!-- /.col-md-9 -->
                         </div><!-- /.row -->
                     </div><!-- /.account-profile -->
