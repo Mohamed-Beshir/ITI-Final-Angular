@@ -5,28 +5,22 @@
   <!-- Page Content -->
   <div id="page-content">
     <!-- Breadcrumb -->
-    <div class="container">
-        <ol class="breadcrumb  opacity-50 pt-2 pe-0 bg-transparent mb-2">
-            <li><a href="#" class="text-white">Home</a></li>
-            <li class="active">Property Rent</li>
-        </ol>
-    </div>
+    
     <!-- end Breadcrumb -->
 
-    <div class="container">
+    <div class="container my-5">
         <div class="row">
             <!-- Results -->
-            <div class="col-md-9 col-sm-9">
+            <div class="col-md-9">
 
-                <section id="results" style="margin-top: 17px;">
-                    <header><h1>Properties Rent</h1></header>
+                <section id="results" >
+                    <header><h1>Properties For Rent</h1></header>
                     <section id="search-filter" style="margin-top: 30px;">
                         <figure class="row justify-content-between">
-                            <h3 class=" col-md-8"><i class="fa fa-search me-2"></i>Search Results:</h3>
                             <!-- <span class="search-count">28</span> -->
-                            <div class="sorting col-md-4" style="width: 180px;">
-                                <div class="form-group select_container1 w-100">
-                                    <select name="sorting" #order (click)="sort(order.value)">
+                            <div class="sorting ">
+                                <div class="form-group ">
+                                    <select class="form-select rounded-0 w-25" name="sorting" #order (click)="sort(order.value)">
                                         <option value="">Sort By</option>
                                         <option value="1">Lowest price first</option>
                                         <option value="2">Highest price first</option>
@@ -34,9 +28,6 @@
                                         <option  value="Highest_area">Highest area first</option>
                                         <option value="3">Date added</option>
                                     </select>
-                                    <div class="icon-dropdown">
-                                      <fa-icon [icon]="arrowdown"></fa-icon>
-                                    </div>
                                 </div><!-- /.form-group -->
                             </div>
                         </figure>
@@ -64,7 +55,12 @@
                 </section><!-- /#results -->
             </div><!-- /.col-md-9 -->
             <!-- end Results -->
-            <app-search [dataStatus]="'for_rent'" style="display: inline;width: 25%;margin-top: 177px;"></app-search>
+            <div class="col-md-3">
+                <div class="ps-5">
+                    <app-search [dataStatus]="'for_rent'"></app-search>
+                </div> 
+            </div>
+            
             <!-- sidebar -->
             <!-- <app-search></app-search> -->
           <!-- end Sidebar -->

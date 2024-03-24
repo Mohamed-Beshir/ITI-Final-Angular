@@ -21,20 +21,24 @@
                     <div class="col-12 col-lg-5 col-xl-4">
                         <dl class="pe-lg-3 m-0 w-100">
                             <div class="d-flex justify-content-between w-100">
-                                <dt>Status:</dt>
-                                <dd>{{property.status}}</dd>
+                                <dt>Status</dt>
+                                @if (property.status === "for_sale") {
+                                    <dd>For Sale</dd>
+                                }@else if (property.status === "for_rent") {
+                                    <dd>For Rent</dd>
+                                }
                             </div>
                             <div class="d-flex justify-content-between">
-                                <dt>Area:</dt>
+                                <dt>Area</dt>
                                 <dd>{{property.area}} m<sup>2</sup></dd>
                             </div>
                             <div class="d-flex justify-content-between">
 
-                                <dt>Beds:</dt>
+                                <dt>Beds</dt>
                                 <dd>{{property.beds}}</dd>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <dt>Baths:</dt>
+                                <dt>Baths</dt>
                                 <dd>{{property.baths}}</dd>
                             </div>
 

@@ -1,42 +1,36 @@
-<div class="col-md-3 col-sm-3" style="width: 100%;">
+<div class="" >
   <section id="sidebar">
 
       <aside id="edit-search">
 
-          <header><h3>Search Properties</h3></header>
+          <header><h4 class="mb-4">Search Properties</h4></header>
           <form role="form" id="form-sidebar" class="form-search" (submit)="search(status.value, city.value, district.value, propertyType.value, area.value, beds.value, baths.value, price.value)">
-              <div class="form-group select_container" [class]="dataStatus ? 'd-none' : ''" >
-                <select #status [value]="dataStatus ? dataStatus : ''">
+              <div class="form-group" [class]="dataStatus ? 'd-none' : ''" >
+                <select class="form-select rounded-0" #status [value]="dataStatus ? dataStatus : ''">
                   <option style="color: #777;" value="">Status</option>
                   <option value="for_rent">Rent</option>
                   <option value="for_sale">Sale</option>
                 </select>
-                <div class="icon-dropdown">
-                  <fa-icon [icon]="arrowdown"></fa-icon>
-                </div>
               </div><!-- /.form-group -->
                 
               <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
-                <input  type="text" class="form-control rounded-0 h-100" placeholder="City" #city>
+                <input  type="text" class="form-control rounded-0 border-0 h-100 search-text" placeholder="City" #city>
               </div><!-- /.form-group -->
               <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
-                <input type="text" class="form-control rounded-0 h-100" placeholder="District" #district>
+                <input type="text"  class="form-control rounded-0 border-0 h-100 search-text" placeholder="District" #district>
               </div><!-- /.form-group -->
-              <div class="form-group select_container">
-                  <select name="property-type" #propertyType>
-                      <option style="color: #777;" value="">Property Type</option>
+              <div class="form-group my-3">
+                  <select class="form-select rounded-0" name="property-type" #propertyType>
+                      <option style="color: #777;" value="">Type</option>
                       <option value="Apartment">Apartment</option>
                       <option value="Condominium">Condominium</option>
                       <option value="Cottage">Cottage</option>
                       <option value="Flat">Flat</option>
                       <option value="House">House</option>
                   </select>
-                  <div class="icon-dropdown">
-                    <fa-icon [icon]="arrowdown"></fa-icon>
-                  </div>
                 </div><!-- /.form-group -->
-                <div class="form-group select_container">
-                  <select #area>
+                <div class="form-group my-3">
+                  <select class="form-select rounded-0" #area>
                     <option style="color: #777;" value="">Area</option>
                     <option value="50">+50</option>
                     <option value="100">+100</option>
@@ -58,12 +52,9 @@
                     <option value="950">+950</option>
                     <option value="1000">+1000</option>
                 </select>
-                  <div class="icon-dropdown">
-                    <fa-icon [icon]="arrowdown"></fa-icon>
-                  </div>
                 </div><!-- /.form-group -->
-                <div class="form-group select_container">
-                  <select #price>
+                <div class="form-group my-3">
+                  <select class="form-select rounded-0" #price>
                     <option style="color: #777;" value="">Price</option>
                     <option value="50">+50</option>
                     <option value="100">+100</option>
@@ -135,15 +126,12 @@
                     <option value="900000">+900000</option>
                     <option value="1000000">+1000000</option>
                 </select>
-                  <div class="icon-dropdown">
-                    <fa-icon [icon]="arrowdown"></fa-icon>
-                  </div>
                 </div><!-- /.form-group -->
                 <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
-                  <input type="number" class="form-control rounded-0 h-100" min="0" placeholder="Beds" #beds>
+                  <input type="number" class="form-control rounded-0 h-100 border-0 search-text" min="0" placeholder="Beds" #beds>
                 </div>
                 <div style="height: 43px;" class="form-group p-0 mt-3 select_container">
-                  <input type="number" class="form-control rounded-0 h-100" min="0" placeholder="Baths" #baths>
+                  <input type="number" class="form-control rounded-0 h-100 border-0 search-text" min="0" placeholder="Baths" #baths>
                 </div>
               <div class="form-group p-0 mt-3" style="height: 43px;">
                   <button style="width: 100%;" type="submit" class="btn btn-primary h-100">Search Now</button>
