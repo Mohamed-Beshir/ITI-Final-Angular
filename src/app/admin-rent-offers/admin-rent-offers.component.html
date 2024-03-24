@@ -77,81 +77,85 @@
         <div class="my-5">
           <div class="row">
             <div class="col-md-12">
-              <div *ngFor="let offer of rentOffers" class="card mb-3">
-                <div class="card-body">
-                  <div class="row">
-                    <!-- Property Details -->
-                    <div class="col-md-6 bg-light p-4">
-                      <h5 class="card-title mb-4">Property Details</h5>
-                        <!-- Image Gallery -->
-                        <div class="my-4">
-                          <div class="row">
-                            @for (image of offer.property.images; track image) {
-                              <div class="col-md-4">
-                                <a routerLink="/property-details/{{offer.property.id}}">
-                                  <img src="http://localhost:8000/images/{{ image }}" alt="Property Image" class="rounded" width="150px" height="150px">
-                                </a>
-                              </div> 
-                            }     
+              @if (rentOffers.length > 0) {
+                <div *ngFor="let offer of rentOffers" class="card mb-3">
+                  <div class="card-body">
+                    <div class="row">
+                      <!-- Property Details -->
+                      <div class="col-md-6 bg-light p-4">
+                        <h5 class="card-title mb-4">Property Details</h5>
+                          <!-- Image Gallery -->
+                          <div class="my-4">
+                            <div class="row">
+                              @for (image of offer.property.images; track image) {
+                                <div class="col-md-4">
+                                  <a routerLink="/property-details/{{offer.property.id}}">
+                                    <img src="http://localhost:8000/images/{{ image }}" alt="Property Image" class="rounded" width="150px" height="150px">
+                                  </a>
+                                </div> 
+                              }     
+                            </div>
+                          </div>
+                        <div class="row">
+                          <div class="mb-3 col-6">
+                            <strong>Title:</strong> {{ offer.property.title }}
+                          </div>
+                          <div class="mb-3 col-6">
+                            <strong>City:</strong> {{ offer.property.city }}
+                          </div>
+                          <div class="mb-3 col-6">
+                            <strong>District:</strong> {{ offer.property.district }}
+                          </div>
+                          <div class="mb-3 col-6">
+                            <strong>Street:</strong> {{ offer.property.street }}
+                          </div>
+                          <div class="mb-3 col-6">
+                            <strong>Type:</strong> {{ offer.property.type }}
+                          </div>
+                          <div class="mb-3 col-6">
+                            <strong>Area:</strong> {{ offer.property.area }} sqm.
+                          </div>
+                          <div class="mb-3 col-6">
+                            <strong>Lister:</strong> {{ offer.lister_name }}
+                          </div>
+                          <div class="mb-3 col-6">
+                            <strong>Date:</strong> {{ offer.list_creation_date }}
+                          </div>
+                          <div class="mb-3 col-6">
+                            <strong>Period:</strong> {{ offer.period }}
+                          </div>
+                          <div class="mb-3 col-6">
+                            <strong>Price:</strong><span class="text-success"> LE {{ offer.price }}</span>
                           </div>
                         </div>
-                      <div class="row">
-                        <div class="mb-3 col-6">
-                          <strong>Title:</strong> {{ offer.property.title }}
-                        </div>
-                        <div class="mb-3 col-6">
-                          <strong>City:</strong> {{ offer.property.city }}
-                        </div>
-                        <div class="mb-3 col-6">
-                          <strong>District:</strong> {{ offer.property.district }}
-                        </div>
-                        <div class="mb-3 col-6">
-                          <strong>Street:</strong> {{ offer.property.street }}
-                        </div>
-                        <div class="mb-3 col-6">
-                          <strong>Type:</strong> {{ offer.property.type }}
-                        </div>
-                        <div class="mb-3 col-6">
-                          <strong>Area:</strong> {{ offer.property.area }} sqm.
-                        </div>
-                        <div class="mb-3 col-6">
-                          <strong>Lister:</strong> {{ offer.lister_name }}
-                        </div>
-                        <div class="mb-3 col-6">
-                          <strong>Date:</strong> {{ offer.list_creation_date }}
-                        </div>
-                        <div class="mb-3 col-6">
-                          <strong>Period:</strong> {{ offer.period }}
-                        </div>
-                        <div class="mb-3 col-6">
-                          <strong>Price:</strong><span class="text-success"> LE {{ offer.price }}</span>
-                        </div>
                       </div>
-                    </div>
-                    <!-- Offer Details -->
-                    <div class="col-md-6 bg-light p-4">
-                      <h5 class="card-title mb-4">Offer Details</h5>
-                      <div class="card-text">
-                        <div class="mb-3">
-                          <strong>Buyer:</strong> {{ offer.buyer_name }}
-                        </div>
-                        <div class="mb-3">
-                          <strong>Offered Price: </strong><span class="text-danger"> LE {{ offer.offered_price }}</span> 
-                        </div>
-                        <div class="mb-3">
-                          <strong>Offer Creation Date:</strong> {{ offer.offer_creation_date  }}
-                        </div>
-                        <div class="mb-3">
-                          <strong>Message:</strong> {{ offer.message }}
-                        </div>
-                        <div class="mb-3">
-                          <strong>Status: </strong><span class="status {{ offer.status }}">{{ offer.status }}</span>
+                      <!-- Offer Details -->
+                      <div class="col-md-6 bg-light p-4">
+                        <h5 class="card-title mb-4">Offer Details</h5>
+                        <div class="card-text">
+                          <div class="mb-3">
+                            <strong>Buyer:</strong> {{ offer.buyer_name }}
+                          </div>
+                          <div class="mb-3">
+                            <strong>Offered Price: </strong><span class="text-danger"> LE {{ offer.offered_price }}</span> 
+                          </div>
+                          <div class="mb-3">
+                            <strong>Offer Creation Date:</strong> {{ offer.offer_creation_date  }}
+                          </div>
+                          <div class="mb-3">
+                            <strong>Message:</strong> {{ offer.message }}
+                          </div>
+                          <div class="mb-3">
+                            <strong>Status: </strong><span class="status {{ offer.status }}">{{ offer.status }}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              }@else {
+                <h3 class="text-center mt-5 mb-4">No Data found</h3>
+              }     
             </div>
           </div>
         </div>

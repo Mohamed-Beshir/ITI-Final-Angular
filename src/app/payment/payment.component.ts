@@ -98,7 +98,7 @@ export class PaymentComponent implements OnInit {
               console.log('Sale payment details saved successfully:', response);
             },
             (error) => {
-              console.error('Error saving rent payment details:', error);
+              console.error('Error saving sale payment details:', error);
               
             }
           );

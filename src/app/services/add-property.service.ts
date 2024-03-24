@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class AddPropertyService {
 
   api : any = "http://localhost:8000/api/properties";
+  
 
   constructor(private http : HttpClient) {}
   getAllProperty () {
@@ -50,5 +51,10 @@ export class AddPropertyService {
   }
   getAllPropertyAgent(agent_id : number){
     return this.http.get(`${this.api}-agent?agent_id=${agent_id}`);
+  }
+
+
+  getSimilarProperties(propertyId: number) {
+    return this.http.get(`${this.api}/${propertyId}/similar`);
   }
 }

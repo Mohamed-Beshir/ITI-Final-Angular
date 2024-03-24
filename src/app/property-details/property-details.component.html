@@ -156,7 +156,7 @@
                                     <div id="agency">
                                         <div class="form-group">
                                             <label for="account-agency" class="text-secondary my-2" style="opacity: 0.6"
-                                                formControlName="dropdownValue">Select your agency:</label>
+                                                formControlName="dropdownValue">Select your rating:</label>
                                             <br />
                                             <select formControlName="rate" class="custom-dropdown" name="account-agency" id="account-agency" class="text-secondary">
                                                 <option value="">Select rate:</option>
@@ -207,7 +207,7 @@
                         <form>
                             <header><h3>Make an Offer</h3></header>
                             @if (offerSubmittedBefore) {
-                                <div class="alert alert-info">You have submitted an offer on this property .. Pending lister approval.</div>
+                                <div class="alert alert-info">Your offer has been submitted for this property. You'll be notified via email once the listing owner responds to your offer.</div>
                             }@else {
                                 <div>
                                     <button class="btn btn-default" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Make Offer now</button>
@@ -227,7 +227,7 @@
                                             <div class="mb-3">
                                               <label for="message" class="form-label">Message</label>
                                               <textarea class="form-control" id="message" formControlName="message" rows="4"></textarea>
-                                              <div *ngIf="offerForm.controls['message'].invalid && offerForm.controls['message'].dirty || offerForm.controls['message'].touched" class="text-danger small">
+                                              <div *ngIf="offerForm.controls['message'].invalid &&  offerForm.controls['message'].touched" class="text-danger small">
                                                 Message is required.
                                               </div>
                                             </div>
@@ -239,51 +239,28 @@
                             }
                         </form>   
                     }
-                    
                     <aside id="edit-search">
-                        <header><h3>Search Properties</h3></header>
-                        <app-search style="display: inline;width: 25%;margin-top: 177px;"></app-search>
-                    </aside><!-- /#edit-search -->
-                    <aside id="featured-properties">
-                        <header><h3>Featured Properties</h3></header>
-                        <div class="property small">
-                            <a href="property-detail.html">
-                                <div class="property-image">
-                                    <img alt="" src="assets/img/properties/property-06.jpg">
-                                </div>
-                            </a>
-                            <div class="info">
-                                <a href="property-detail.html"><h4>2186 Rinehart Road</h4></a>
-                                <figure>Doral, FL 33178 </figure>
-                                <div class="tag price">$ 72,000</div>
-                            </div>
-                        </div><!-- /.property -->
-                        <div class="property small">
-                            <a href="property-detail.html">
-                                <div class="property-image">
-                                    <img alt="" src="assets/img/properties/property-09.jpg">
-                                </div>
-                            </a>
-                            <div class="info">
-                                <a href="property-detail.html"><h4>2479 Murphy Court</h4></a>
-                                <figure>Minneapolis, MN 55402</figure>
-                                <div class="tag price">$ 36,000</div>
-                            </div>
-                        </div><!-- /.property -->
-                        <div class="property small">
-                            <a href="property-detail.html">
-                                <div class="property-image">
-                                    <img alt="" src="assets/img/properties/property-03.jpg">
-                                </div>
-                            </a>
-                            <div class="info">
-                                <a href="property-detail.html"><h4>1949 Tennessee Avenue</h4></a>
-                                <figure>Minneapolis, MN 55402</figure>
-                                <div class="tag price">$ 128,600</div>
-                            </div>
-                        </div><!-- /.property -->
-                    </aside><!-- /#featured-properties -->
-                    
+                        <app-search ></app-search>
+                    </aside>
+                    @if (similarProperties.length > 0) {
+                        <aside id="featured-properties">
+                            <header><h3>Similar Properties</h3></header>
+                            @for (property of similarProperties; track property.id) {
+                                <div class="property small">
+                                    <a [routerLink]="['/property-details', property.id]">
+                                        <div class="property-image">
+                                            <img alt="Similar Property Image" src="http://localhost:8000/images/{{property.images[0].url}}">
+                                        </div>
+                                    </a>
+                                    <div class="info">
+                                        <a [routerLink]="['/property-details', property.id]"><h4>{{ property.title }}</h4></a>
+                                        <figure>{{ property.city }}, {{ property.district }} </figure>
+                                        <div class="tag price">LE {{ property.price }}</div>
+                                    </div>
+                                </div><!-- /.property --> 
+                            }   
+                        </aside><!-- /#featured-properties -->
+                    }
                 </section><!-- /#sidebar -->
             </div><!-- /.col-md-3 -->
             <!-- end Sidebar -->
