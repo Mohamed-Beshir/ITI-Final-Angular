@@ -54,7 +54,7 @@ export class MypropertiesAgentComponent {
       
 
       accept: () => {
-        this.propertiesApi.deletePropertyFromApi(propertyId).subscribe(res => res)
+        this.propertiesApi.deletePropertyFromApi(propertyId).subscribe(res => console.log(res))
         const index = this.propertiesArray.findIndex((property : any) => property.id === propertyId);
         if (index !== -1) {
           this.propertiesArray.splice(index, 1);

@@ -16,7 +16,7 @@
       <div class="container">
           <header><h1>Edit Your Property</h1></header>
 
-          <form  role="form" id="form-submit" class="form-submit" [formGroup]="myForm" *ngIf="properties">
+          <form  role="form" id="form-submit" class="form-submit" [formGroup]="myForm" (submit)="onSubmit()" *ngIf="properties">
               <div class="row">
                   <div class="block">
                       <div class="col-md-9 col-sm-9 sc">
@@ -28,6 +28,9 @@
                                           <div class="form-group">
                                               <label for="submit-title">Title</label>
                                               <input type="text" class="form-control input1" id="submit-title" name="title" required formControlName="title" [(ngModel)]="properties.title" >
+                                              <div *ngIf="myForm.get('title')!.invalid && myForm.get('title')!.touched" class="text-danger">
+                                                <div *ngIf="myForm.get('title')!.errors?.['required']">Title is required</div>
+                                              </div>
                                           </div><!-- /.form-group -->
                                       </div>
                                       <div class="col-md-4">
@@ -37,137 +40,150 @@
                                                   <span class="input-group-addon">$</span>
                                                   <input type="text input1" class="form-control" id="submit-price" name="price" pattern="\d*" required formControlName="price" [(ngModel)]="properties.price">
                                               </div>
+                                                <!-- Display validation errors -->
+                                                <div *ngIf="myForm.get('price')!.errors && (myForm.get('price')!.dirty || myForm.get('price')!.touched)">
+                                                    <div *ngIf="myForm.get('price')!.errors?.['required']" class="text-danger">Price is required</div>
+                                                    <div *ngIf="myForm.get('price')!.errors?.['pattern']" class="text-danger">Invalid price format</div>
+                                                </div>
                                           </div><!-- /.form-group -->
                                       </div>
                                   </div>
                                   <div class="form-group">
                                       <label for="submit-description">Description</label>
                                       <textarea class="form-control" id="submit-description" rows="8" name="submit-description" required formControlName="description" [(ngModel)]="properties.description"></textarea>
+                                    <!-- Display validation errors -->
+                                    <div *ngIf="myForm.get('description')!.errors && (myForm.get('description')!.dirty || myForm.get('description')!.touched)">
+                                        <div *ngIf="myForm.get('description')!.errors?.['required']" class="text-danger">Description is required</div>
+                                      </div>
                                   </div><!-- /.form-group -->
                               </section><!-- /#basic-information -->
 
 
                                   <div class="container">
-                                      <div class="row">
-                                          <div class="col-md-6 col-sm-6">
+                                          <div>
                                               <section id="summary">
-                                                  <header><h2>Summary</h2></header>
-                                                  <div class="form-group">
-                                                      <label for="submit-city">City</label>
-                                                      <div class="select_container">
-                                                        <select name="type" id="submit-city" formControlName="city" [(ngModel)]="properties.city">
-                                                            <option value="New York">New York</option>
-                                                            <option value="Los Angeles">Los Angeles</option>
-                                                            <option value="Chicago">Chicago</option>
-                                                            <option value="Houston">Houston</option>
-                                                            <option value="Philadelphia">Philadelphia</option>
+                                                <div class="form-group">
+                                                    <label for="submit-city">City</label>
+                                                    <input type="text" class="form-control input1" id="submit-city" name="city" required formControlName="city" [(ngModel)]="properties.city">
+                                                    <div *ngIf="myForm.get('city')?.errors && (myForm.get('city')?.dirty || myForm.get('city')?.touched)" class="text-danger">
+                                                      <div *ngIf="myForm.get('city')?.errors?.['required']">City is required</div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="submit-street">Street</label>
+                                                    <input type="text" class="form-control input1" id="submit-street" name="street" required formControlName="street" [(ngModel)]="properties.street">
+                                                    <!-- Validation error message for Street -->
+                                                    <div *ngIf="myForm.get('street')!.invalid && myForm.get('street')!.touched" class="text-danger">
+                                                      <div *ngIf="myForm.get('street')!.errors?.['required']">Street is required</div>
+                                                      <!-- Add more validation checks and error messages if needed -->
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label for="submit-district">District</label>
+                                                    <input type="text" class="form-control input1" id="submit-district" name="district" required formControlName="district" [(ngModel)]="properties.district">
+                                                    <!-- Validation error message for District -->
+                                                    <div *ngIf="myForm.get('district')!.invalid && myForm.get('district')!.touched" class="text-danger">
+                                                      <div *ngIf="myForm.get('district')!.errors?.['required']">District is required</div>
+                                                        <!-- Add more validation checks and error messages if needed -->
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="submit-property-type">Property Type</label>
+                                                    <div class="select_container">
+                                                        <select name="type" id="submit-property-type" formControlName="property_type" [(ngModel)]="properties.property_type">
+                                                            <option value="Apartment">Apartment</option>
+                                                            <option value="Condominium">Condominium</option>
+                                                            <option value="Cottage">Cottage</option>
+                                                            <option value="Flat">Flat</option>
+                                                            <option value="House">House</option>
                                                         </select>
+                                                    </div>
+                                                    <!-- Add validation message if needed -->
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="submit-status">Status</label>
+                                                    <div class="select_container">
+                                                        <select name="type" id="submit-status" formControlName="status">
+                                                            <option value="for_sale">Sale</option>
+                                                            <option value="for_rent">Rent</option>
+                                                        </select>
+                                                    </div>
+                                                    <!-- Add validation message if needed -->
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="submit-Beds">Beds</label>
+                                                            <input type="text" class="form-control input1" id="submit-Beds" name="Beds" pattern="\d*" required formControlName="beds" [(ngModel)]="properties.beds">
+                                                            <!-- Validation error message for Beds -->
+                                                            <div *ngIf="myForm.get('beds')!.invalid && myForm.get('beds')!.touched" class="text-danger">
+                                                              <div *ngIf="myForm.get('beds')!.errors?.['required']">Beds is required</div>
+                                                              <div *ngIf="myForm.get('beds')!.errors?.['pattern']" class="text-danger">Invalid beds format</div>
+                                                              <!-- Add more validation checks and error messages if needed -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="submit-Baths">Baths</label>
+                                                            <input type="text" class="form-control input1" id="submit-Baths" name="Baths" pattern="\d*" required formControlName="baths" [(ngModel)]="properties.baths">
+                                                            <!-- Validation error message for Baths -->
+                                                            <div *ngIf="myForm.get('baths')!.invalid && myForm.get('baths')!.touched" class="text-danger">
+                                                              <div *ngIf="myForm.get('baths')!.errors?.['required']">Baths is required</div>
+                                                              <div *ngIf="myForm.get('baths')!.errors?.['pattern']" class="text-danger">Invalid Baths format</div>
+                                                              <!-- Add more validation checks and error messages if needed -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                              <div class="row">
+                                                  <div class="form-group col-12 col-xl-6">
+                                                      <label for="submit-area">Area</label>
+                                                      <div class="input-group">
+                                                          <input type="text" class="form-control input-area" id="submit-area" name="area" pattern="\d*" required formControlName="area" [(ngModel)]="properties.area">
+                                                          <span class="input-group-text">m<sup>2</sup></span>
+                                                      </div>
+                                                      <!-- Validation error message for Area -->
+                                                      <div *ngIf="myForm.get('area')!.invalid && myForm.get('area')!.touched" class="text-danger">
+                                                        <div *ngIf="myForm.get('area')!.errors?.['required']">Area is required</div>
+                                                        <div *ngIf="myForm.get('area')!.errors?.['pattern']" class="text-danger">Invalid area format</div>
+                                                        <!-- Add more validation checks and error messages if needed -->
                                                       </div>
                                                   </div>
-                                                  <!--  -->
-                                                  <div class="col-md-6 col-sm-6" style="width: 100%;">
-                                                    <div class="form-group" >
-                                                        <label for="submit-street">street</label>
-                                                        <input type="text" class="form-control input1" id="submit-street" name="street" required formControlName="street" [(ngModel)]="properties.street">
-                                                    </div><!-- /.form-group -->
-                                                </div><!-- /.col-md-6 -->
-                                                <div class="col-md-6 col-sm-6" style="width: 100%;">
-                                                  <div class="form-group">
-                                                      <label for="submit-property_number">property number</label>
-                                                      <input  type="text" class="form-control input1" id="submit-property_number" name="property_number" pattern="\d*" required formControlName="property_number" [(ngModel)]="properties.property_number">
-                                                  </div><!-- /.form-group -->
-                                              </div><!-- /.col-md-6 -->
-                                                  <!--  -->
-                                                  <div class="row">
-                                                      <div class="col-md-6 col-sm-6" >
-                                                          <div class="form-group">
-                                                              <label for="submit-property-type">Property Type</label>
-                                                              <div class="select_container">
-                                                                <select name="type" id="submit-property-type" formControlName="property_type" [(ngModel)]="properties.property_type">
-                                                                    <option value="Apartment">Apartment</option>
-                                                                    <option value="Condominium">Condominium</option>
-                                                                    <option value="Cottage">Cottage</option>
-                                                                    <option value="Flat">Flat</option>
-                                                                    <option value="House">House</option>
-                                                                </select>
-                                                              </div>
-                                                          </div><!-- /.form-group -->
-                                                      </div><!-- /.col-md-6 -->
-                                                      <div class="col-md-6 col-sm-6">
-                                                          <div class="form-group">
-                                                              <label for="submit-status">Status</label>
-                                                              <div class="select_container">
-                                                                <select name="type" id="submit-status" formControlName="status">
-                                                                    <option value="Sale">Sale</option>
-                                                                    <option value="Rent">Rent</option>
-                                                                </select>
-                                                              </div>
-                                                          </div><!-- /.form-group -->
-                                                      </div><!-- /.col-md-6 -->
-                                                  </div><!-- /.row -->
-                                                  <div class="row">
-                                                      <div class="col-md-6 col-sm-6">
-                                                          <div class="form-group">
-                                                              <label for="submit-Beds">Beds</label>
-                                                              <input type="text" class="form-control input1" id="submit-Beds" name="Beds" pattern="\d*" required formControlName="beds">
-                                                          </div><!-- /.form-group -->
-                                                      </div><!-- /.col-md-6 -->
-                                                      <div class="col-md-6 col-sm-6">
-                                                          <div class="form-group">
-                                                              <label for="submit-Baths">Baths</label>
-                                                              <input type="text" class="form-control input1" id="submit-Baths" name="Baths" pattern="\d*" required formControlName="baths">
-                                                          </div><!-- /.form-group -->
-                                                      </div><!-- /.col-md-6 -->
-                                                  </div><!-- /.row -->
-                                                  <div class="row">
-                                                      <div class="col-md-6 col-sm-6">
-                                                          <div class="form-group">
-                                                              <label for="submit-area">Area</label>
-                                                              <div class="input-group">
-                                                                  <input type="text" class="form-control input-area" id="submit-area" name="area" pattern="\d*" required formControlName="area" [(ngModel)]="properties.area">
-                                                                  <span class="input-group-text ">m<sup>2</sup></span>
-                                                              </div>
-                                                          </div><!-- /.form-group -->
-                                                      </div><!-- /.col-md-6 -->
-                                                      <div class="col-md-6 col-sm-6">
-                                                          <div class="form-group">
-                                                              <label for="submit-garages">Garages</label>
-                                                              <input type="text" class="form-control input1" id="submit-garages" name="garages" pattern="\d*" required formControlName="garages">
-                                                          </div><!-- /.form-group -->
-                                                      </div><!-- /.col-md-6 -->
-                                                  </div><!-- /.row -->
+                                              </div>
                                               </section><!-- /#summary -->
                                           </div><!-- /.col-md-6 -->
-                                          <!-- map -->
-                                          <div class="col-md-6 col-sm-6">
-                                            <section id="place-on-map">
-                                                <header class="section-title">
-                                                    <h2>Place on Map</h2>
-                                                </header>
-                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110502.77769395754!2d31.340866811853022!3d30.05946276096188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2z2KfZhNmC2KfZh9ix2KnYjCDZhdit2KfZgdi42Kkg2KfZhNmC2KfZh9ix2KnigKw!5e0!3m2!1sar!2seg!4v1708135131469!5m2!1sar!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                            </section><!-- /#place-on-map -->
-                                        </div><!-- /.col-md-6 -->
-                                          <!-- end map -->
-                                      </div><!-- /.block -->
                                   </div><!-- /.row -->
 
                               <!-- gallary -->
                               <section class="block" id="gallery">
                                 <header><h2>Gallery</h2></header>
                                 <div class="image-container">
-                                  <div class="upload">
-                                    <input id="file-upload" type="file" (change)="onFileSelected($event)" multiple class=" " multiple="true" data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-default" data-browse-label="Browse Images" formControlName="image">
-                                    <label for="file-upload">
-                                      <fa-icon [icon]="upload"></fa-icon>&nbsp;
-                                      chose image
-                                    </label>
-                                  </div>
-                                  <div class="preview-container">
-                                    <div   *ngFor="let image of images let i = index" class="image-preview">
-                                      <img  [src]="image.url" alt="Preview">
-                                      <button  class="btn btn-danger" (click)="deleteImage(i)">Delete</button>
+                                    <div class="upload">
+                                        <input id="file-upload" name="images[]" type="file" (change)="onFileChange($event)" multiple class="form-control" accept="image/jpeg,image/png" formControlName="image">
+                                        <label for="file-upload">
+                                            <fa-icon [icon]="upload"></fa-icon>&nbsp;
+                                            Choose image
+                                        </label>
                                     </div>
-                                  </div>
+                                    <!-- Display validation error message if no images are selected -->
+                                    <div *ngIf="myForm.get('image')?.invalid && myForm.get('image')?.touched" class="text-danger">
+                                      <div *ngIf="myForm.get('image')?.errors?.['required']">Please select at least one image</div>
+                                    </div>
+
+                                    <div class="preview-container">
+                                        <div style="position: relative;" *ngFor="let image of selectedImages; let i = index" class="image-preview">
+                                            <img style="width:200px;height: 150px;" [src]="image.url" alt="Selected Image">
+                                            <div style="position: absolute;top:0;"><button class="btn btn-danger" (click)="onDelete(i)" style="right: 0;top: 0; width: 30px;height: 30px;position: relative;"><p style="position: absolute;top: 0;color: white;">x</p></button></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                               <!--end gallary  -->
@@ -181,9 +197,8 @@
                       <div style="width: 100%;" class="col-md-9 col-sm-9">
                           <div class="center">
                               <div class="form-group">
-                                  <button type="submit" class="btn btn-default large" (click)="onSubmit()">Proceed to Payment</button>
+                                  <button type="submit" class="btn btn-default large">Edit Property</button>
                               </div><!-- /.form-group -->
-                              <figure class="note block">By clicking the “Proceed to Payment” or “Submit” button you agree with our <a href="terms-conditions.html">Terms and conditions</a></figure>
                           </div>
                       </div>
                   </div>
