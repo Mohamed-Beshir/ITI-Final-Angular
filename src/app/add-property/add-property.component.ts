@@ -100,25 +100,31 @@ selectedImages: { file: File, url: string }[] = [];
                 "period": "monthly",
                 "price": this.myForm.get('price')?.value
             }
-            this.property_rents.saveProperty_rentsData(property_rent).subscribe(res => console.log(res));
+            this.property_rents.saveProperty_rentsData(property_rent).subscribe(res => {
+              console.log(res)
+              this.router.navigate(["my-properties"])
+            });
           }else {
             let property_sale = {
               "property_id": resp.id,
               "lister_id": this.userData.id,
               "price": this.myForm.get('price')?.value
             }
-            this.property_sales.saveProperty_salesData(property_sale).subscribe(res => console.log(res));
+            this.property_sales.saveProperty_salesData(property_sale).subscribe(res => {
+              console.log(res)
+              this.router.navigate(["my-properties"])
+            });
           }
           const formData = new FormData();
           for (let i = 0; i < this.selectedImages.length; i++) {
             formData.append('images[]', this.selectedImages[i].file);
           }
           this.http.post(`http://localhost:8000/api/images?property_id=${resp.id.toString()}`, formData).subscribe(res => console.log(res));
+          
         });
         
       });
 
-      this.router.navigate(["my-properties"])
     }
 
     //

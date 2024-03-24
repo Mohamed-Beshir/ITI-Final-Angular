@@ -25,7 +25,7 @@
             <td>{{ offer.buyer_name }}</td>
             <td>{{ offer.buyer_email }}</td>
             <td>{{ offer.property_title }} </td>
-            <td><img src="http://localhost:8000/images/{{offer.property_image}}" alt="not found"></td>
+            <td><img style="width: 80px;" src="http://localhost:8000/images/{{offer.property_image}}" alt="not found"></td>
             <td>{{ offer.offer_price }}</td>
             <td> {{ offer.offer_message }}</td>
             <td class="status"><span class="{{ offer.offer_status }}">{{ offer.offer_status }}</span></td>
@@ -42,23 +42,4 @@
       </table>
 
 </div>
-<table>
-  <thead>
-    <tr>
-      <th>Offer ID</th>
-      <th>Property Title</th>
-      <th>Property Image</th>
-      <!-- Add more table headers as needed -->
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let offer of offers">
-      <td>{{ offer.offer_id }}</td>
-      <td>{{ offer.property_title }}</td>
-      <td><img [src]="offer.property_image" alt="Property Image"></td>
-      <!-- Add more table cells as needed -->
-    </tr>
-  </tbody>
-</table>
-
 <app-big-footer></app-big-footer>
