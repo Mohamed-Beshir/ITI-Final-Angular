@@ -219,18 +219,14 @@ select,.price-range{
   display: flex;
   justify-content: center;
 }
-.select_container option{
-  padding: 30px;
-}
 
-.select_container1.icon-dropdown{
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  color: #1396e2;
-  display: flex;
-  right: 0;
-  width: 50px;
-  height: 100%;
-}
 
+
+
+
+.search-text{
+  background-color: #f3f3f3;
+  color: #5a5a5a;
+  font-weight: 700;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+}

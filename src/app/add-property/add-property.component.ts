@@ -33,16 +33,16 @@ selectedImages: { file: File, url: string }[] = [];
 
     this.myForm = this.formBuilder.group({
       title: ["", [Validators.required]],
-      price: ["", [Validators.required]],
+      price: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
       description: ["", [Validators.required]],
       city: ["", [Validators.required]],
       street: ["", [Validators.required]],
       district: ["", [Validators.required]],
       property_type: ["", [Validators.required]],
       status: ["", [Validators.required]],
-      beds: ["", [Validators.required]],
-      baths: ["", [Validators.required]],
-      area: ["", [Validators.required]],
+      beds: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
+      baths: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
+      area: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
       image: ["", [Validators.required]],
     })
   }

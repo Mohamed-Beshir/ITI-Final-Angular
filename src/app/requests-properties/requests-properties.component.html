@@ -4,10 +4,10 @@
   <h3>Offers</h3>
 
 </div>
-<div class="container table-wrap" style="min-height: 500px; ">
-    <table class="table table-responsive-xl">
-        <thead class=" ">
-          <tr class="border-black ">
+<div class="container " style="min-height: 500px; ">
+    <table class="table  container">
+        <thead class="table-dark">
+          <tr  >
             <th scope="col">Buyer Name</th>
             <th scope="col">Buyer Email</th>
             <th scope="col">Property Title</th>
@@ -19,7 +19,7 @@
             <th scope="col">Handle</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody >
 
           <tr *ngFor="let offer of offers">
             <td>{{ offer.buyer_name }}</td>
@@ -32,8 +32,8 @@
             <td>{{offer.offer_for}}</td>
             <td>
               <ng-container *ngIf="offer.offer_status !== 'accepted' && offer.offer_status !== 'rejected'">
-                <button class="btn btn-success mx-1" (click)="acceptOffer(offer.offer_id)">Accept</button>
-                <button class="btn btn-danger" (click)="rejectOffer(offer.offer_id)">Reject</button>
+                <button style="width:fit-content; font-size: 11px;font-weight: bold;" class="btn btn-success mx-1" (click)="acceptOffer(offer.offer_id, offer.offer_for)">Accept</button>
+                <button style="width:fit-content; font-size: 11px;font-weight: bold;" class="btn btn-danger" (click)="rejectOffer(offer.offer_id, offer.offer_for)">Reject</button>
               </ng-container>
             </td>
 

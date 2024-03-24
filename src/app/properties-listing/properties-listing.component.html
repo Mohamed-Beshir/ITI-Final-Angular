@@ -5,42 +5,33 @@
   <!-- Page Content -->
   <div id="page-content">
     <!-- Breadcrumb -->
-    <div class="container">
-        <ol class="breadcrumb  opacity-50 pt-2 pe-0 bg-transparent mb-2">
-            <li><a href="#" class="text-white">Home</a></li>
-            <li class="active">Property Listing</li>
-        </ol>
-    </div>
+    
     <!-- end Breadcrumb -->
 
-    <div class="container">
+    <div class="container my-5">
         <div class="row">
             <!-- Results -->
-            <div class="col-md-9 col-sm-9">
+            <div class="col-md-9">
 
-                <section id="results" style="margin-top: 17px;">
-                    <header><h1>Properties Listing</h1></header>
-                    <section id="search-filter" style="margin-top: 30px;">
-                        <figure><h3><i class="fa fa-search"></i>Search Results:</h3>
+                <section id="results">
+                    <header><h2>Properties Listing</h2></header>
+                    <section id="search-filter" class="my-5 mx-3">
+                        <figure>
                             <!-- <span class="search-count">28</span> -->
                             <div class="sorting ">
-                                <div class="form-group select_container1">
-                                    <select name="sorting" #order (click)="sort(order.value)">
+                                <div class="form-group">
+                                    <select class="form-select rounded-0 w-25" name="sorting" #order (click)="sort(order.value)">
                                         <option value="">Sort By</option>
-                                        <option value="1">Lowest price first</option>
-                                        <option value="2">Highest price first</option>
+                                        <!-- <option value="1">Lowest price first</option>
+                                        <option value="2">Highest price first</option> -->
                                         <option value="Lowest_area">Lowest area first</option>
                                         <option  value="Highest_area">Highest area first</option>
-                                        <option value="3">Date added</option>
                                     </select>
-                                    <div class="icon-dropdown">
-                                      <fa-icon [icon]="arrowdown"></fa-icon>
-                                    </div>
                                 </div><!-- /.form-group -->
                             </div>
                         </figure>
                     </section>
-                    <div class="container justify-content-center" id="properties">
+                    <div class="container my-5 justify-content-center" id="properties">
                     <div class="d-flex flex-wrap justify-content-between" >
 
                     @for (item of getCurrentPageProperties(); track item.id) {
@@ -68,7 +59,11 @@
                 </section><!-- /#results -->
             </div><!-- /.col-md-9 -->
             <!-- end Results -->
-            <app-search style="display: inline;width: 25%;margin-top: 177px;"></app-search>
+            <div class="col-md-3">
+                <div class="ps-5">
+                    <app-search></app-search>
+                </div>
+            </div>
             <!-- sidebar -->
             <!-- <app-search></app-search> -->
           <!-- end Sidebar -->

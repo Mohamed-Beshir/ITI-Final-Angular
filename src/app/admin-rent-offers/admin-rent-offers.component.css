@@ -460,10 +460,11 @@ body {
 }
 .status {
   font-size: 12px;
-  padding: 6px 16px;
+  padding: 4px 14px;
   color: var(--light);
   border-radius: 20px;
   font-weight: 700;
+  margin-left: 10px;
 }
  .status.accepted {
   background: var(--blue);

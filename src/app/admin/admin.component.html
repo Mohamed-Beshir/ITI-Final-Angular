@@ -112,30 +112,35 @@
             <div class="head">
               <h3>Recent Payments</h3>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>User Name</th>
-                  <th>Payment Date</th>
-                  <th>Payment Type</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (payment of dashboardData.payments; track payment.payment_date) {
+            @if (dashboardData.payments.length === 0) {
+              <h5 class="text-center my-5 text-muted">No payments in the last 24 hours.</h5>
+            }@else {
+              <table>
+                <thead>
                   <tr>
-                    <td>
-                      <p>{{ payment.user_name }}</p>
-                    </td>
-                    <td>{{ payment.payment_date }}</td>
-                    <td>{{ payment.payment_type }}</td>
-                    <td>LE {{ payment.amount_paid }}</td>
-                    <td><span class="status {{ payment.status }}">{{ payment.status }}</span></td>
+                    <th>User Name</th>
+                    <th>Payment Date</th>
+                    <th>Payment Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
                   </tr>
-                }
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  @for (payment of dashboardData.payments; track payment.payment_date) {
+                    <tr>
+                      <td>
+                        <p>{{ payment.user_name }}</p>
+                      </td>
+                      <td>{{ payment.payment_date }}</td>
+                      <td>{{ payment.payment_type }}</td>
+                      <td>LE {{ payment.amount_paid }}</td>
+                      <td><span class="status {{ payment.status }}">{{ payment.status }}</span></td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
+            
           </div>
         </div>
       </main>

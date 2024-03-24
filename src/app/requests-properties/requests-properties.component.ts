@@ -1,3 +1,4 @@
+import { RentofferActionsService } from './../services/rentoffer-actions.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { Component ,OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -33,7 +34,7 @@ export class RequestsPropertiesComponent implements OnInit {
   offers: Offer[] = [];
   userId: number=0;
 
-  constructor(private dataService: SaleOffersService, private offerActionsService: OfferActionsService, private router : Router) { }
+  constructor(private dataService: SaleOffersService, private offerActionsService: OfferActionsService, private rentofferActionsService: RentofferActionsService, private router : Router) { }
 
   ngOnInit(): void {
     // Retrieve user ID from localStorage
@@ -49,36 +50,72 @@ export class RequestsPropertiesComponent implements OnInit {
     }
   }
 
-  acceptOffer(offerId: number): void {
-    this.offerActionsService.acceptOffer(offerId).subscribe({
-      next: response => {
-        console.log('Offer accepted successfully:', response);
-        // Handle success response
-        this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
-          this.router.navigate(['/requests']);
-        });
+  acceptOffer(offerId: number, offerFor: string): void {
+    if (offerFor === 'Sale') {
+      this.offerActionsService.acceptOffer(offerId).subscribe({
+        next: response => {
+          console.log('Sale offer accepted successfully:', response);
+          // Handle success response
+          this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/requests']);
+          });
+        },
+        error: error => {
+          console.error('Error accepting sale offer:', error);
+          // Handle error response
+        }
+      });
+    } else if (offerFor === 'Rent') {
+      this.rentofferActionsService.acceptOffer(offerId).subscribe({
+        next: response => {
+          console.log('Rent offer accepted successfully:', response);
+          // Handle success response
+          this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/requests']);
+          });
       },
       error: error => {
         console.error('Error accepting offer:', error);
         // Handle error response
       }
-      
     });
+  } else {
+    console.error('Invalid offer type:', offerFor);
+  }
   }
 
-  rejectOffer(offerId: number): void {
-    this.offerActionsService.rejectOffer(offerId).subscribe({
-      next: response => {
-        console.log('Offer rejected successfully:', response);
-        // Handle success response
-        this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
-          this.router.navigate(['/requests']);
-        });
+  rejectOffer(offerId: number, offerFor: string): void {
+    if (offerFor === 'Sale') {
+      this.offerActionsService.rejectOffer(offerId).subscribe({
+        next: response => {
+          console.log('Sale offer rejected successfully:', response);
+          // Handle success response
+          this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/requests']);
+          });
+        },
+        error: error => {
+          console.error('Error rejecting sale offer:', error);
+          // Handle error response
+        }
+      });
+    } else if (offerFor === 'Rent') {
+      this.rentofferActionsService.rejectOffer(offerId).subscribe({
+        next: response => {
+          console.log('Rent offer rejected successfully:', response);
+          // Handle success response
+          this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/requests']);
+          });
       },
       error: error => {
         console.error('Error rejecting offer:', error);
         // Handle error response
       }
     });
+  } else {
+    console.error('Invalid offer type:', offerFor);
   }
+  }
+
 }

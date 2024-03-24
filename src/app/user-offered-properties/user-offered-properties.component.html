@@ -4,53 +4,57 @@
 <section class="ftco-section my-5">
     <div class="container">
         <h3 class="my-5">My Offers</h3>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-wrap">
-                    <table class="table table-responsive-xl">
-                      <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Offer Type</th>
-                            <th>Lister Name</th>
-                            <th>Offer Price</th>
-                            <th>Offer Message</th>
-                            <th>Offer Date</th>
-                            <th>Status</th>                       
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @for (offer of offers; track offer.id) {
-                            <tr class="alert" role="alert">  
-                                <td>
-                                    <div>
-                                        <p>{{ offer.property_title }}</p>
-                                        <img src="http://localhost:8000/images/{{ offer.property_image }}" alt="Property image" width="100px" height="100px">
-                                    </div>
-                                </td>
-                                <td>{{ offer.offer_for }}</td>
-                                <td>{{ offer.lister_name }}</td>
-                                <td><span class="text-primary">LE</span> {{ offer.offer_price }}</td>
-                                <td>{{ offer.offer_message }}</td>
-                                <td>{{ offer.offer_date }}</td>
-                                <td class="status">
-                                    <div>
-                                        <span class="{{ offer.offer_status }}">{{ offer.offer_status }}</span>
-                                    </div>
-                                    @if (offer.offer_status === 'accepted') {
-                                        <div class="mt-5">
-                                            <a href="javascript:void(0)" (click)="proceedToPayment(offer)">Go to Payment&nbsp;<i class="pi pi-angle-right"></i><i class="pi pi-angle-right"></i></a>
-                                            <div id="paypal-button-container"></div>
-                                        </div>
-                                    }
-                                </td>
+        @if (offers.length === 0) {
+            <h3 class="my-5 text-center color-muted">You haven't made any offers.</h3>
+        }@else {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table class="table table-responsive-xl">
+                          <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Offer Type</th>
+                                <th>Lister Name</th>
+                                <th>Offer Price</th>
+                                <th>Offer Message</th>
+                                <th>Offer Date</th>
+                                <th>Status</th>                       
                             </tr>
-                        }
-                      </tbody>
-                    </table>
+                          </thead>
+                          <tbody>
+                            @for (offer of offers; track offer.id) {
+                                <tr class="alert" role="alert">  
+                                    <td>
+                                        <div>
+                                            <p>{{ offer.property_title }}</p>
+                                            <img src="http://localhost:8000/images/{{ offer.property_image }}" alt="Property image" width="100px" height="100px">
+                                        </div>
+                                    </td>
+                                    <td>{{ offer.offer_for }}</td>
+                                    <td>{{ offer.lister_name }}</td>
+                                    <td><span class="text-primary">LE</span> {{ offer.offer_price }}</td>
+                                    <td>{{ offer.offer_message }}</td>
+                                    <td>{{ offer.offer_date }}</td>
+                                    <td class="status">
+                                        <div>
+                                            <span class="{{ offer.offer_status }}">{{ offer.offer_status }}</span>
+                                        </div>
+                                        @if (offer.offer_status === 'accepted') {
+                                            <div class="mt-5">
+                                                <a href="javascript:void(0)" (click)="proceedToPayment(offer)">Go to Payment&nbsp;<i class="pi pi-angle-right"></i><i class="pi pi-angle-right"></i></a>
+                                                <div id="paypal-button-container"></div>
+                                            </div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                          </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 </section>
 
