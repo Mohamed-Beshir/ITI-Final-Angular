@@ -4,13 +4,14 @@ import { BigFooterComponent } from '../big-footer/big-footer.component';
 import { Router, RouterLink } from '@angular/router';
 import { AddUserService } from './../services/add-user.service';
 import { UserServiceService } from '../services/user-service.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-profile-agent',
   standalone: true,
-  imports: [NavbarComponent, BigFooterComponent, RouterLink,FormsModule,CommonModule],
+  imports: [NavbarComponent, BigFooterComponent, RouterLink,FormsModule,CommonModule,ReactiveFormsModule],
   templateUrl: './profile-agent.component.html',
   styleUrl: './profile-agent.component.css'
 })
@@ -42,9 +43,9 @@ export class ProfileAgentComponent implements OnInit {
     }
 
     this.userForm = this.formBuilder.group({
-      name: [''],
-      email: [''],
-      role: [''],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
