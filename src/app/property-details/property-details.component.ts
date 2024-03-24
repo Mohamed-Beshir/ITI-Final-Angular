@@ -80,7 +80,8 @@ export class PropertyDetailsComponent implements OnInit{
     });
     this.property_details.getOneProperty(this.id).subscribe(data => {
       this.property = data
-      this.checkOfferSubmittedBefore();});
+      this.checkOfferSubmittedBefore();
+      this.fetchSimilarProperties(this.id);});
 
     
 
@@ -154,6 +155,9 @@ export class PropertyDetailsComponent implements OnInit{
         this.submitOfferService.submitRentOffer(formData).subscribe(
           () => {
             console.log('Offer submitted successfully');
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/property-details', this.id]);
+            });
           },
           error => {
             console.error('Error submitting offer:', error);
@@ -164,6 +168,9 @@ export class PropertyDetailsComponent implements OnInit{
         this.submitOfferService.submitSaleOffer(formData).subscribe(
           () => {
             console.log('Offer submitted successfully');
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/property-details', this.id]);
+            });
           },
           error => {
             console.error('Error submitting offer:', error);
@@ -262,5 +269,18 @@ export class PropertyDetailsComponent implements OnInit{
 
   userValue!: number;
   overallValue: number = 4;
-  similarProperties = [{id : 1},{id : 2},{id : 3}];
+  
+  similarProperties: any[] = [];
+  fetchSimilarProperties(propertyId: number): void {
+    this.property_details.getSimilarProperties(propertyId).subscribe(
+      (similarProperties: any) => {
+        // Store the similar properties in the array
+        this.similarProperties = similarProperties;
+        console.log('Similar Properties:', this.similarProperties);
+      },
+      error => {
+        console.error('Error fetching similar properties:', error);
+      }
+    );
+  }
 }
