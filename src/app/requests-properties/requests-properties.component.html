@@ -25,7 +25,7 @@
             <td>{{ offer.buyer_name }}</td>
             <td>{{ offer.buyer_email }}</td>
             <td>{{ offer.property_title }} </td>
-            <td><img alt="not found" src="http://localhost:8000/images/{{offer.property_image}}"></td>
+            <td><img style="width: 80px;" src="http://localhost:8000/images/{{offer.property_image}}" alt="not found"></td>
             <td>{{ offer.offer_price }}</td>
             <td> {{ offer.offer_message }}</td>
             <td class="status"><span class="{{ offer.offer_status }}">{{ offer.offer_status }}</span></td>
@@ -42,6 +42,4 @@
       </table>
 
 </div>
-
-
 <app-big-footer></app-big-footer>

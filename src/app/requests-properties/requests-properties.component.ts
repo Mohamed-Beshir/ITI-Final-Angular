@@ -6,7 +6,7 @@ import { BigFooterComponent } from '../big-footer/big-footer.component';
 import { RequestPropertyService } from '../services/request-property.service';
 import { SaleOffersService } from '../services/sale-offers.service';
 import { OfferActionsService } from '../services/offer-actions.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 interface Offer {
   offer_id: number;
@@ -34,7 +34,7 @@ export class RequestsPropertiesComponent implements OnInit {
   offers: Offer[] = [];
   userId: number=0;
 
-  constructor(private dataService: SaleOffersService, private offerActionsService: OfferActionsService, private rentofferActionsService: RentofferActionsService) { }
+  constructor(private dataService: SaleOffersService, private offerActionsService: OfferActionsService, private rentofferActionsService: RentofferActionsService, private router : Router) { }
 
   ngOnInit(): void {
     // Retrieve user ID from localStorage
@@ -56,6 +56,9 @@ export class RequestsPropertiesComponent implements OnInit {
         next: response => {
           console.log('Sale offer accepted successfully:', response);
           // Handle success response
+          this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/requests']);
+          });
         },
         error: error => {
           console.error('Error accepting sale offer:', error);
@@ -67,15 +70,18 @@ export class RequestsPropertiesComponent implements OnInit {
         next: response => {
           console.log('Rent offer accepted successfully:', response);
           // Handle success response
-        },
-        error: error => {
-          console.error('Error accepting rent offer:', error);
-          // Handle error response
-        }
-      });
-    } else {
-      console.error('Invalid offer type:', offerFor);
-    }
+          this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/requests']);
+          });
+      },
+      error: error => {
+        console.error('Error accepting offer:', error);
+        // Handle error response
+      }
+    });
+  } else {
+    console.error('Invalid offer type:', offerFor);
+  }
   }
 
   rejectOffer(offerId: number, offerFor: string): void {
@@ -84,6 +90,9 @@ export class RequestsPropertiesComponent implements OnInit {
         next: response => {
           console.log('Sale offer rejected successfully:', response);
           // Handle success response
+          this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/requests']);
+          });
         },
         error: error => {
           console.error('Error rejecting sale offer:', error);
@@ -95,15 +104,18 @@ export class RequestsPropertiesComponent implements OnInit {
         next: response => {
           console.log('Rent offer rejected successfully:', response);
           // Handle success response
-        },
-        error: error => {
-          console.error('Error rejecting rent offer:', error);
-          // Handle error response
-        }
-      });
-    } else {
-      console.error('Invalid offer type:', offerFor);
-    }
+          this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/requests']);
+          });
+      },
+      error: error => {
+        console.error('Error rejecting offer:', error);
+        // Handle error response
+      }
+    });
+  } else {
+    console.error('Invalid offer type:', offerFor);
+  }
   }
 
 }
