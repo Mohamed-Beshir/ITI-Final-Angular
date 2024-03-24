@@ -22,6 +22,9 @@ export class PaymentComponent implements OnInit {
 
   public payPalConfig?: IPayPalConfig;
 
+  paymentSuccess: boolean = false;
+  transactionId: string = '';
+
 
   constructor(private route: ActivatedRoute, private payment: PaymentService) { }
 
@@ -78,6 +81,7 @@ export class PaymentComponent implements OnInit {
     onApprove: (data, actions) => {
       console.log('onApprove - transaction was approved, but not authorized', data, actions);
       actions.order.get().then((details:any) => {
+        this.onPaymentSuccess(details.id);
         console.log('onApprove - you can get full order details inside onApprove: ', details);
         let status = 'completed';
         if (details.status === 'APPROVED') {
@@ -87,7 +91,7 @@ export class PaymentComponent implements OnInit {
           const paymentDetails = {
             transaction_id: details.id,
             status: status,
-            sales_offer_id: this.offer.offer_id // or any other property you want to include
+            sales_offer_id: this.offer.offer_id 
           };
           this.payment.saveSalePaymentDetails(paymentDetails).subscribe(
             (response) => {
@@ -95,14 +99,14 @@ export class PaymentComponent implements OnInit {
             },
             (error) => {
               console.error('Error saving rent payment details:', error);
-              // Handle error, e.g., show an error message
+              
             }
           );
         }else if(this.offer.offer_for == "Rent"){
           const paymentDetails = {
             transaction_id: details.id,
             status: status,
-            rents_offer_id: this.offer.offer_id // or any other property you want to include
+            rents_offer_id: this.offer.offer_id 
           };
           this.payment.saveRentPaymentDetails(paymentDetails).subscribe(
             (response) => {
@@ -110,7 +114,7 @@ export class PaymentComponent implements OnInit {
             },
             (error) => {
               console.error('Error saving rent payment details:', error);
-              // Handle error, e.g., show an error message
+              
             }
           );
         }
@@ -131,5 +135,10 @@ export class PaymentComponent implements OnInit {
       console.log('onClick', data, actions);
     },
   };
+  }
+
+  onPaymentSuccess(transactionId: string) {
+    this.paymentSuccess = true;
+    this.transactionId = transactionId;
   }
 }

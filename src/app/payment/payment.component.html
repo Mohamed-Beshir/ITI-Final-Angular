@@ -6,6 +6,11 @@
         <h3 class="my-5">Payment Details</h3>
         <div class="row">
             <div class="col-md-12">
+                @if (paymentSuccess) {
+                    <div class="alert alert-success">
+                        Payment successful! This is your Transaction ID: {{ transactionId }}
+                    </div>
+                }
                 <div class="table-wrap">
                     <table class="table table-responsive-xl">
                       <thead>
@@ -23,7 +28,7 @@
                             <td>
                                 <div>
                                     <p>{{ offer.property_title }}</p>
-                                    <img src="http://localhost:8000/images/{{ offer.property_image }}" alt="Property image" width="200px" height="200px">
+                                    <img src="http://localhost:8000/images/{{ offer.property_image }}" alt="Property image" class="rounded" width="200px" height="200px">
                                 </div>
                             </td>
                             <td>{{ offer.offer_for }}</td>
