@@ -49,12 +49,6 @@ export class ProfileAgentComponent implements OnInit {
     if (this.userId) {
       this.getUserData(this.userId);
     }
-
-    this.userForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
   }
 
   getUserData(userId: string): void {

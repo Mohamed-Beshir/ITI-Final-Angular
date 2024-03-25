@@ -108,13 +108,23 @@
                                                 <div class="form-group">
                                                     <label for="submit-status">Status</label>
                                                     <div class="select_container">
-                                                        <select name="type" id="submit-status" formControlName="status">
+                                                        <select name="type" id="submit-status" formControlName="status" (change)="onStatusChange($event)">
                                                             <option value="for_sale">Sale</option>
                                                             <option value="for_rent">Rent</option>
                                                         </select>
                                                     </div>
                                                     <!-- Add validation message if needed -->
                                                 </div>
+                                                <div class="form-group" *ngIf="showRentOptions">
+                                                  <label for="period">Rent Period</label>
+                                                  <div class="select_container">
+                                                      <select name="period" id="period" formControlName="period">
+                                                          <option value="monthly">Monthly</option>
+                                                          <option value="daily">daily</option>
+                                                      </select>
+                                                  </div>
+                                                  <!-- Add validation message if needed -->
+                                              </div>
 
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-6">

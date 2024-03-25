@@ -85,90 +85,63 @@
                                         <h2 class="mb-5">Edit your information</h2>
                                     </header>
                                     <!--  -->
-                                    <dl class="contact-fields">
-                                        <dt><label for="form-account-name">Your Name</label></dt>
-                                        <dd>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="form-account-name"
-                                                    name="form-account-name" [(ngModel)]="userData.name">
-                                            </div><!-- /.form-group -->
-                                        </dd>
-
-                                        <dt><label for="form-account-email">Email</label></dt>
-                                        <dd>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="form-account-email"
-                                                    name="form-account-phone" [(ngModel)]="userData.email">
-                                            </div><!-- /.form-group -->
-                                        </dd>
-                                        <dt><label for="form-account-email">Password</label></dt>
-                                        <dd>
-                                            <div class="form-group">
-                                                <input type="password" class="form-control" id="form-account-password"
-                                                    name="form-account-password" [(ngModel)]="userData.password">
-                                            </div><!-- /.form-group -->
-                                        </dd>
-                                    </dl>
-                                    <div class="form-group" style="text-align: right;">
-                                        <button type="submit" class="btn btn-default mx-3" (click)="onSubmit()"
-                                            id="account-submit" routerLink="/profile">Save Changes</button>
-                                        <button routerLink="/profile" type="submit" class="btn btn-default"
-                                            (click)="cancelEdit()" id="account-submit">Cancel</button>
-                                    </div><!-- /.form-group -->
-
-
-                                    <section id="change-password" *ngIf="showEditForm">
-                                        <header>
-                                            <h2>Edit your information</h2>
-                                        </header>
-                                        <!--  -->
-                                        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                                            <dl class="contact-fields">
-                                                <dt><label for="form-account-name">Your Name:</label></dt>
-                                                <dd>
-                                                    <div class="form-group">
-                                                        <input type="text" formControlName="name" class="form-control"
-                                                            id="form-account-name" name="form-account-name">
-                                                        <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched"
-                                                            class="text-danger">
-                                                            Name is required
-                                                        </div>
-
+                                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                                        <dl class="contact-fields">
+                                            <dt><label for="form-account-name">Your Name:</label></dt>
+                                            <dd>
+                                                <div class="form-group">
+                                                    <input type="text" formControlName="name" class="form-control"
+                                                        id="form-account-name" name="form-account-name">
+                                                    <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+                                                        class="text-danger">
+                                                        Name is required
                                                     </div>
-                                                </dd>
 
-                                                <dt><label for="form-account-email">Email:</label></dt>
-                                                <dd>
-                                                    <div class="form-group">
-                                                        <input type="text" formControlName="email" placeholder="Email"
-                                                            id="form-account-email" name="form-account-phone">
-                                                        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
-                                                            class="text-danger">
-                                                            <div *ngIf="userForm.get('email')?.errors?.['required']">
-                                                                Email is required</div>
-                                                            <div *ngIf="userForm.get('email')?.errors?.['email']">
-                                                                Invalid email format</div>
-                                                        </div>
+                                                </div>
+                                            </dd>
 
+                                            <dt><label for="form-account-email">Email:</label></dt>
+                                            <dd>
+                                                <div class="form-group">
+                                                    <input type="text" formControlName="email" placeholder="Email"
+                                                        id="form-account-email" name="form-account-phone">
+                                                    <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+                                                        class="text-danger">
+                                                        <div *ngIf="userForm.get('email')?.errors?.['required']">
+                                                            Email is required</div>
+                                                        <div *ngIf="userForm.get('email')?.errors?.['email']">
+                                                            Invalid email format</div>
                                                     </div>
-                                                </dd>
+
+                                                </div>
+                                            </dd>
+                                            <!--  -->
+                                            <dt><label for="form-account-password">New Password:</label></dt>
 
 
+                                            <dd>
+                                              <div class="form-group">
+                                                  <input type="password" formControlName="password" placeholder="password"
+                                                      id="form-account-password" name="form-account-phone" >
+                                                  <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched"
+                                                      class="text-danger">
+                                                      <div *ngIf="userForm.get('password')?.errors?.['required']">
+                                                          Password is required</div>
+                                                      <div *ngIf="userForm.get('password')?.errors?.['pattern']">
+                                                          Invalid password format</div>
+                                                  </div>
+                                              </div>
+                                            </dd>
 
-                                            </dl>
-                                            <div class="form-group" style="text-align: right;">
-                                                <button type="submit" class="btn btn-default" id="account-submit"
-                                                    [disabled]="!userForm.valid">Save Changes</button>
-                                                <button type="button" class="btn btn-default" (click)="cancelEdit()"
-                                                    id="account-submit">Cancel</button>
-                                            </div>
-                                        </form>
 
-                                        <!--  -->
-                                        <!-- <div *ngIf="notificationMessage" class="alert alert-success">
-                                      {{ notificationMessage }}
-                                    </div> -->
-                                    </section>
+                                        </dl>
+                                        <div class="form-group" style="text-align: right;">
+                                            <button type="submit" class="btn btn-default" id="account-submit"
+                                                [disabled]="!userForm.valid">Save Changes</button>
+                                            <button type="button" class="btn btn-default" (click)="cancelEdit()"
+                                                id="account-submit">Cancel</button>
+                                        </div>
+                                    </form>
                                 </section>
 
                             </div><!-- /.col-md-9 -->
