@@ -210,7 +210,10 @@ export class PropertyDetailsComponent implements OnInit{
         this.review.createReview(reviewUser).subscribe(res => console.log(res));
       }
 
-    this.reloadComponent()
+      if (userDataString) {
+        this.reloadComponent()
+      }
+    
   }
 
   reloadComponent(): void {
