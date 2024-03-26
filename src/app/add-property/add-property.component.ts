@@ -38,12 +38,13 @@ selectedImages: { file: File, url: string }[] = [];
       city: ["", [Validators.required]],
       street: ["", [Validators.required]],
       district: ["", [Validators.required]],
-      property_type: ["", [Validators.required]],
-      status: ["", [Validators.required]],
+      property_type: ["House", [Validators.required]],
+      status: ["for_sale", [Validators.required]],
       beds: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
       baths: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
       area: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
       image: ["", [Validators.required]],
+      period: ['monthly', [Validators.required]],
     })
   }
   userData : any = [];
@@ -73,7 +74,6 @@ selectedImages: { file: File, url: string }[] = [];
 
     let newProperty : any = {
       title : this.myForm.get('title')?.value,
-      // price : this.myForm.get('price')?.value,
       description : this.myForm.get('description')?.value,
       street : this.myForm.get('street')?.value,
       type : this.myForm.get('property_type')?.value,
@@ -83,7 +83,6 @@ selectedImages: { file: File, url: string }[] = [];
       status : this.myForm.get('status')?.value,
       baths : this.myForm.get('baths')?.value,
       beds : this.myForm.get('beds')?.value,
-      // image : [this.img_1,this.img_2,this.img_3],
     }
     if(this.myForm.valid){
       console.log(newProperty)
@@ -97,7 +96,7 @@ selectedImages: { file: File, url: string }[] = [];
             let property_rent = {
                 "property_id": resp.id,
                 "lister_id": this.userData.id,
-                "period": "monthly",
+                "period": this.myForm.get('period')?.value,
                 "price": this.myForm.get('price')?.value
             }
             this.property_rents.saveProperty_rentsData(property_rent).subscribe(res => {
@@ -133,42 +132,7 @@ selectedImages: { file: File, url: string }[] = [];
   upload1 = 'upload'; // Assuming you have defined the 'upload' icon
   images: { url: string }[] = []; // Define the images property
 
-//   onFileSelected(event: any): void {
-//     const files: FileList = event.target.files;
-//     if (files && files.length > 0) {
-//       // Clear existing images
-//       this.images = [];
 
-//       for (let i = 0; i < files.length; i++) {
-//         const img: File = files[i];
-//         i == 0 ? this.img_1 = img.name : "";
-//         i == 1 ? this.img_2 = img.name : "";
-//         i == 2 ? this.img_3 = img.name : "";
-//       }
-//       // Process the selected files
-//       for (let i = 0; i < files.length; i++) {
-//         const imgs: FileList = event.target.files;
-
-//         const file: File | null = files.item(i); // Allow file to be null
-//         if (file) {
-//           const reader = new FileReader();
-
-//           reader.onload = (e: any) => {
-//             // Push the image URL to the array
-//             this.images.push({ url: e.target.result });
-//           };
-
-//           // Read the file as a data URL
-//           reader.readAsDataURL(file);
-//         }
-//       }
-//     }
-//   }
-// //
-// deleteImage(index: number): void {
-//   this.images.splice(index, 1); // Remove the image at the specified index
-// }
-  //
   onFileChange(event: any) {
     const files: FileList = event.target.files;
     const remainingSlots = 4 - this.selectedImages.length;

@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -43,10 +42,11 @@ selectedImages: { file: File, url: string }[] = [];
       district: ["", [Validators.required]],
       property_type: ["", [Validators.required]],
       status: ["", [Validators.required]],
+      period: ["", []],
       beds: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
       baths: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
       area: ["", [Validators.required, Validators.pattern(/^\d*$/)]],
-      image: ["", [Validators.required]],
+      image: [""],
     })
   }
   userData : any = [];
@@ -63,6 +63,16 @@ selectedImages: { file: File, url: string }[] = [];
     if(this.userData.role == 'user'){
       this.router.navigate(['']);
     }
+    
+    this.myForm.get('status').valueChanges.subscribe((status :any) => {
+      if (status === 'for_rent') {
+        this.myForm.get('period').setValidators([Validators.required]);
+      } else {
+        this.myForm.get('period').clearValidators();
+      }
+      // Trigger revalidation of the 'period' field
+      this.myForm.get('period').updateValueAndValidity();
+    });
 
     this.route.params.subscribe(params => {
       this.id = params['id'];
@@ -70,6 +80,7 @@ selectedImages: { file: File, url: string }[] = [];
     });
     this.property.getOneProperty(this.id).subscribe(res => this.properties = res)
   }
+  
  
   img_1:any;
   img_2:any;
@@ -96,50 +107,77 @@ selectedImages: { file: File, url: string }[] = [];
 
       console.log(this.properties.property_sale_id)
       console.log(this.properties.property_rent_id)
-      if(this.properties.property_sale_id){
-        this.property_sales.deleteProperty_salesFromApi(this.properties.property_sale_id).subscribe(res=>console.log(res))
-      }else{
-        this.property_rents.deleteProperty_rentsFromApi(this.properties.property_rent_id).subscribe(res=>console.log(res))
-      }
+
+      // if(this.properties.property_sale_id){
+      //   this.property_sales.deleteProperty_salesFromApi(this.properties.property_sale_id).subscribe(res=>console.log(res))
+      // }else{
+      //   this.property_rents.deleteProperty_rentsFromApi(this.properties.property_rent_id).subscribe(res=>console.log(res))
+      // }
 
       // remove old images
-      for(let id of this.properties.image_id){
-        this.http.delete(`http://localhost:8000/api/images/${id}`).subscribe(res => res)
+      if(this.selectedImages.length > 0)
+      {
+        for(let id of this.properties.image_id){
+          this.http.delete(`http://localhost:8000/api/images/${id}`).subscribe(res => res)
+        }
       }
+      
 
       this.property.updateProperty(this.id,newProperty).subscribe((resp : any)=> {
         this.property.getAllProperty().subscribe((data : any) => {
           if(this.myForm.get('status')?.value == 'for_rent'){
             let property_rent = {
-                "property_id": resp.id,
-                "lister_id": this.userData.id,
-                "period": "monthly",
-                "price": this.myForm.get('price')?.value
+              "property_id": resp.id,
+              "lister_id": this.userData.id,
+              "period": this.myForm.get('period')?.value,
+              "price": this.myForm.get('price')?.value
             }
-            this.property_rents.saveProperty_rentsData(property_rent).subscribe(res => {
-              console.log(res)
-            });
+            let update_property_rent = {
+              "period": this.myForm.get('period')?.value,
+              "price": this.myForm.get('price')?.value
+            }
+            if(this.properties.property_sale_id){
+              this.property_sales.deleteProperty_salesFromApi(this.properties.property_sale_id).subscribe(res=>console.log(res))
+              this.property_rents.saveProperty_rentsData(property_rent).subscribe(res => {console.log(res)});
+            }else{
+              this.property_rents.updateProperty_rents(this.properties.property_rent_id, update_property_rent).subscribe(res=>console.log(res))
+            }
           }else {
             let property_sale = {
               "property_id": resp.id,
               "lister_id": this.userData.id,
               "price": this.myForm.get('price')?.value
             }
-            this.property_sales.saveProperty_salesData(property_sale).subscribe(res => {
-              console.log(res)
-            });
+            let update_property_sale = {
+              "price": this.myForm.get('price')?.value
+            }
+            if(this.properties.property_rent_id){
+              this.property_rents.deleteProperty_rentsFromApi(this.properties.property_rent_id).subscribe(res=>console.log(res))
+              this.property_sales.saveProperty_salesData(property_sale).subscribe(res => {console.log(res)});
+            }else{
+              this.property_sales.updateProperty_sales(this.properties.property_sale_id, update_property_sale).subscribe(res=>console.log(res))
+            }
           }
-          const formData = new FormData();
-          for (let i = 0; i < this.selectedImages.length; i++) {
-            formData.append('images[]', this.selectedImages[i].file);
-          }
-          this.http.post(`http://localhost:8000/api/images?property_id=${resp.id.toString()}`, formData).subscribe(res => {
-            console.log(res)
-            this.router.navigate(["my-properties"])
-          });
+          
+            const formData = new FormData();
+            for (let i = 0; i < this.selectedImages.length; i++) {
+              formData.append('images[]', this.selectedImages[i].file);
+            }
+            this.http.post(`http://localhost:8000/api/images?property_id=${resp.id.toString()}`, formData)
+            .subscribe(
+              (res) => {
+                console.log(res);
+                this.router.navigate(["my-properties"]);
+              },
+              (error) => {
+                this.router.navigate(["my-properties"]); 
+              }
+            );
+
+          
+            
         });
       })
-      // this.router.navigate(["my-properties"])
       
     }
     console.log(this.myForm)
@@ -168,9 +206,15 @@ selectedImages: { file: File, url: string }[] = [];
     }
   }
 
-onDelete(index: number) {
-  this.selectedImages.splice(index, 1);
-}
+  onDelete(index: number) {
+    this.selectedImages.splice(index, 1);
+  }
   //
+  showRentOptions: boolean = false;
+  onStatusChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    console.log(target);
+    console.log(target.value);
+    this.showRentOptions = target.value === 'for_rent';
+  }
 }
-

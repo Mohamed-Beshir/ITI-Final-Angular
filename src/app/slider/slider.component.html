@@ -5,13 +5,15 @@
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
   <div class="carousel-inner">
-    <div *ngFor="let property of propertyData; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
-      <img [src]="property.image" class="d-block w-100" alt="Property Image" style="height:450px">
-      <div class="carousel-caption d-none d-md-block property-caption">
-        <h5>LE {{ property.price }}</h5>
-        <h3>{{ property.street }}</h3>
-        <p>{{ property.propertyNumber }}</p>
-      </div>
+    <div *ngFor="let property of propertiesSlider.slice(-3).reverse(); let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+      <img src="http://localhost:8000/images/{{property.image}}" class="d-block w-100" alt="Property Image" style="height:450px">
+      <a [routerLink]="['/property-details', property.id]">
+        <div class="carousel-caption d-none d-md-block property-caption">
+          <h5>LE {{ property.price }}</h5>
+          <h3>{{ property.title }}</h3>
+          <p>{{ property.city }}, {{ property.district }}</p>
+        </div>
+      </a>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">

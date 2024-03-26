@@ -5,15 +5,10 @@
   <!-- Page Content -->
   <div id="page-content">
       <!-- Breadcrumb -->
-        <nav class="container py-2">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="nav-link text-dark link-secondary">Home</a></li>
-                <li class="breadcrumb-item text-secondary">Add your property</li>
-            </ol>
-        </nav>
+        
   <!-- end Breadcrumb -->
 
-      <div class="container">
+      <div class="container my-5">
           <header><h1>Add Your Property</h1></header>
 
           <form  role="form" id="form-submit" class="form-submit" [formGroup]="myForm" (submit)="onSubmit()">
@@ -22,144 +17,168 @@
                       <div class="col-md-9 col-sm-9 sc">
                           <section id="submit-form">
                               <section id="basic-information">
-                                  <header><h2>Basic Information</h2></header>
-                                  <div class="row">
+                                  <div class="row mt-3">
                                     <div class="col-md-8">
                                       <div class="form-group">
-                                          <label for="submit-title">Title</label>
+                                          <label for="submit-title">Title <span class="text-danger" *ngIf="myForm.get('title')!.errors?.['required']">*</span></label>
                                           <input type="text" class="form-control input1" id="submit-title" name="title" required formControlName="title">
-                                          <div *ngIf="myForm.get('title')!.invalid && myForm.get('title')!.touched" class="text-danger">
+                                            <div *ngIf="myForm.get('title')!.invalid && myForm.get('title')!.touched" class="text-danger small mt-1">
                                             <div *ngIf="myForm.get('title')!.errors?.['required']">Title is required</div>
                                           </div>
-
                                       </div><!-- /.form-group -->
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="submit-price">Price</label>
+                                        <label for="submit-price">Price <span class="text-danger" *ngIf="myForm.get('price')!.errors?.['required']">*</span></label>
                                         <div class="input-group">
-                                            <span class="input-group-addon">$</span>
-                                            <input type="text" class="form-control" id="submit-price" name="price" formControlName="price">
+                                            <input type="text" class="form-control rounded-0" id="submit-price" name="price" formControlName="price">
+                                            <span class="input-group-text">LE</span>
                                         </div>
                                         <!-- Display validation errors -->
                                         <div *ngIf="myForm.get('price')!.errors && (myForm.get('price')!.dirty || myForm.get('price')!.touched)">
-                                          <div *ngIf="myForm.get('price')!.errors?.['required']" class="text-danger">Price is required</div>
-                                          <div *ngIf="myForm.get('price')!.errors?.['pattern']" class="text-danger">Invalid price format</div>
-                                      </div>
+                                          <div *ngIf="myForm.get('price')!.errors?.['required']" class="text-danger small mt-1">Price is required</div>
+                                          <div *ngIf="myForm.get('price')!.errors?.['pattern']" class="text-danger small mt-1">Invalid price format</div>
+                                        </div>
 
                                     </div><!-- /.form-group -->
                                 </div>
                                   </div>
                                   <div class="form-group">
-                                    <label for="submit-description">Description</label>
-                                    <textarea class="form-control" id="submit-description" rows="8" name="submit-description" formControlName="description"></textarea>
+                                    <label for="submit-description">Description <span class="text-danger" *ngIf="myForm.get('description')!.errors?.['required']">*</span></label>
+                                    <textarea class="form-control rounded-0" style="background-color: #f3f3f3;" id="submit-description" rows="7" name="submit-description" formControlName="description"></textarea>
                                     <!-- Display validation errors -->
                                     <div *ngIf="myForm.get('description')!.errors && (myForm.get('description')!.dirty || myForm.get('description')!.touched)">
-                                      <div *ngIf="myForm.get('description')!.errors?.['required']" class="text-danger">Description is required</div>
+                                      <div *ngIf="myForm.get('description')!.errors?.['required']" class="text-danger small mt-1">Description is required</div>
                                     </div>
 
                                 </div><!-- /.form-group -->
                               </section><!-- /#basic-information -->
 
 
-                                  <div class="container">
+                                  <div class="row">
                                             <div>
                                               <section id="summary">
-                                                <div class="form-group">
-                                                    <label for="submit-city">City</label>
-                                                    <input type="text" class="form-control input1" id="submit-city" name="city" required formControlName="city">
-                                                    <div *ngIf="myForm.get('city')?.errors && (myForm.get('city')?.dirty || myForm.get('city')?.touched)" class="text-danger">
-                                                      <div *ngIf="myForm.get('city')?.errors?.['required']">City is required</div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="submit-city">City <span class="text-danger" *ngIf="myForm.get('city')!.errors?.['required']">*</span></label>
+                                                            <input type="text" class="form-control input1" id="submit-city" name="city" required formControlName="city">
+                                                            <div *ngIf="myForm.get('city')?.errors && (myForm.get('city')?.dirty || myForm.get('city')?.touched)" class="text-danger small mt-1">
+                                                              <div *ngIf="myForm.get('city')?.errors?.['required']">City is required</div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-
-                                                </div>
-
-                                                <div class="form-group">
-                                                  <label for="submit-street">Street</label>
-                                                  <input type="text" class="form-control input1" id="submit-street" name="street" required formControlName="street">
-                                                  <!-- Validation error message for Street -->
-                                                  <div *ngIf="myForm.get('street')!.invalid && myForm.get('street')!.touched" class="text-danger">
-                                                    <div *ngIf="myForm.get('street')!.errors?.['required']">Street is required</div>
-                                                    <!-- Add more validation checks and error messages if needed -->
-                                                  </div>
-                                              </div>
-
-                                              <div class="form-group">
-                                                  <label for="submit-district">District</label>
-                                                  <input type="text" class="form-control input1" id="submit-district" name="district" required formControlName="district">
-                                                  <!-- Validation error message for District -->
-                                                  <div *ngIf="myForm.get('district')!.invalid && myForm.get('district')!.touched" class="text-danger">
-                                                    <div *ngIf="myForm.get('district')!.errors?.['required']">District is required</div>
-                                                      <!-- Add more validation checks and error messages if needed -->
-                                                  </div>
-                                              </div>
-
-
-                                                <div class="form-group">
-                                                    <label for="submit-property-type">Property Type</label>
-                                                    <div class="select_container">
-                                                        <select name="type" id="submit-property-type" formControlName="property_type">
-                                                            <option value="Apartment">Apartment</option>
-                                                            <option value="Condominium">Condominium</option>
-                                                            <option value="Cottage">Cottage</option>
-                                                            <option value="Flat">Flat</option>
-                                                            <option value="House">House</option>
-                                                        </select>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="submit-street">Street <span class="text-danger" *ngIf="myForm.get('street')!.errors?.['required']">*</span></label>
+                                                            <input type="text" class="form-control input1" id="submit-street" name="street" required formControlName="street">
+                                                            <!-- Validation error message for Street -->
+                                                            <div *ngIf="myForm.get('street')!.invalid && myForm.get('street')!.touched" class="text-danger small mt-1">
+                                                              <div *ngIf="myForm.get('street')!.errors?.['required']">Street is required</div>
+                                                              <!-- Add more validation checks and error messages if needed -->
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <!-- Add validation message if needed -->
                                                 </div>
-
-                                                <div class="form-group">
-                                                    <label for="submit-status">Status</label>
-                                                    <div class="select_container">
-                                                        <select name="type" id="submit-status" formControlName="status">
-                                                            <option value="for_sale">Sale</option>
-                                                            <option value="for_rent">Rent</option>
-                                                        </select>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="submit-district">District <span class="text-danger" *ngIf="myForm.get('district')!.errors?.['required']">*</span></label>
+                                                            <input type="text" class="form-control input1" id="submit-district" name="district" required formControlName="district">
+                                                            <!-- Validation error message for District -->
+                                                            <div *ngIf="myForm.get('district')!.invalid && myForm.get('district')!.touched" class="text-danger small mt-1">
+                                                              <div *ngIf="myForm.get('district')!.errors?.['required']">District is required</div>
+                                                                <!-- Add more validation checks and error messages if needed -->
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <!-- Add validation message if needed -->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="submit-property-type">Property Type <span class="text-danger" *ngIf="myForm.get('property_type')!.errors?.['required']">*</span></label>
+                                                            <div class="select_container">
+                                                                <select name="type" id="submit-property-type" formControlName="property_type">
+                                                                    <option value="Apartment">Apartment</option>
+                                                                    <option value="Condominium">Condominium</option>
+                                                                    <option value="Cottage">Cottage</option>
+                                                                    <option value="Flat">Flat</option>
+                                                                    <option value="House">House</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                
+
+                                              
+
 
                                                 <div class="row">
-                                                  <div class="col-md-6 col-sm-6">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="submit-status">Status <span class="text-danger" *ngIf="myForm.get('status')!.errors?.['required']">*</span></label>
+                                                            <div class="select_container">
+                                                                <select name="type" id="submit-status" formControlName="status">
+                                                                    <option value="for_sale">Sale</option>
+                                                                    <option value="for_rent">Rent</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div *ngIf="myForm.get('status')?.value === 'for_rent'">
+                                                            <div class="form-group">
+                                                              <label for="submit-period">Period <span class="text-danger" *ngIf="myForm.get('period')!.errors?.['required']">*</span></label>
+                                                              <div class="select_container">
+                                                                <select name="period" id="submit-period" formControlName="period">
+                                                                  <option value="monthly">Monthly</option>
+                                                                  <option value="daily">Daily</option>
+                                                                </select>
+                                                              </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>  
+
+                                                <div class="row">
+                                                  <div class="col-md-4">
                                                       <div class="form-group">
-                                                          <label for="submit-Beds">Beds</label>
+                                                          <label for="submit-Beds">Beds <span class="text-danger" *ngIf="myForm.get('beds')!.errors?.['required']">*</span></label>
                                                           <input type="text" class="form-control input1" id="submit-Beds" name="Beds" pattern="\d*" required formControlName="beds">
                                                           <!-- Validation error message for Beds -->
-                                                          <div *ngIf="myForm.get('beds')!.invalid && myForm.get('beds')!.touched" class="text-danger">
+                                                          <div *ngIf="myForm.get('beds')!.invalid && myForm.get('beds')!.touched" class="text-danger small mt-1">
                                                             <div *ngIf="myForm.get('beds')!.errors?.['required']">Beds is required</div>
-                                                            <div *ngIf="myForm.get('beds')!.errors?.['pattern']" class="text-danger">Invalid beds format</div>
+                                                            <div *ngIf="myForm.get('beds')!.errors?.['pattern']">Invalid beds format</div>
                                                             <!-- Add more validation checks and error messages if needed -->
                                                           </div>
                                                       </div>
                                                   </div>
-                                                  <div class="col-md-6 col-sm-6">
+                                                  <div class="col-md-4">
                                                       <div class="form-group">
-                                                          <label for="submit-Baths">Baths</label>
+                                                          <label for="submit-Baths">Baths <span class="text-danger" *ngIf="myForm.get('baths')!.errors?.['required']">*</span></label>
                                                           <input type="text" class="form-control input1" id="submit-Baths" name="Baths" pattern="\d*" required formControlName="baths">
                                                           <!-- Validation error message for Baths -->
-                                                          <div *ngIf="myForm.get('baths')!.invalid && myForm.get('baths')!.touched" class="text-danger">
+                                                          <div *ngIf="myForm.get('baths')!.invalid && myForm.get('baths')!.touched" class="text-danger small mt-1">
                                                             <div *ngIf="myForm.get('baths')!.errors?.['required']">Baths is required</div>
-                                                            <div *ngIf="myForm.get('baths')!.errors?.['pattern']" class="text-danger">Invalid Baths format</div>
+                                                            <div *ngIf="myForm.get('baths')!.errors?.['pattern']" >Invalid Baths format</div>
                                                             <!-- Add more validation checks and error messages if needed -->
                                                           </div>
                                                       </div>
                                                   </div>
-                                              </div>
-
-                                              <div class="row">
-                                                  <div class="form-group col-12 col-xl-6">
-                                                      <label for="submit-area">Area</label>
-                                                      <div class="input-group">
-                                                          <input type="text" class="form-control input-area" id="submit-area" name="area" pattern="\d*" required formControlName="area">
-                                                          <span class="input-group-text">m<sup>2</sup></span>
-                                                      </div>
-                                                      <!-- Validation error message for Area -->
-                                                      <div *ngIf="myForm.get('area')!.invalid && myForm.get('area')!.touched" class="text-danger">
-                                                        <div *ngIf="myForm.get('area')!.errors?.['required']">Area is required</div>
-                                                        <div *ngIf="myForm.get('area')!.errors?.['pattern']" class="text-danger">Invalid area format</div>
-                                                        <!-- Add more validation checks and error messages if needed -->
-                                                      </div>
+                                                  <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="submit-area">Area <span class="text-danger" *ngIf="myForm.get('area')!.errors?.['required']">*</span></label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control rounded-0" id="submit-area" name="area" pattern="\d*" required formControlName="area">
+                                                            <span class="input-group-text">m<sup>2</sup></span>
+                                                        </div>
+                                                        <!-- Validation error message for Area -->
+                                                        <div *ngIf="myForm.get('area')!.invalid && myForm.get('area')!.touched" class="text-danger small mt-1">
+                                                          <div *ngIf="myForm.get('area')!.errors?.['required']">Area is required</div>
+                                                          <div *ngIf="myForm.get('area')!.errors?.['pattern']" >Invalid area format</div>
+                                                          <!-- Add more validation checks and error messages if needed -->
+                                                        </div>
+                                                    </div>
                                                   </div>
                                               </div>
 
@@ -169,27 +188,33 @@
                                   </div><!-- /.row -->
 
                               <!-- gallary -->
-                              <section class="block" id="gallery">
-                                <header><h2>Gallery</h2></header>
+                              <section class="container my-3" id="gallery">
+                                <header><h2>Gallery <span class="text-danger" *ngIf="myForm.get('image')!.errors?.['required']">*</span></h2></header>
                                 <div class="image-container">
                                     <div class="upload">
-                                        <input id="file-upload" name="images[]" type="file" (change)="onFileChange($event)" multiple class="form-control" accept="image/jpeg,image/png" formControlName="image">
+                                        <input id="file-upload" name="images[]" type="file" (change)="onFileChange($event)" multiple class="form-control" accept="image/jpeg,image/png,image/webp" formControlName="image">
                                         <label for="file-upload">
                                             <fa-icon [icon]="upload"></fa-icon>&nbsp;
-                                            Choose image
+                                            Upload images
                                         </label>
                                     </div>
-                                    <!-- Display validation error message if no images are selected -->
-                                    <div *ngIf="myForm.get('image')?.invalid && myForm.get('image')?.touched" class="text-danger">
-                                      <div *ngIf="myForm.get('image')?.errors?.['required']">Please select at least one image</div>
-                                    </div>
+                                    
 
                                     <div class="preview-container">
-                                        <div style="position: relative;" *ngFor="let image of selectedImages; let i = index" class="image-preview">
-                                            <img style="width:200px;height: 150px;" [src]="image.url" alt="Selected Image">
-                                            <div style="position: absolute;top:0;"><button class="btn btn-danger" (click)="onDelete(i)" style="right: 0;top: 0; width: 30px;height: 30px;position: relative;"><p style="position: absolute;top: 0;color: white;">x</p></button></div>
+                                        <div *ngFor="let image of selectedImages; let i = index" class="image-preview" style="position: relative; display: inline-block; margin-right: 10px;">
+                                            <div class="my-2" style="position: relative; display: inline-block;">
+                                                <img [src]="image.url" alt="Selected Image" style="width: 200px; height: 150px;">
+                                                <button title="remove image" (click)="onDelete(i)" class="btn btn-danger rounded-circle" style="position: absolute; top: 5px; right: 5px; width: 30px; height: 30px;">
+                                                    <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; color: white;">X</p>
+                                                </button>
+                                            </div>                                               
                                         </div>
                                     </div>
+                                    
+                                </div>
+                                <!-- Display validation error message if no images are selected -->
+                                <div *ngIf="myForm.get('image')?.invalid && myForm.get('image')?.touched" class="text-danger small mt-1">
+                                    <div *ngIf="myForm.get('image')?.errors?.['required']">Please select at least one image</div>
                                 </div>
                             </section>
 
@@ -200,12 +225,14 @@
                       </div><!-- /.col-md-9 -->
                   </div>
               </div><!-- /.row -->
-              <div class="row">
-                  <div class="block">
-                      <div style="width: 100%;" class="col-md-9 col-sm-9">
+              <div class="row mt-3">
+                  <div>
+                      <div>
                           <div class="center">
-                              <div class="form-group">
-                                <button type="submit" class="btn btn-default large">Add Property</button>                              </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <button type="submit" class="add-prop border-0 large" [disabled]="!myForm.valid">Add Property</button>
+                                    <p *ngIf="myForm.invalid" class="text-danger small mt-3">( Please fill in all required fields )</p>
+                                </div><!-- /.form-group -->
                           </div>
                       </div>
                   </div>

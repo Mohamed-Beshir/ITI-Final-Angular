@@ -16,8 +16,8 @@ export class SearchboxComponent  {
   
   constructor(private propertyService: AddPropertyService, private route: Router) { }
 
-  search(status : string, city : string, district : string, propertyType : string, area : string, beds : string, baths : string, price : string): void {
-    this.propertyService.searchProperties(city, district, propertyType, status, area, beds, baths, price)
+  search(status : string, period : string, city : string, district : string, propertyType : string, area : string, beds : string, baths : string, price : string): void {
+    this.propertyService.searchProperties(city, district, propertyType, status, area, beds, baths, price, period)
       .subscribe(data => {
         // this.properties = data;
         // console.log(this.properties)

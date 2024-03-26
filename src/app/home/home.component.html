@@ -10,19 +10,22 @@
             </div>
         }
     </div>
-    <div class="section-header">
-        <h2>Price Drop</h2>
-        <div>
-            <a href="#">All Properties&nbsp;<i class="pi pi-angle-right"></i></a>
-        </div>
-    </div>
-    <div class="row">
-        @for (property of propertiesHome; track property.id) {
-            <div class="col-lg-3 col-md-6">
-                <app-property-card [property]="property"></app-property-card>
+    @if (priceDropProperties.length != 0) {
+        <div class="section-header">
+            <h2>Price Drop</h2>
+            <div>
+                <a href="#">All Properties&nbsp;<i class="pi pi-angle-right"></i></a>
             </div>
-        }
-    </div>
+        </div>
+        <div class="row">
+            @for (property of priceDropProperties.slice(-4).reverse(); track property.id) {
+                <div class="col-lg-3 col-md-6">
+                    <app-property-card [property]="property"></app-property-card>
+                </div>
+            }
+        </div>
+    }
+    
     
     <app-property-ad></app-property-ad>
 
@@ -33,7 +36,7 @@
         </div>
     </div>
     <div class="row">
-        @for (property of propertiesHome; track property.id) {
+        @for (property of propertiesHome.slice(-8).reverse(); track property.id) {
             <div class="col-lg-3 col-md-6">
                 <app-property-card [property]="property"></app-property-card>
             </div>

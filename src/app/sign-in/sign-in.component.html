@@ -6,7 +6,7 @@
           <li class="breadcrumb-item text-secondary">Sign In</li>
         </ol>
     </nav>
-    <div class="container">
+    <div class="container my-3">
         <header class="border-bottom text-secondary my-4 pb-1"><h2>Sign In</h2></header>
         <div class="row">
             <div class="col-md-4 col-sm-6 m-auto">
@@ -17,7 +17,7 @@
                 }
                
                 <form [formGroup]="signForm" (submit)="checkUser()">
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-3">
                         <label for="email" class="fw-bold text-secondary">Email:</label>
                         <input type="email" class="form-control bg-secondary bg-opacity-25 rounded-0 py-2" id="email" formControlName="email">
                         @if(signForm.controls["email"].touched && signForm.controls["email"].invalid){

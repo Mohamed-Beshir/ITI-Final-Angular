@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 //
 
@@ -21,18 +21,20 @@ import { NgIf } from '@angular/common';
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
   a1=''
   umbrela=faUmbrella;
   home=faHome;
   arrow=faAngleRight;
   arrowdown=faAngleDown;
 
+  showPeriodOptions :boolean = false;
+
   @Input() dataStatus : string | null = null;
 
   constructor(private propertyService: AddPropertyService, private route: Router) { }
-  search(status : string | null, city : string, district : string, propertyType : string, area : string, beds : string, baths : string, price : string): void {
-    this.propertyService.searchProperties(city, district, propertyType, status, area, beds, baths, price)
+  search(status : string | null, period : string | null, city : string, district : string, propertyType : string, area : string, beds : string, baths : string, price : string): void {
+    this.propertyService.searchProperties(city, district, propertyType, status, area, beds, baths, price, period)
       .subscribe(data => {
         // this.properties = data;
         // console.log(this.properties)
@@ -57,6 +59,19 @@ export class SearchComponent {
           }
         }
       });
+  }
+
+  ngOnInit(): void {
+    if(this.dataStatus == 'for_rent'){
+      this.showPeriodOptions = true;
+    }
+  }
+
+  onStatusChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    console.log(target);
+    console.log(target.value);
+    this.showPeriodOptions = (target.value === 'for_rent');
   }
 
 }

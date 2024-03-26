@@ -33,6 +33,7 @@ interface Offer {
 export class RequestsPropertiesComponent implements OnInit {
   offers: Offer[] = [];
   userId: number=0;
+  isLoading: boolean = false;
 
   constructor(private dataService: SaleOffersService, private offerActionsService: OfferActionsService, private rentofferActionsService: RentofferActionsService, private router : Router) { }
 
@@ -51,11 +52,12 @@ export class RequestsPropertiesComponent implements OnInit {
   }
 
   acceptOffer(offerId: number, offerFor: string): void {
+    this.isLoading = true;
     if (offerFor === 'Sale') {
       this.offerActionsService.acceptOffer(offerId).subscribe({
         next: response => {
           console.log('Sale offer accepted successfully:', response);
-          // Handle success response
+          
           this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
             this.router.navigate(['/requests']);
           });
@@ -85,6 +87,7 @@ export class RequestsPropertiesComponent implements OnInit {
   }
 
   rejectOffer(offerId: number, offerFor: string): void {
+    this.isLoading = true;
     if (offerFor === 'Sale') {
       this.offerActionsService.rejectOffer(offerId).subscribe({
         next: response => {

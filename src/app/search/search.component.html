@@ -4,13 +4,20 @@
       <aside id="edit-search">
 
           <header><h4 class="text-center" style="font-weight: lighter;">Search Properties</h4></header>
-          <hr>
-          <form role="form" id="form-sidebar" class="form-search" (submit)="search(status.value, city.value, district.value, propertyType.value, area.value, beds.value, baths.value, price.value)">
+          <hr style="display: block; margin-top: 19px;">
+          <form role="form" id="form-sidebar" class="form-search" (submit)="search(status.value, period.value, city.value, district.value, propertyType.value, area.value, beds.value, baths.value, price.value)">
               <div class="form-group" [class]="dataStatus ? 'd-none' : ''" >
-                <select class="form-select rounded-0" #status [value]="dataStatus ? dataStatus : ''">
+                <select class="form-select rounded-0" #status [value]="dataStatus ? dataStatus : ''" (change)="onStatusChange($event)">
                   <option style="color: #777;" value="">Status</option>
                   <option value="for_rent">Rent</option>
                   <option value="for_sale">Sale</option>
+                </select>
+              </div><!-- /.form-group -->
+              <div class="form-group my-3" [class]="!showPeriodOptions ? 'd-none' : ''">
+                <select class="form-select rounded-0" #period>
+                  <option style="color: #777;" value="">Period</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="daily">Daily</option>
                 </select>
               </div><!-- /.form-group -->
                 

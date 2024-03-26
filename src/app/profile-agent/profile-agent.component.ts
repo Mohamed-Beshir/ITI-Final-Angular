@@ -1,109 +1,120 @@
-import { Component ,OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, ValidationErrors } from '@angular/forms';
+import { UserServiceService } from '../services/user-service.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { BigFooterComponent } from '../big-footer/big-footer.component';
-import { Router, RouterLink } from '@angular/router';
-import { AddUserService } from './../services/add-user.service';
-import { UserServiceService } from '../services/user-service.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { UserLoggedService } from '../services/user-logged.service';
 
 @Component({
   selector: 'app-profile-agent',
   standalone: true,
-  imports: [NavbarComponent, BigFooterComponent, RouterLink,FormsModule,CommonModule,ReactiveFormsModule],
+  imports: [NavbarComponent, BigFooterComponent, NgIf, ReactiveFormsModule, RouterLink],
   templateUrl: './profile-agent.component.html',
   styleUrl: './profile-agent.component.css'
 })
 export class ProfileAgentComponent implements OnInit {
-  userId: string | null = null;
+  isLoggedIn: boolean = false;
   userData: any;
-  userForm!: FormGroup;
-  showEditForm = false; // Initialize flag for edit form visibility
-  notificationMessage: string | null = null;
+  userInfo:any;
+  updateUserForm: FormGroup;
+  changePasswordForm: FormGroup;
+  successMessage: string | null = null;
 
-  constructor(private userService: UserServiceService, private formBuilder: FormBuilder, private router : Router) {
+  constructor(private userService: UserServiceService, private router: Router, private loggedUser: UserLoggedService) {
+    this.updateUserForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.pattern('^[a-z][a-z 0-9 (-_.)]{3,40}@[a-z]{3,15}(.com|.net|.edu|.org)$')])
+    });
 
+    this.changePasswordForm = new FormGroup({
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      password_confirmation: new FormControl('', [Validators.required, this.confirmPasswordValidator])
+    });
   }
-  userloggedData : any = [];
 
   ngOnInit(): void {
-
-    //
-    this.userForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-    //
-
-    const userData = localStorage.getItem('user_data');
-    if (userData) {
-      this.userloggedData= JSON.parse(userData);
-      this.userId = JSON.parse(userData).id;
+    // Check if user is logged in
+    this.isLoggedIn = this.loggedUser.isLoggedIn();
+    
+    // Retrieve user data if user is logged in
+    if (this.isLoggedIn) {
+      this.userInfo = this.loggedUser.getUserData();
+      this.userService.getUserData(this.userInfo.id).subscribe(
+        (userData) => {
+          this.userData = userData;
+          // Populate form fields with user data
+          this.updateUserForm.patchValue({
+            name: userData.name,
+            email: userData.email
+          });
+        },
+        (error) => {
+          console.error('Error retrieving user data:', error);
+          // Handle error as needed
+        }
+      );
+      this.updateUserForm.patchValue({
+        name: this.userData.name,
+        email: this.userData.email
+      });
     }else{
       this.router.navigate(['/signin']);
-
     }
+  }
 
-    if (this.userId) {
-      this.getUserData(this.userId);
+  confirmPasswordValidator = (control: FormControl): ValidationErrors | null => {
+    if (!control.value) {
+      return null; // Don't validate if confirm password is empty
     }
-
-    this.userForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
-
-  getUserData(userId: string): void {
-    this.userService.getUserData(userId).subscribe(data => {
-      this.userData = data;
-      this.userForm.patchValue(data);
-    });
-  }
-
-  toggleEdit(): void {
-    this.showEditForm = !this.showEditForm; // Toggle the edit form visibility
-  }
-
-  cancelEdit(): void {
-    this.showEditForm = false; // Hide the edit form
-  }
-
-  onSubmit(): void {
-
-
-    if (this.userForm.valid) {
-      // Form is valid, perform form submission logic here
-      console.log('Form submitted:', this.userForm.value);
-    } else {
-      // Form is invalid, display error messages or handle as needed
-      console.log('Form is invalid');
-      // Optionally, you can mark all fields as touched to display validation errors
-      this.userForm.markAllAsTouched();
+  
+    const password = this.changePasswordForm.get('password');
+  
+    if (password && control.value !== password.value) {
+      return { passwordMismatch: true };
     }
-    if (!this.userId) {
-      console.error('User ID is not available.');
-      return;
-    }
-    this.notificationMessage = 'User data saved successfully.';
-
-    const updatedUserData = this.userForm.value;
-    this.userService.updateUserData(this.userId, updatedUserData).subscribe(response => {
-      console.log('Data updated successfully:', response);
-      // You can handle success response here
-      this.showEditForm = false; // Hide the edit form after successful submission
-    }, error => {
-      console.error('Error updating data:', error);
-      // You can handle error response here
-    });
-
-
-
-    this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
-      this.router.navigate(['/profile']);
-    });
+  
+    return null;
   }
+
+  updateUserInfo(): void {
+    if (this.updateUserForm.valid) {
+      // Assuming you have access to userId, replace '1' with actual user ID
+      const updatedUserData = this.updateUserForm.value;
+      this.userService.updateUserData(this.userData.id, updatedUserData).subscribe(
+        (response) => {
+          console.log('User data updated successfully:', response);
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/profile']);
+          });
+        },
+        (error) => {
+          console.error('Error updating user data:', error);
+          // Optionally, you can show an error message or perform other actions
+        }
+      );
+    }
+  }
+
+
+  changePassword(): void {
+    if (this.changePasswordForm.valid) {
+      const newPasswordData = this.changePasswordForm.value;
+      this.userService.updateUserData(this.userData.id, newPasswordData).subscribe(
+          (response) => {
+              console.log('Password updated successfully:', response);
+              this.successMessage = 'Password updated successfully.';
+              this.changePasswordForm.reset(); // Reset the form after successful password change
+          },
+          (error) => {
+              console.error('Error updating password:', error);
+              // Optionally, you can display an error message or perform other actions
+          }
+      );
+  }
+  }
+
+
+  
 }

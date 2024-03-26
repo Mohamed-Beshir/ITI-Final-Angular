@@ -38,6 +38,8 @@
                                         <dd>Sale</dd>
                                     }@else if(property.status === 'for_rent'){
                                         <dd>Rent</dd>
+                                        <dt>Period</dt>
+                                        <dd>{{property.rental_period}}</dd>
                                     }  
                                     <dt>Price</dt>
                                         <dd><span class="tag price">LE {{property.price}}</span></dd>
@@ -156,10 +158,10 @@
                                     <div id="agency">
                                         <div class="form-group">
                                             <label for="account-agency" class="text-secondary my-2" style="opacity: 0.6"
-                                                formControlName="dropdownValue">Select your rating:</label>
+                                                formControlName="dropdownValue">Select your rating</label>
                                             <br />
                                             <select formControlName="rate" class="custom-dropdown" name="account-agency" id="account-agency" class="text-secondary">
-                                                <option value="">Select rate:</option>
+                                                <option value="">Select rate</option>
                                                 <option value="1">Not very good</option>
                                                 <option value="2">Not good</option>
                                                 <option value="3">acceptable</option>
@@ -171,9 +173,9 @@
                                 
                                     <hr />
                                     <div class="form-group mb-3" [formGroup]="registerForm">
-                                        <label for="form-create-account-full-name" style="font-weight: bold; color: rgb(92, 91, 91)">Comment:</label>
+                                        <label for="form-create-account-full-name" style="font-weight: bold; color: rgb(92, 91, 91)">Comment</label>
                                         <textarea type="text" class="form-control" id="form-create-account-full-name" required
-                                            style="background-color: rgb(242, 241, 241); border-radius: 0; height: 300px; resize: none;" class="form-control" id="fullname"
+                                            style="background-color: rgb(242, 241, 241); border-radius: 0; height: 200px; resize: none;" class="form-control" id="fullname"
                                             formControlName="comment" ></textarea>
                                         @if(registerForm.controls['comment'].invalid &&
                                         registerForm.controls['comment'].touched ){
@@ -200,12 +202,14 @@
                 <section id="sidebar">
                     @if (!isLoggedIn) {
                         <aside id="edit-search">
-                            <header><h3>Make an Offer</h3></header>
+                            <h2 class="text-center" style="margin-top: 20px;">Make an Offer</h2>
                             <div class="text-center"><a routerLink="/signin" class="nav-link">Sign in to make an offer</a></div>
                         </aside>
                     }@else if (isLoggedIn && userRole === "user") {
                         <form>
-                            <header><h3>Make an Offer</h3></header>
+                            <aside id="edit-search">
+                                <h2 class="text-center" style="margin-top: 20px;">Make an Offer</h2>
+                            </aside>
                             @if (offerSubmittedBefore) {
                                 <div class="alert alert-info">Your offer has been submitted for this property. You'll be notified via email once the listing owner responds to your offer.</div>
                             }@else {

@@ -14,7 +14,7 @@
                         <ul class="sidebar-navigation">
                             <li class="active"><a routerLink="/profile"><i
                                         class="fa fa-user"></i><span>Profile</span></a></li>
-                            @if(userloggedData.role !== 'user'){
+                            @if(userData.role !== 'user'){
                             <li><a routerLink="/my-properties"><i class="fa fa-home"></i><span>My Properties</span></a>
                             </li>
                             }
@@ -37,138 +37,132 @@
                             </div>
                             <div class="col-md-9">
 
-                                <form role="form" id="form-account-profile" method="post">
+                                <section id="contact">
+                                    <dl class="contact-fields">
+                                        <dt><label >Your Name</label></dt>
+                                        <dd>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" 
+                                                    value="{{ userData.name  }}" readonly>
+                                            </div><!-- /.form-group -->
+                                        </dd>
 
+                                        <dt><label >Email</label></dt>
+                                        <dd>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" 
+                                                     value="{{ userData.email }}" readonly>
+                                            </div><!-- /.form-group -->
+                                        </dd>
+                                        <dt><label >Role</label></dt>
+                                        <dd>
+                                            <div class="form-group">
+                                                @if(userData.role === "user"){
+                                                <input type="text" class="form-control" 
+                                                    value="Regular User" readonly>
+                                                }@else if(userData.role === "agent"){
+                                                <input type="text" class="form-control" 
+                                                    value="Agent" readonly>
+                                                }
+                                            </div><!-- /.form-group -->
+                                        </dd>
 
-                                    <section id="contact">
-                                        <dl class="contact-fields" *ngIf="userData">
+                                    </dl>
+                                </section>
+
+                                <section >
+                                    <form [formGroup]="updateUserForm" (ngSubmit)="updateUserInfo()">
+                                        <header>
+                                            <h4 class="my-5">Edit your information</h4>
+                                        </header>
+                                        
+                                        <dl class="contact-fields" >
                                             <dt><label for="form-account-name">Your Name</label></dt>
                                             <dd>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" id="form-account-name"
-                                                        name="form-account-name" value="{{ userData.name  }}" readonly>
-                                                </div><!-- /.form-group -->
+                                                         formControlName="name" value="{{ userData.name  }}">
+                                                </div>
+                                                @if(updateUserForm.controls["name"].touched && updateUserForm.controls["name"].invalid){
+                                                    @if(updateUserForm.controls["name"].errors?.["required"]){
+                                                        <div class="error text-danger">Name is required.</div>
+                                                    }
+                                                    @if(updateUserForm.controls["name"].errors?.["minlength"]){
+                                                        <div class="error text-danger">Min length for name is 3 characters.</div>
+                                                    }
+                                                }
                                             </dd>
-
+    
                                             <dt><label for="form-account-email">Email</label></dt>
                                             <dd>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" id="form-account-email"
-                                                        name="form-account-phone" value="{{ userData.email }}" readonly>
+                                                    formControlName="email" value="{{ userData.email  }}">
                                                 </div><!-- /.form-group -->
+                                                @if(updateUserForm.controls["email"].touched && updateUserForm.controls["email"].invalid){
+                                                    @if(updateUserForm.controls["email"].errors?.["required"]){
+                                                        <div class="error text-danger">Email is required.</div>
+                                                    }
+                                                    @if(updateUserForm.controls["email"].errors?.["pattern"]){
+                                                        <div class="error text-danger">Please enter a valid email.</div>
+                                                    }
+                                                }
                                             </dd>
-                                            <dt><label for="form-account-skype">Role</label></dt>
+                                        </dl>
+                                        <div class="form-group" style="text-align: right;">
+                                            <button type="submit" class="btn btn-default mx-3"
+                                                 routerLink="/profile">Save Changes</button>
+                                            
+                                        </div><!-- /.form-group -->
+                                    </form>
+                                </section>
+
+                                <section >
+                                    <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword()">
+                                        <header>
+                                            <h4 class="my-5">Change your password</h4>
+                                        </header>
+                                        <div *ngIf="successMessage" class="alert alert-success ">
+                                            {{ successMessage }}
+                                          </div>
+                                        <dl class="contact-fields">
+                                            <dt><label for="form-account-password">New Password</label></dt>
                                             <dd>
                                                 <div class="form-group">
-                                                    @if(userData.role === "user"){
-                                                    <input type="text" class="form-control" id="form-account-skype"
-                                                        name="form-account-password" value="Regular User" readonly>
-                                                    }@else if(userData.role === "agent"){
-                                                    <input type="text" class="form-control" id="form-account-skype"
-                                                        name="form-account-password" value="Agent" readonly>
+                                                    <input type="password" class="form-control" id="form-account-password"
+                                                    formControlName="password">
+                                                    @if(changePasswordForm.controls["password"].touched && changePasswordForm.controls["password"].invalid){
+                                                        @if(changePasswordForm.controls["password"].errors?.["required"]){
+                                                            <div class="error text-danger">Password is required.</div>
+                                                        }
+                                                        @if(changePasswordForm.controls["password"].errors?.["minlength"]){
+                                                            <div class="error text-danger">The password must not be less than 8 characters</div>
+                                                        }
                                                     }
                                                 </div><!-- /.form-group -->
                                             </dd>
-
+                                            <dt><label for="form-account-confirmPassword">Confirm New Password</label></dt>
+                                            <dd>
+                                                <div class="form-group">
+                                                    <input type="password" class="form-control" id="form-account-confirmPassword"
+                                                    formControlName="password_confirmation">
+                                                    @if(changePasswordForm.controls["password_confirmation"].touched && changePasswordForm.controls["password_confirmation"].invalid){
+                                                        @if(changePasswordForm.controls["password_confirmation"].errors?.["required"]){
+                                                            <div class="error text-danger">Please confirm the password.</div>
+                                                        }
+                                                        @if(changePasswordForm.controls["password_confirmation"].errors?.["passwordMismatch"]){
+                                                            <div class="error text-danger">Passwords do not match.</div>
+                                                        }
+                                                    }
+                                                </div><!-- /.form-group -->
+                                            </dd>
                                         </dl>
                                         <div class="form-group" style="text-align: right;">
-                                            <button (click)="toggleEdit()" type="submit" class="btn btn-default"
-                                                id="account-submit">Edit</button>
-                                        </div>
-                                    </section>
-
-
-                                </form><!-- /#form-contact -->
-
-                                <section id="change-password" *ngIf="showEditForm">
-                                    <header>
-                                        <h2 class="mb-5">Edit your information</h2>
-                                    </header>
-                                    <!--  -->
-                                    <dl class="contact-fields">
-                                        <dt><label for="form-account-name">Your Name</label></dt>
-                                        <dd>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="form-account-name"
-                                                    name="form-account-name" [(ngModel)]="userData.name">
-                                            </div><!-- /.form-group -->
-                                        </dd>
-
-                                        <dt><label for="form-account-email">Email</label></dt>
-                                        <dd>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="form-account-email"
-                                                    name="form-account-phone" [(ngModel)]="userData.email">
-                                            </div><!-- /.form-group -->
-                                        </dd>
-                                        <dt><label for="form-account-email">Password</label></dt>
-                                        <dd>
-                                            <div class="form-group">
-                                                <input type="password" class="form-control" id="form-account-password"
-                                                    name="form-account-password" [(ngModel)]="userData.password">
-                                            </div><!-- /.form-group -->
-                                        </dd>
-                                    </dl>
-                                    <div class="form-group" style="text-align: right;">
-                                        <button type="submit" class="btn btn-default mx-3" (click)="onSubmit()"
-                                            id="account-submit" routerLink="/profile">Save Changes</button>
-                                        <button routerLink="/profile" type="submit" class="btn btn-default"
-                                            (click)="cancelEdit()" id="account-submit">Cancel</button>
-                                    </div><!-- /.form-group -->
-
-
-                                    <section id="change-password" *ngIf="showEditForm">
-                                        <header>
-                                            <h2>Edit your information</h2>
-                                        </header>
-                                        <!--  -->
-                                        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                                            <dl class="contact-fields">
-                                                <dt><label for="form-account-name">Your Name:</label></dt>
-                                                <dd>
-                                                    <div class="form-group">
-                                                        <input type="text" formControlName="name" class="form-control"
-                                                            id="form-account-name" name="form-account-name">
-                                                        <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched"
-                                                            class="text-danger">
-                                                            Name is required
-                                                        </div>
-
-                                                    </div>
-                                                </dd>
-
-                                                <dt><label for="form-account-email">Email:</label></dt>
-                                                <dd>
-                                                    <div class="form-group">
-                                                        <input type="text" formControlName="email" placeholder="Email"
-                                                            id="form-account-email" name="form-account-phone">
-                                                        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
-                                                            class="text-danger">
-                                                            <div *ngIf="userForm.get('email')?.errors?.['required']">
-                                                                Email is required</div>
-                                                            <div *ngIf="userForm.get('email')?.errors?.['email']">
-                                                                Invalid email format</div>
-                                                        </div>
-
-                                                    </div>
-                                                </dd>
-
-
-
-                                            </dl>
-                                            <div class="form-group" style="text-align: right;">
-                                                <button type="submit" class="btn btn-default" id="account-submit"
-                                                    [disabled]="!userForm.valid">Save Changes</button>
-                                                <button type="button" class="btn btn-default" (click)="cancelEdit()"
-                                                    id="account-submit">Cancel</button>
-                                            </div>
-                                        </form>
-
-                                        <!--  -->
-                                        <!-- <div *ngIf="notificationMessage" class="alert alert-success">
-                                      {{ notificationMessage }}
-                                    </div> -->
-                                    </section>
+                                            <button type="submit" class="btn btn-default mx-3"
+                                                 [disabled]="changePasswordForm.invalid">Save Changes</button>
+                                            
+                                        </div><!-- /.form-group -->
+                                    </form>
                                 </section>
 
                             </div><!-- /.col-md-9 -->

@@ -10,13 +10,13 @@ export class UserServiceService {
 
   constructor(private   http: HttpClient) { }
 
-  getUserData(userId: string): Observable<any> {
+  getUserData(userId: number): Observable<any> {
     // Append user ID to API URL
     const url = `${this.apiUrl}/${userId}`;
     return this.http.get<any>(url);
   }
 
-  updateUserData(userId: string, userData: any): Observable<any> {
+  updateUserData(userId: number, userData: any): Observable<any> {
     const url = `${this.apiUrl}/${userId}`;
     return this.http.put<any>(url, userData);
   }
